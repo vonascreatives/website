@@ -1,0 +1,89 @@
+# AI Prompt for Knowledge Base Interface
+
+## Primary Prompt
+
+```
+Create a modern knowledge base interface with a clean, documentation-style design similar to GitBook or Notion docs.
+
+NAVIGATION STRUCTURE:
+Create a fixed sidebar with these 7 main sections:
+1. Company Foundation
+2. Team & Operations  
+3. Production Workflows
+4. YouTube Shows
+5. Tools & Systems
+6. External Partnerships
+7. Policies & Procedures
+
+CONTENT PAGE LAYOUT:
+Design each content page with these components in order:
+
+HEADER SECTION:
+- Page title (large, bold)
+- Short intro paragraph (2-3 sentences)
+- Last updated date (top right)
+- Content type badge (Article/Video/Workflow)
+
+MEDIA SECTION (conditional):
+- Video player embed if video content
+- Interactive guide preview for workflows
+- Thumbnail with play button for external content
+
+STEPS SECTION (for workflows):
+- Numbered step counter with connecting lines: [1] → [2] → [3]
+- Each step expandable with title and description
+- Progress indicator showing completion
+
+MAIN CONTENT SECTION:
+- Full article content with proper typography
+- Code blocks with syntax highlighting
+- Responsive images and diagrams
+- Callout boxes for important notes
+
+FOOTER SECTION:
+- Colored tag pills (clickable for filtering)
+- FAQ accordion section
+- Related articles grid (3-4 cards from same category)
+
+DESIGN STYLE:
+- Clean, minimal interface like modern documentation sites
+- Left sidebar navigation with section highlighting
+- White/light background with subtle borders
+- Professional typography with clear hierarchy
+- Responsive design for desktop and mobile
+- Search bar in header
+- Breadcrumb navigation
+
+Make each section a reusable component. Focus on readability and easy navigation between content.
+```
+
+## Alternative Short Prompt
+
+```
+Build a knowledge base interface with:
+
+SIDEBAR MENU: Company Foundation | Team & Operations | Production Workflows | YouTube Shows | Tools & Systems | External Partnerships | Policies & Procedures
+
+CONTENT STRUCTURE: Title → Short intro → Media (video/guide if applicable) → Numbered steps (for workflows) → Full article → Tags → FAQ → Related articles
+
+DESIGN: Clean documentation-style like GitBook, component-based architecture, responsive layout, search functionality.
+
+Create modular components for each content section.
+```
+
+## Specific Component Prompts
+
+### For Step Counter Component:
+```
+Create a step counter component with numbered circles connected by lines. Each step should have a title and expandable description. Include a progress bar at the top showing completion status.
+```
+
+### For Related Articles Component:
+```
+Design a "Related Articles" section with 3-4 content cards showing thumbnail, title, brief description, and tags. Filter to show only articles from the same content category.
+```
+
+### For Navigation Component:
+```
+Create a fixed sidebar navigation with 7 main sections. Include active state highlighting, collapsible sub-menus, and search functionality. Mobile version should be a hamburger menu.
+```

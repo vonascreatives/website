@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test CMS Data Loading</title>
+</head>
+<body>
+    <h1>CMS Data Test</h1>
+    <div id="status">Loading...</div>
+    <div id="data"></div>
+
+    <script type="module">
+        console.log('🔍 Testing CMS data loading in browser...');
+        
+        // Test environment variables in browser context
+        console.log('Environment check:');
+        console.log('window.location:', window.location.origin);
+        
+        // Test direct fetch to Next.js API
+        try {
+            const response = await fetch('http://localhost:3001');
+            const text = await response.text();
+            console.log('✅ Next.js server responding');
+            document.getElementById('status').textContent = '✅ Next.js server responding';
+        } catch (error) {
+            console.error('❌ Next.js server error:', error);
+            document.getElementById('status').textContent = '❌ Next.js server error: ' + error.message;
+        }
+        
+        // Check if we can see the React app loading
+        setTimeout(() => {
+            const iframe = document.createElement('iframe');
+            iframe.src = 'http://localhost:3001';
+            iframe.style.width = '100%';
+            iframe.style.height = '600px';
+            iframe.style.border = '1px solid #ccc';
+            document.getElementById('data').appendChild(iframe);
+        }, 1000);
+    </script>
+</body>
+</html>
