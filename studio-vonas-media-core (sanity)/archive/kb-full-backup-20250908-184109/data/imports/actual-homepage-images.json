@@ -1,0 +1,429 @@
+{
+  "analysis_date": "2025-08-28T09:59:34.039Z",
+  "method": "actual_component_analysis",
+  "description": "Images identified by examining actual homepage component code",
+  "sections": [
+    "hero",
+    "brand",
+    "service",
+    "project",
+    "award",
+    "footer"
+  ],
+  "images": [
+    {
+      "section": "hero",
+      "filename": "hero-bg-shape-1-1.svg",
+      "relativePath": "home-01/hero/hero-bg-shape-1-1.svg",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/home-01/hero/hero-bg-shape-1-1.svg",
+      "exists": true
+    },
+    {
+      "section": "hero",
+      "filename": "hero-shape-1-1.png",
+      "relativePath": "home-01/hero/hero-shape-1-1.png",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/home-01/hero/hero-shape-1-1.png",
+      "exists": true
+    },
+    {
+      "section": "hero",
+      "filename": "hero-1-1.png",
+      "relativePath": "home-01/hero/hero-1-1.png",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/home-01/hero/hero-1-1.png",
+      "exists": true
+    },
+    {
+      "section": "brand",
+      "filename": "brand-1.png",
+      "relativePath": "home-01/brand/brand-1.png",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/home-01/brand/brand-1.png",
+      "exists": true
+    },
+    {
+      "section": "brand",
+      "filename": "brand-2.png",
+      "relativePath": "home-01/brand/brand-2.png",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/home-01/brand/brand-2.png",
+      "exists": true
+    },
+    {
+      "section": "brand",
+      "filename": "brand-3.png",
+      "relativePath": "home-01/brand/brand-3.png",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/home-01/brand/brand-3.png",
+      "exists": true
+    },
+    {
+      "section": "brand",
+      "filename": "brand-4.png",
+      "relativePath": "home-01/brand/brand-4.png",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/home-01/brand/brand-4.png",
+      "exists": true
+    },
+    {
+      "section": "brand",
+      "filename": "brand-5.png",
+      "relativePath": "home-01/brand/brand-5.png",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/home-01/brand/brand-5.png",
+      "exists": true
+    },
+    {
+      "section": "brand",
+      "filename": "brand-6.png",
+      "relativePath": "home-01/brand/brand-6.png",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/home-01/brand/brand-6.png",
+      "exists": true
+    },
+    {
+      "section": "brand",
+      "filename": "brand-7.png",
+      "relativePath": "home-01/brand/brand-7.png",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/home-01/brand/brand-7.png",
+      "exists": true
+    },
+    {
+      "section": "service",
+      "filename": "service-icon-1.png",
+      "relativePath": "home-01/service/service-icon-1.png",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/home-01/service/service-icon-1.png",
+      "exists": true
+    },
+    {
+      "section": "service",
+      "filename": "service-icon-2.png",
+      "relativePath": "home-01/service/service-icon-2.png",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/home-01/service/service-icon-2.png",
+      "exists": true
+    },
+    {
+      "section": "service",
+      "filename": "service-icon-3.png",
+      "relativePath": "home-01/service/service-icon-3.png",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/home-01/service/service-icon-3.png",
+      "exists": true
+    },
+    {
+      "section": "service",
+      "filename": "service-icon-4.png",
+      "relativePath": "home-01/service/service-icon-4.png",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/home-01/service/service-icon-4.png",
+      "exists": true
+    },
+    {
+      "section": "project",
+      "filename": "project-1-1.jpg",
+      "relativePath": "home-01/project/project-1-1.jpg",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/home-01/project/project-1-1.jpg",
+      "exists": true
+    },
+    {
+      "section": "project",
+      "filename": "project-1-2.jpg",
+      "relativePath": "home-01/project/project-1-2.jpg",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/home-01/project/project-1-2.jpg",
+      "exists": true
+    },
+    {
+      "section": "project",
+      "filename": "project-1-3.jpg",
+      "relativePath": "home-01/project/project-1-3.jpg",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/home-01/project/project-1-3.jpg",
+      "exists": true
+    },
+    {
+      "section": "project",
+      "filename": "project-1-4.jpg",
+      "relativePath": "home-01/project/project-1-4.jpg",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/home-01/project/project-1-4.jpg",
+      "exists": true
+    },
+    {
+      "section": "project",
+      "filename": "project-1-5.jpg",
+      "relativePath": "home-01/project/project-1-5.jpg",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/home-01/project/project-1-5.jpg",
+      "exists": true
+    },
+    {
+      "section": "project",
+      "filename": "project-1-6.jpg",
+      "relativePath": "home-01/project/project-1-6.jpg",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/home-01/project/project-1-6.jpg",
+      "exists": true
+    },
+    {
+      "section": "project",
+      "filename": "hero-1-2.jpg",
+      "relativePath": "inner-service/hero/hero-1-2.jpg",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/inner-service/hero/hero-1-2.jpg",
+      "exists": true
+    },
+    {
+      "section": "award",
+      "filename": "award-1.png",
+      "relativePath": "home-01/award/award-1.png",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/home-01/award/award-1.png",
+      "exists": true
+    },
+    {
+      "section": "award",
+      "filename": "award-2.png",
+      "relativePath": "home-01/award/award-2.png",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/home-01/award/award-2.png",
+      "exists": true
+    },
+    {
+      "section": "award",
+      "filename": "award-3.png",
+      "relativePath": "home-01/award/award-3.png",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/home-01/award/award-3.png",
+      "exists": true
+    },
+    {
+      "section": "award",
+      "filename": "award-4.png",
+      "relativePath": "home-01/award/award-4.png",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/home-01/award/award-4.png",
+      "exists": true
+    },
+    {
+      "section": "award",
+      "filename": "award-5.png",
+      "relativePath": "home-01/award/award-5.png",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/home-01/award/award-5.png",
+      "exists": true
+    },
+    {
+      "section": "award",
+      "filename": "award-6.png",
+      "relativePath": "home-01/award/award-6.png",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/home-01/award/award-6.png",
+      "exists": true
+    },
+    {
+      "section": "footer",
+      "filename": "footer-circle-shape-1.png",
+      "relativePath": "home-01/footer/footer-circle-shape-1.png",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/home-01/footer/footer-circle-shape-1.png",
+      "exists": true
+    },
+    {
+      "section": "footer",
+      "filename": "footer-circle-shape-2.png",
+      "relativePath": "home-01/footer/footer-circle-shape-2.png",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/home-01/footer/footer-circle-shape-2.png",
+      "exists": true
+    }
+  ],
+  "uploadCandidates": [
+    {
+      "section": "hero",
+      "filename": "hero-bg-shape-1-1.svg",
+      "relativePath": "home-01/hero/hero-bg-shape-1-1.svg",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/home-01/hero/hero-bg-shape-1-1.svg",
+      "exists": true
+    },
+    {
+      "section": "hero",
+      "filename": "hero-shape-1-1.png",
+      "relativePath": "home-01/hero/hero-shape-1-1.png",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/home-01/hero/hero-shape-1-1.png",
+      "exists": true
+    },
+    {
+      "section": "hero",
+      "filename": "hero-1-1.png",
+      "relativePath": "home-01/hero/hero-1-1.png",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/home-01/hero/hero-1-1.png",
+      "exists": true
+    },
+    {
+      "section": "brand",
+      "filename": "brand-1.png",
+      "relativePath": "home-01/brand/brand-1.png",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/home-01/brand/brand-1.png",
+      "exists": true
+    },
+    {
+      "section": "brand",
+      "filename": "brand-2.png",
+      "relativePath": "home-01/brand/brand-2.png",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/home-01/brand/brand-2.png",
+      "exists": true
+    },
+    {
+      "section": "brand",
+      "filename": "brand-3.png",
+      "relativePath": "home-01/brand/brand-3.png",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/home-01/brand/brand-3.png",
+      "exists": true
+    },
+    {
+      "section": "brand",
+      "filename": "brand-4.png",
+      "relativePath": "home-01/brand/brand-4.png",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/home-01/brand/brand-4.png",
+      "exists": true
+    },
+    {
+      "section": "brand",
+      "filename": "brand-5.png",
+      "relativePath": "home-01/brand/brand-5.png",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/home-01/brand/brand-5.png",
+      "exists": true
+    },
+    {
+      "section": "brand",
+      "filename": "brand-6.png",
+      "relativePath": "home-01/brand/brand-6.png",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/home-01/brand/brand-6.png",
+      "exists": true
+    },
+    {
+      "section": "brand",
+      "filename": "brand-7.png",
+      "relativePath": "home-01/brand/brand-7.png",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/home-01/brand/brand-7.png",
+      "exists": true
+    },
+    {
+      "section": "service",
+      "filename": "service-icon-1.png",
+      "relativePath": "home-01/service/service-icon-1.png",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/home-01/service/service-icon-1.png",
+      "exists": true
+    },
+    {
+      "section": "service",
+      "filename": "service-icon-2.png",
+      "relativePath": "home-01/service/service-icon-2.png",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/home-01/service/service-icon-2.png",
+      "exists": true
+    },
+    {
+      "section": "service",
+      "filename": "service-icon-3.png",
+      "relativePath": "home-01/service/service-icon-3.png",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/home-01/service/service-icon-3.png",
+      "exists": true
+    },
+    {
+      "section": "service",
+      "filename": "service-icon-4.png",
+      "relativePath": "home-01/service/service-icon-4.png",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/home-01/service/service-icon-4.png",
+      "exists": true
+    },
+    {
+      "section": "project",
+      "filename": "project-1-1.jpg",
+      "relativePath": "home-01/project/project-1-1.jpg",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/home-01/project/project-1-1.jpg",
+      "exists": true
+    },
+    {
+      "section": "project",
+      "filename": "project-1-2.jpg",
+      "relativePath": "home-01/project/project-1-2.jpg",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/home-01/project/project-1-2.jpg",
+      "exists": true
+    },
+    {
+      "section": "project",
+      "filename": "project-1-3.jpg",
+      "relativePath": "home-01/project/project-1-3.jpg",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/home-01/project/project-1-3.jpg",
+      "exists": true
+    },
+    {
+      "section": "project",
+      "filename": "project-1-4.jpg",
+      "relativePath": "home-01/project/project-1-4.jpg",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/home-01/project/project-1-4.jpg",
+      "exists": true
+    },
+    {
+      "section": "project",
+      "filename": "project-1-5.jpg",
+      "relativePath": "home-01/project/project-1-5.jpg",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/home-01/project/project-1-5.jpg",
+      "exists": true
+    },
+    {
+      "section": "project",
+      "filename": "project-1-6.jpg",
+      "relativePath": "home-01/project/project-1-6.jpg",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/home-01/project/project-1-6.jpg",
+      "exists": true
+    },
+    {
+      "section": "project",
+      "filename": "hero-1-2.jpg",
+      "relativePath": "inner-service/hero/hero-1-2.jpg",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/inner-service/hero/hero-1-2.jpg",
+      "exists": true
+    },
+    {
+      "section": "award",
+      "filename": "award-1.png",
+      "relativePath": "home-01/award/award-1.png",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/home-01/award/award-1.png",
+      "exists": true
+    },
+    {
+      "section": "award",
+      "filename": "award-2.png",
+      "relativePath": "home-01/award/award-2.png",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/home-01/award/award-2.png",
+      "exists": true
+    },
+    {
+      "section": "award",
+      "filename": "award-3.png",
+      "relativePath": "home-01/award/award-3.png",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/home-01/award/award-3.png",
+      "exists": true
+    },
+    {
+      "section": "award",
+      "filename": "award-4.png",
+      "relativePath": "home-01/award/award-4.png",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/home-01/award/award-4.png",
+      "exists": true
+    },
+    {
+      "section": "award",
+      "filename": "award-5.png",
+      "relativePath": "home-01/award/award-5.png",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/home-01/award/award-5.png",
+      "exists": true
+    },
+    {
+      "section": "award",
+      "filename": "award-6.png",
+      "relativePath": "home-01/award/award-6.png",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/home-01/award/award-6.png",
+      "exists": true
+    },
+    {
+      "section": "footer",
+      "filename": "footer-circle-shape-1.png",
+      "relativePath": "home-01/footer/footer-circle-shape-1.png",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/home-01/footer/footer-circle-shape-1.png",
+      "exists": true
+    },
+    {
+      "section": "footer",
+      "filename": "footer-circle-shape-2.png",
+      "relativePath": "home-01/footer/footer-circle-shape-2.png",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/home-01/footer/footer-circle-shape-2.png",
+      "exists": true
+    }
+  ],
+  "missingImages": [],
+  "summary": {
+    "totalFound": 29,
+    "totalMissing": 0,
+    "totalExpected": 29
+  }
+}

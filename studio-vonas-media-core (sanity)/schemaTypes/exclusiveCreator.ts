@@ -1,0 +1,242 @@
+import {defineField, defineType} from 'sanity'
+
+export default defineType({
+  name: 'exclusiveCreator',
+  title: 'Exclusive Creator',
+  type: 'document',
+  groups: [
+    {
+      name: 'profile',
+      title: 'Profile',
+      default: true,
+    },
+    {
+      name: 'metrics',
+      title: 'Metrics',
+    },
+    {
+      name: 'packages',
+      title: 'Packages',
+    },
+    {
+      name: 'contact',
+      title: 'Contact',
+    },
+    {
+      name: 'seo',
+      title: 'SEO',
+    },
+  ],
+  fields: [
+    defineField({
+      name: 'name',
+      title: 'Creator Name',
+      type: 'string',
+      group: 'profile',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'slug',
+      title: 'Slug',
+      type: 'slug',
+      group: 'profile',
+      options: {
+        source: 'name',
+        maxLength: 96,
+      },
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'headline',
+      title: 'Headline',
+      type: 'string',
+      group: 'profile',
+      description: 'Short hook line that describes the creator',
+      validation: (Rule) => Rule.max(100),
+    }),
+    defineField({
+      name: 'heroImage',
+      title: 'Hero Image',
+      type: 'array',
+      of: [{type: 'imageWithAlt'}],
+      group: 'profile',
+      options: {
+        layout: 'grid',
+      },
+      validation: (Rule) => Rule.max(1),
+      description: 'Main hero banner image for the creator profile',
+    }),
+    defineField({
+      name: 'gallery',
+      title: 'Gallery',
+      type: 'array',
+      of: [{type: 'imageWithAlt'}],
+      group: 'profile',
+      options: {
+        layout: 'grid',
+      },
+    }),
+    defineField({
+      name: 'bio',
+      title: 'Bio',
+      type: 'richBody',
+      group: 'profile',
+    }),
+    defineField({
+      name: 'niches',
+      title: 'Niches',
+      type: 'array',
+      of: [{type: 'string'}],
+      options: {
+        list: [
+          {title: 'Tech', value: 'tech'},
+          {title: 'Lifestyle', value: 'lifestyle'},
+          {title: 'Fashion', value: 'fashion'},
+          {title: 'Beauty', value: 'beauty'},
+          {title: 'Fitness', value: 'fitness'},
+          {title: 'Food', value: 'food'},
+          {title: 'Travel', value: 'travel'},
+          {title: 'Gaming', value: 'gaming'},
+          {title: 'Education', value: 'education'},
+          {title: 'Business', value: 'business'},
+          {title: 'Entertainment', value: 'entertainment'},
+          {title: 'Music', value: 'music'},
+          {title: 'Art', value: 'art'},
+          {title: 'Photography', value: 'photography'},
+          {title: 'Streetwear', value: 'streetwear'},
+          {title: 'Documentary', value: 'documentary'},
+          {title: 'Comedy', value: 'comedy'},
+          {title: 'Sports', value: 'sports'},
+          {title: 'Science', value: 'science'},
+          {title: 'Other', value: 'other'},
+        ],
+        layout: 'tags',
+      },
+      group: 'profile',
+    }),
+    defineField({
+      name: 'location',
+      title: 'Location',
+      type: 'string',
+      group: 'profile',
+      description: 'City/Country',
+    }),
+    defineField({
+      name: 'languages',
+      title: 'Languages',
+      type: 'array',
+      of: [{type: 'string'}],
+      group: 'profile',
+    }),
+    defineField({
+      name: 'niche',
+      title: 'Niche',
+      type: 'string',
+      group: 'profile',
+      description: 'Primary content specialty',
+    }),
+    defineField({
+      name: 'subscribers',
+      title: 'Subscribers',
+      type: 'string',
+      group: 'metrics',
+      description: 'Subscriber count (e.g., 2.8M)',
+    }),
+    defineField({
+      name: 'joinDate',
+      title: 'Join Date',
+      type: 'date',
+      group: 'profile',
+    }),
+    defineField({
+      name: 'exclusiveContent',
+      title: 'Exclusive Content',
+      type: 'boolean',
+      group: 'profile',
+      description: 'Mark as exclusive creator',
+      initialValue: true,
+    }),
+    defineField({
+      name: 'metrics',
+      title: 'Platform Metrics',
+      type: 'array',
+      of: [{type: 'platformMetrics'}],
+      group: 'metrics',
+      validation: (Rule) => Rule.min(1).error('At least one platform metric is required'),
+    }),
+    defineField({
+      name: 'totalFollowers',
+      title: 'Total Followers',
+      type: 'number',
+      group: 'metrics',
+      description: 'Combined follower count across all platforms',
+    }),
+    defineField({
+      name: 'packages',
+      title: 'Packages',
+      type: 'array',
+      of: [{type: 'creatorPackage'}],
+      group: 'packages',
+      description: 'Service packages offered by this creator',
+    }),
+    defineField({
+      name: 'socialLinks',
+      title: 'Social Links',
+      type: 'socialLinks',
+      group: 'contact',
+    }),
+    defineField({
+      name: 'contactEmail',
+      title: 'Contact Email',
+      type: 'string',
+      validation: (Rule) => Rule.email(),
+      group: 'contact',
+    }),
+    defineField({
+      name: 'availability',
+      title: 'Availability',
+      type: 'string',
+      options: {
+        list: [
+          {title: 'Open', value: 'open'},
+          {title: 'Limited', value: 'limited'},
+          {title: 'Closed', value: 'closed'},
+          {title: 'By Inquiry', value: 'inquiry'},
+        ],
+      },
+      group: 'contact',
+    }),
+    defineField({
+      name: 'featured',
+      title: 'Featured Creator',
+      type: 'boolean',
+      group: 'profile',
+      description: 'Show this creator prominently on the site',
+    }),
+    defineField({
+      name: 'seo',
+      title: 'SEO',
+      type: 'seoFields',
+      group: 'seo',
+    }),
+  ],
+  preview: {
+    select: {
+      title: 'name',
+      media: 'heroImage.0.image',
+      niches: 'niches',
+      totalFollowers: 'totalFollowers',
+      availability: 'availability',
+    },
+    prepare({title, media, niches, totalFollowers, availability}) {
+      const nichesText = niches?.slice(0, 2).join(', ')
+      const followersText = totalFollowers ? `${totalFollowers.toLocaleString()} followers` : ''
+      
+      return {
+        title,
+        media,
+        subtitle: [nichesText, followersText, availability].filter(Boolean).join(' • '),
+      }
+    },
+  },
+})

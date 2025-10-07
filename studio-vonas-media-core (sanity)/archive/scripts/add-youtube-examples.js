@@ -1,0 +1,645 @@
+const {createClient} = require('@sanity/client')
+
+const client = createClient({
+  projectId: '5cywtc7a',
+  dataset: 'production',
+  apiVersion: '2024-08-26',
+  token: process.env.SANITY_API_TOKEN,
+  useCdn: false
+})
+
+// Sample YouTube channels with rich demo data
+const sampleYouTubeChannels = [
+  {
+    _type: 'youtubeId',
+    _id: 'youtube-01',
+    
+    // Hero / Intro Section
+    channel_number: '01',
+    category: 'Technology',
+    channel_name: 'TechSphere Daily',
+    intro_description: [
+      {
+        _type: 'block',
+        children: [
+          {
+            _type: 'span',
+            text: 'Your daily dose of cutting-edge technology news, reviews, and tutorials. We break down complex tech concepts into digestible content for the modern digital native.'
+          }
+        ]
+      }
+    ],
+    cta_button_url: 'https://youtube.com/@techsphere-daily',
+    
+    // Side Info
+    channel: 'Alex Rodriguez',
+    date_started: '2021-03-15',
+    focus: ['Reviews', 'Tutorials', 'Technology'],
+    share_links: {
+      youtube_url: 'https://youtube.com/@techsphere-daily',
+      instagram_url: 'https://instagram.com/techsphere.daily',
+      twitter_url: 'https://twitter.com/techspheretv',
+      website_url: 'https://techsphere.media'
+    },
+    
+    // Visual Identity
+    visual_identity_subtitle: 'Clean, Modern, Tech-Forward',
+    visual_identity_description: [
+      {
+        _type: 'block',
+        children: [
+          {
+            _type: 'span',
+            text: 'Our visual identity reflects the intersection of human creativity and technological innovation. We use a minimalist approach with bold typography and electric blue accents that represent the digital frontier.'
+          }
+        ]
+      }
+    ],
+    visual_identity_bullets: [
+      'Minimalist design philosophy',
+      'Electric blue and white color scheme', 
+      'Futuristic typography choices',
+      'Clean thumbnail layouts'
+    ],
+    typography: [
+      {
+        font_name: 'Roboto',
+        font_usage: 'Used for video thumbnails and titles'
+      },
+      {
+        font_name: 'Montserrat',
+        font_usage: 'Used for overlay text and descriptions'
+      }
+    ],
+    colors: [
+      {
+        color_name: 'Electric Blue',
+        color_hex: '#00D4FF'
+      },
+      {
+        color_name: 'Deep Navy',
+        color_hex: '#1A1B3A'
+      },
+      {
+        color_hex: '#FFFFFF'
+      }
+    ],
+    // visual_identity_images: [  // Uncomment after sample images are available
+    //   {
+    //     _type: 'imageWithAlt',
+    //     image: {
+    //       _type: 'reference',
+    //       _ref: 'sample-image-1'
+    //     },
+    //     altText: 'TechSphere Daily logo and branding elements'
+    //   },
+    //   {
+    //     _type: 'imageWithAlt', 
+    //     image: {
+    //       _type: 'reference',
+    //       _ref: 'sample-image-3'
+    //     },
+    //     altText: 'Sample thumbnail designs'
+    //   }
+    // ],
+    
+    // Concept
+    concept_subtitle: 'Technology for Everyone',
+    concept_text_block_1: [
+      {
+        _type: 'block',
+        children: [
+          {
+            _type: 'span',
+            text: 'TechSphere Daily exists to democratize technology education. We believe that everyone deserves to understand the digital tools that shape our world, regardless of their technical background.'
+          }
+        ]
+      }
+    ],
+    concept_text_block_2: [
+      {
+        _type: 'block', 
+        children: [
+          {
+            _type: 'span',
+            text: 'Our target audience includes millennials and Gen Z professionals who want to stay current with technology trends without getting overwhelmed by jargon. We focus on practical applications and real-world impact.'
+          }
+        ]
+      }
+    ],
+    // concept_images: [  // Uncomment after sample images are available
+    //   {
+    //     _type: 'imageWithAlt',
+    //     image: {
+    //       _type: 'reference', 
+    //       _ref: 'sample-image-2'
+    //     },
+    //     altText: 'Behind the scenes of content creation'
+    //   }
+    // ]
+  },
+
+  {
+    _type: 'youtubeId',
+    _id: 'youtube-02',
+    
+    // Hero / Intro Section
+    channel_number: '02',
+    category: 'Lifestyle',
+    channel_name: 'Urban Nomad Life',
+    intro_description: [
+      {
+        _type: 'block',
+        children: [
+          {
+            _type: 'span',
+            text: 'Join me as I explore city life, remote work culture, and the art of living intentionally in urban environments. Real stories from real places.'
+          }
+        ]
+      }
+    ],
+    cta_button_url: 'https://youtube.com/@urban-nomad-life',
+    
+    // Side Info
+    channel: 'Maya Chen',
+    date_started: '2020-11-08',
+    focus: ['Vlogs', 'Lifestyle', 'Travel'],
+    share_links: {
+      youtube_url: 'https://youtube.com/@urban-nomad-life',
+      instagram_url: 'https://instagram.com/urban.nomad.maya',
+      tiktok_url: 'https://tiktok.com/@urbannomadlife',
+      website_url: 'https://urbannomadlife.co'
+    },
+    
+    // Visual Identity
+    visual_identity_subtitle: 'Warm, Authentic, City-Inspired',
+    visual_identity_description: [
+      {
+        _type: 'block',
+        children: [
+          {
+            _type: 'span', 
+            text: 'Our visual identity captures the energy and diversity of city life. Warm earth tones meet urban concrete grays, creating a palette that feels both grounded and dynamic.'
+          }
+        ]
+      }
+    ],
+    visual_identity_bullets: [
+      'Earth tone color palette',
+      'Hand-drawn illustrative elements',
+      'Urban photography aesthetic',
+      'Authentic, unfiltered moments'
+    ],
+    typography: [
+      {
+        font_name: 'Playfair Display',
+        font_usage: 'Used for channel branding and main titles'
+      },
+      {
+        font_name: 'Open Sans',
+        font_usage: 'Used for video descriptions and subtitles'
+      }
+    ],
+    colors: [
+      {
+        color_name: 'Terracotta',
+        color_hex: '#E07A5F'
+      },
+      {
+        color_name: 'Sage Green',
+        color_hex: '#81B29A'
+      },
+      {
+        color_name: 'Warm Gray',
+        color_hex: '#F2F2F2'
+      }
+    ],
+    // visual_identity_images: [  // Uncomment after sample images are available
+    //   {
+    //     _type: 'imageWithAlt',
+    //     image: {
+    //       _type: 'reference',
+    //       _ref: 'sample-image-1'
+    //     },
+    //     altText: 'Urban Nomad Life branding and logo'
+    //   }
+    // ],
+    
+    // Concept
+    concept_subtitle: 'Intentional Urban Living',
+    concept_text_block_1: [
+      {
+        _type: 'block',
+        children: [
+          {
+            _type: 'span',
+            text: 'Urban Nomad Life explores what it means to live consciously in fast-paced city environments. We share stories of people who have found ways to slow down, connect, and thrive in urban spaces.'
+          }
+        ]
+      }
+    ],
+    concept_text_block_2: [
+      {
+        _type: 'block',
+        children: [
+          {
+            _type: 'span',
+            text: 'Our audience consists of young professionals seeking work-life balance, remote workers exploring new cities, and anyone interested in sustainable urban lifestyle choices.'
+          }
+        ]
+      }
+    ]
+  },
+
+  {
+    _type: 'youtubeId',
+    _id: 'youtube-03',
+    
+    // Hero / Intro Section  
+    channel_number: '03',
+    category: 'Gaming',
+    channel_name: 'Pixel Pioneers',
+    intro_description: [
+      {
+        _type: 'block',
+        children: [
+          {
+            _type: 'span',
+            text: 'Deep dives into indie games, gaming culture, and the stories behind the pixels. We celebrate the art and innovation in independent game development.'
+          }
+        ]
+      }
+    ],
+    cta_button_url: 'https://youtube.com/@pixel-pioneers',
+    
+    // Side Info
+    channel: 'Jordan Kim',
+    date_started: '2019-07-22',
+    focus: ['Reviews', 'Gaming', 'Entertainment'],
+    share_links: {
+      youtube_url: 'https://youtube.com/@pixel-pioneers',
+      instagram_url: 'https://instagram.com/pixelpioneers',
+      twitter_url: 'https://twitter.com/pixelpioneers',
+      tiktok_url: 'https://tiktok.com/@pixelpioneers'
+    },
+    
+    // Visual Identity
+    visual_identity_subtitle: 'Retro-Future Gaming Aesthetic',
+    visual_identity_description: [
+      {
+        _type: 'block',
+        children: [
+          {
+            _type: 'span',
+            text: 'Our visual identity pays homage to classic gaming while embracing modern design principles. Neon colors and pixel art elements create a nostalgic yet contemporary feel.'
+          }
+        ]
+      }
+    ],
+    visual_identity_bullets: [
+      '8-bit inspired graphics',
+      'Neon color accents',
+      'Pixel art thumbnails',
+      'Retro gaming references'
+    ],
+    typography: [
+      {
+        font_name: 'Press Start 2P',
+        font_usage: 'Used for retro gaming titles and headers'
+      },
+      {
+        font_name: 'Source Code Pro',
+        font_usage: 'Used for code snippets and technical content'
+      }
+    ],
+    colors: [
+      {
+        color_name: 'Neon Green',
+        color_hex: '#39FF14'
+      },
+      {
+        color_name: 'Electric Purple',
+        color_hex: '#8A2BE2'
+      },
+      {
+        color_name: 'Pixel Black',
+        color_hex: '#0D0D0D'
+      }
+    ],
+    // visual_identity_images: [  // Uncomment after sample images are available
+    //   {
+    //     _type: 'imageWithAlt',
+    //     image: {
+    //       _type: 'reference',
+    //       _ref: 'sample-image-2'
+    //     },
+    //     altText: 'Gaming setup and pixel art branding'
+    //   }
+    // ],
+    
+    // Concept
+    concept_subtitle: 'Celebrating Indie Game Innovation',
+    concept_text_block_1: [
+      {
+        _type: 'block',
+        children: [
+          {
+            _type: 'span',
+            text: 'Pixel Pioneers focuses on the incredible creativity and innovation happening in indie game development. We showcase games that push boundaries and tell unique stories.'
+          }
+        ]
+      }
+    ],
+    concept_text_block_2: [
+      {
+        _type: 'block',
+        children: [
+          {
+            _type: 'span',
+            text: 'Our community includes indie game developers, retro gaming enthusiasts, and players who appreciate artistry in game design. We foster discussions about games as an art form.'
+          }
+        ]
+      }
+    ]
+  },
+
+  {
+    _type: 'youtubeId',
+    _id: 'youtube-04',
+    
+    // Hero / Intro Section
+    channel_number: '04', 
+    category: 'Education',
+    channel_name: 'Future Skills Academy',
+    intro_description: [
+      {
+        _type: 'block',
+        children: [
+          {
+            _type: 'span',
+            text: 'Preparing tomorrow\'s workforce with skills that matter. We teach digital literacy, creative problem-solving, and adaptive thinking for the modern economy.'
+          }
+        ]
+      }
+    ],
+    cta_button_url: 'https://youtube.com/@future-skills-academy',
+    
+    // Side Info
+    channel: 'Dr. Sarah Thompson',
+    date_started: '2020-01-10',
+    focus: ['Education', 'Tutorials', 'Technology'],
+    share_links: {
+      youtube_url: 'https://youtube.com/@future-skills-academy',
+      instagram_url: 'https://instagram.com/futureskillsacademy',
+      website_url: 'https://futureskillsacademy.org'
+    },
+    
+    // Visual Identity
+    visual_identity_subtitle: 'Professional, Accessible, Forward-Thinking',
+    visual_identity_description: [
+      {
+        _type: 'block',
+        children: [
+          {
+            _type: 'span',
+            text: 'Our visual identity balances professionalism with approachability. Clean lines and academic blues convey expertise while remaining welcoming to learners at all levels.'
+          }
+        ]
+      }
+    ],
+    visual_identity_bullets: [
+      'Clean, academic design',
+      'Professional color scheme',
+      'Accessible typography',
+      'Educational infographic style'
+    ],
+    typography: [
+      {
+        font_name: 'Lato',
+        font_usage: 'Used for educational content and presentations'
+      },
+      {
+        font_name: 'Merriweather',
+        font_usage: 'Used for course titles and headers'
+      }
+    ],
+    colors: [
+      {
+        color_name: 'Academic Blue',
+        color_hex: '#2E86AB'
+      },
+      {
+        color_name: 'Success Green',
+        color_hex: '#A23B72'
+      },
+      {
+        color_name: 'Neutral Gray',
+        color_hex: '#F18F01'
+      }
+    ],
+    // visual_identity_images: [  // Uncomment after sample images are available
+    //   {
+    //     _type: 'imageWithAlt',
+    //     image: {
+    //       _type: 'reference',
+    //       _ref: 'sample-image-3'
+    //     },
+    //     altText: 'Educational infographics and course materials'
+    //   }
+    // ],
+    
+    // Concept
+    concept_subtitle: 'Skills for the Future Economy',
+    concept_text_block_1: [
+      {
+        _type: 'block',
+        children: [
+          {
+            _type: 'span',
+            text: 'Future Skills Academy addresses the growing skills gap in the digital economy. We provide practical education that bridges traditional learning with future-ready competencies.'
+          }
+        ]
+      }
+    ],
+    concept_text_block_2: [
+      {
+        _type: 'block',
+        children: [
+          {
+            _type: 'span',
+            text: 'Our target audience includes career changers, recent graduates, and professionals looking to upskill. We focus on making complex topics accessible and actionable.'
+          }
+        ]
+      }
+    ]
+  },
+
+  {
+    _type: 'youtubeId',
+    _id: 'youtube-05',
+    
+    // Hero / Intro Section
+    channel_number: '05',
+    category: 'Entertainment',
+    channel_name: 'Culture Remix',
+    intro_description: [
+      {
+        _type: 'block',
+        children: [
+          {
+            _type: 'span',
+            text: 'Where pop culture meets subculture. We explore the underground movements, viral trends, and creative communities shaping tomorrow\'s mainstream.'
+          }
+        ]
+      }
+    ],
+    cta_button_url: 'https://youtube.com/@culture-remix',
+    
+    // Side Info
+    channel: 'Marcus Rivera',
+    date_started: '2021-09-03',
+    focus: ['Comedy', 'Entertainment', 'Reviews'],
+    share_links: {
+      youtube_url: 'https://youtube.com/@culture-remix',
+      instagram_url: 'https://instagram.com/culture.remix',
+      tiktok_url: 'https://tiktok.com/@cultureremix',
+      twitter_url: 'https://twitter.com/cultureremix'
+    },
+    
+    // Visual Identity
+    visual_identity_subtitle: 'Bold, Eclectic, Street-Smart',
+    visual_identity_description: [
+      {
+        _type: 'block',
+        children: [
+          {
+            _type: 'span',
+            text: 'Our visual identity reflects the chaotic beauty of internet culture. Bold typography, vibrant colors, and collage-style graphics mirror the remix culture we celebrate.'
+          }
+        ]
+      }
+    ],
+    visual_identity_bullets: [
+      'Street art inspired graphics',
+      'Bold, contrasting colors',
+      'Collage and mashup aesthetics',
+      'Underground culture references'
+    ],
+    typography: [
+      {
+        font_name: 'Bebas Neue',
+        font_usage: 'Used for bold headlines and impact text'
+      },
+      {
+        font_name: 'Inter',
+        font_usage: 'Used for body text and descriptions'
+      }
+    ],
+    colors: [
+      {
+        color_name: 'Hot Pink',
+        color_hex: '#FF1493'
+      },
+      {
+        color_name: 'Electric Lime',
+        color_hex: '#CCFF00'
+      },
+      {
+        color_name: 'Deep Purple',
+        color_hex: '#4B0082'
+      }
+    ],
+    // visual_identity_images: [  // Uncomment after sample images are available
+    //   {
+    //     _type: 'imageWithAlt',
+    //     image: {
+    //       _type: 'reference',
+    //       _ref: 'sample-image-1'
+    //     },
+    //     altText: 'Culture Remix branding and street art style graphics'
+    //   },
+    //   {
+    //     _type: 'imageWithAlt',
+    //     image: {
+    //       _type: 'reference',
+    //       _ref: 'sample-image-2'
+    //     },
+    //     altText: 'Behind the scenes of cultural commentary'
+    //   }
+    // ],
+    
+    // Concept
+    concept_subtitle: 'Where Underground Meets Mainstream',
+    concept_text_block_1: [
+      {
+        _type: 'block',
+        children: [
+          {
+            _type: 'span',
+            text: 'Culture Remix explores the fascinating journey of ideas from subculture to mainstream. We track viral trends, underground movements, and the creative forces that shape popular culture.'
+          }
+        ]
+      }
+    ],
+    concept_text_block_2: [
+      {
+        _type: 'block',
+        children: [
+          {
+            _type: 'span',
+            text: 'Our audience includes trend-conscious millennials, cultural critics, and anyone curious about the forces shaping digital culture. We celebrate both established and emerging voices.'
+          }
+        ]
+      }
+    ],
+    // concept_images: [  // Uncomment after sample images are available
+    //   {
+    //     _type: 'imageWithAlt',
+    //     image: {
+    //       _type: 'reference',
+    //       _ref: 'sample-image-3'
+    //     },
+    //     altText: 'Cultural trend analysis and viral content examples'
+    //   }
+    // ]
+  }
+]
+
+async function addYouTubeExamples() {
+  try {
+    console.log('🎬 Adding YouTube channel examples...\\n')
+    
+    for (const channel of sampleYouTubeChannels) {
+      const result = await client.createOrReplace(channel)
+      console.log(`✅ Created: ${channel.channel_name} (${channel.category})`)
+      console.log(`   Channel Number: ${channel.channel_number}`)
+      console.log(`   Creator: ${channel.channel}`)
+      console.log('')
+    }
+    
+    console.log('🎉 Successfully added YouTube channel examples!')
+    console.log(`📊 Added ${sampleYouTubeChannels.length} YouTube channels:`)
+    sampleYouTubeChannels.forEach(channel => {
+      console.log(`   • ${channel.channel_number}: ${channel.channel_name} (${channel.category})`)
+    })
+    console.log('\\n🌐 Check them out at:')
+    console.log('   • Local: http://localhost:3333/')
+    console.log('   • Deployed: https://vonas-media.sanity.studio/')
+    console.log('\\n💡 Each channel includes:')
+    console.log('   • Complete hero/intro section')
+    console.log('   • Detailed side information')
+    console.log('   • Visual identity with colors & typography')
+    console.log('   • Rich concept descriptions')
+    console.log('   • Sample images for demonstration')
+    
+  } catch (error) {
+    console.error('❌ Error adding YouTube examples:', error)
+  }
+}
+
+// Run if executed directly
+if (require.main === module) {
+  addYouTubeExamples()
+}
+
+module.exports = { addYouTubeExamples }

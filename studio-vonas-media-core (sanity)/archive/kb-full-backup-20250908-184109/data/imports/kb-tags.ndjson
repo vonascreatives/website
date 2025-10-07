@@ -1,0 +1,15 @@
+{"_id":"kbTag-company","_type":"kbTag","name":"Company","color":"#2563eb"}
+{"_id":"kbTag-production","_type":"kbTag","name":"Production","color":"#dc2626"}
+{"_id":"kbTag-shows","_type":"kbTag","name":"Shows","color":"#7c3aed"}
+{"_id":"kbTag-policy","_type":"kbTag","name":"Policy","color":"#0891b2"}
+{"_id":"kbTag-guide","_type":"kbTag","name":"Guide","color":"#059669"}
+{"_id":"kbTag-template","_type":"kbTag","name":"Template","color":"#d97706"}
+{"_id":"kbTag-all-staff","_type":"kbTag","name":"All Staff","color":"#6b7280"}
+{"_id":"kbTag-new-hires","_type":"kbTag","name":"New Hires","color":"#10b981"}
+{"_id":"kbTag-editors","_type":"kbTag","name":"Editors","color":"#f59e0b"}
+{"_id":"kbTag-producers","_type":"kbTag","name":"Producers","color":"#8b5cf6"}
+{"_id":"kbTag-guests","_type":"kbTag","name":"Guests","color":"#ec4899"}
+{"_id":"kbTag-faq","_type":"kbTag","name":"FAQ","color":"#06b6d4"}
+{"_id":"kbTag-sop","_type":"kbTag","name":"SOP","color":"#84cc16"}
+{"_id":"kbTag-checklist","_type":"kbTag","name":"Checklist","color":"#f97316"}
+{"_id":"kbTag-how-to","_type":"kbTag","name":"How-to","color":"#a855f7"}

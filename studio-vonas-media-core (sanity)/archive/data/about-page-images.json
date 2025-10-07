@@ -1,0 +1,197 @@
+{
+  "analysis_date": "2025-08-28T10:12:01.839Z",
+  "page": "about",
+  "method": "actual_component_analysis",
+  "description": "Images identified by examining actual About page component code",
+  "sections": [
+    "hero",
+    "about",
+    "brand"
+  ],
+  "images": [
+    {
+      "section": "hero",
+      "filename": "hero-1.jpg",
+      "relativePath": "inner-about/hero/hero-1.jpg",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/inner-about/hero/hero-1.jpg",
+      "exists": true,
+      "page": "about"
+    },
+    {
+      "section": "about",
+      "filename": "shape-1.png",
+      "relativePath": "inner-about/about/shape-1.png",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/inner-about/about/shape-1.png",
+      "exists": true,
+      "page": "about"
+    },
+    {
+      "section": "about",
+      "filename": "about-1.jpg",
+      "relativePath": "inner-about/about/about-1.jpg",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/inner-about/about/about-1.jpg",
+      "exists": true,
+      "page": "about"
+    },
+    {
+      "section": "about",
+      "filename": "about-2.jpg",
+      "relativePath": "inner-about/about/about-2.jpg",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/inner-about/about/about-2.jpg",
+      "exists": true,
+      "page": "about"
+    },
+    {
+      "section": "about",
+      "filename": "about-3.jpg",
+      "relativePath": "inner-about/about/about-3.jpg",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/inner-about/about/about-3.jpg",
+      "exists": true,
+      "page": "about"
+    },
+    {
+      "section": "brand",
+      "filename": "brand-1.png",
+      "relativePath": "inner-about/brand/brand-1.png",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/inner-about/brand/brand-1.png",
+      "exists": true,
+      "page": "about"
+    },
+    {
+      "section": "brand",
+      "filename": "brand-2.png",
+      "relativePath": "inner-about/brand/brand-2.png",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/inner-about/brand/brand-2.png",
+      "exists": true,
+      "page": "about"
+    },
+    {
+      "section": "brand",
+      "filename": "brand-3.png",
+      "relativePath": "inner-about/brand/brand-3.png",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/inner-about/brand/brand-3.png",
+      "exists": true,
+      "page": "about"
+    },
+    {
+      "section": "brand",
+      "filename": "brand-4.png",
+      "relativePath": "inner-about/brand/brand-4.png",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/inner-about/brand/brand-4.png",
+      "exists": true,
+      "page": "about"
+    },
+    {
+      "section": "brand",
+      "filename": "brand-5.png",
+      "relativePath": "inner-about/brand/brand-5.png",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/inner-about/brand/brand-5.png",
+      "exists": true,
+      "page": "about"
+    },
+    {
+      "section": "brand",
+      "filename": "brand-bg-shape.png",
+      "relativePath": "inner-about/brand/brand-bg-shape.png",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/inner-about/brand/brand-bg-shape.png",
+      "exists": true,
+      "page": "about"
+    }
+  ],
+  "uploadCandidates": [
+    {
+      "section": "hero",
+      "filename": "hero-1.jpg",
+      "relativePath": "inner-about/hero/hero-1.jpg",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/inner-about/hero/hero-1.jpg",
+      "exists": true,
+      "page": "about"
+    },
+    {
+      "section": "about",
+      "filename": "shape-1.png",
+      "relativePath": "inner-about/about/shape-1.png",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/inner-about/about/shape-1.png",
+      "exists": true,
+      "page": "about"
+    },
+    {
+      "section": "about",
+      "filename": "about-1.jpg",
+      "relativePath": "inner-about/about/about-1.jpg",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/inner-about/about/about-1.jpg",
+      "exists": true,
+      "page": "about"
+    },
+    {
+      "section": "about",
+      "filename": "about-2.jpg",
+      "relativePath": "inner-about/about/about-2.jpg",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/inner-about/about/about-2.jpg",
+      "exists": true,
+      "page": "about"
+    },
+    {
+      "section": "about",
+      "filename": "about-3.jpg",
+      "relativePath": "inner-about/about/about-3.jpg",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/inner-about/about/about-3.jpg",
+      "exists": true,
+      "page": "about"
+    },
+    {
+      "section": "brand",
+      "filename": "brand-1.png",
+      "relativePath": "inner-about/brand/brand-1.png",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/inner-about/brand/brand-1.png",
+      "exists": true,
+      "page": "about"
+    },
+    {
+      "section": "brand",
+      "filename": "brand-2.png",
+      "relativePath": "inner-about/brand/brand-2.png",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/inner-about/brand/brand-2.png",
+      "exists": true,
+      "page": "about"
+    },
+    {
+      "section": "brand",
+      "filename": "brand-3.png",
+      "relativePath": "inner-about/brand/brand-3.png",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/inner-about/brand/brand-3.png",
+      "exists": true,
+      "page": "about"
+    },
+    {
+      "section": "brand",
+      "filename": "brand-4.png",
+      "relativePath": "inner-about/brand/brand-4.png",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/inner-about/brand/brand-4.png",
+      "exists": true,
+      "page": "about"
+    },
+    {
+      "section": "brand",
+      "filename": "brand-5.png",
+      "relativePath": "inner-about/brand/brand-5.png",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/inner-about/brand/brand-5.png",
+      "exists": true,
+      "page": "about"
+    },
+    {
+      "section": "brand",
+      "filename": "brand-bg-shape.png",
+      "relativePath": "inner-about/brand/brand-bg-shape.png",
+      "fullPath": "/Users/theova/Documents/code/Vonas Media Test Page/new_vonas_media_hp/public/assets/img/inner-about/brand/brand-bg-shape.png",
+      "exists": true,
+      "page": "about"
+    }
+  ],
+  "missingImages": [],
+  "summary": {
+    "totalFound": 11,
+    "totalMissing": 0,
+    "totalExpected": 11
+  }
+}

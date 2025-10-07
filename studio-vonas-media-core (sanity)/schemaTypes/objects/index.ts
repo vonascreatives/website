@@ -1,0 +1,13 @@
+// Reusable schema objects
+export { default as imageWithAlt } from './imageWithAlt'
+export { default as socialLinks } from './socialLinks'
+export { default as platformMetrics } from './platformMetrics'
+export { default as seoFields } from './seoFields'
+export { default as richBody } from './richBody'
+export { default as referencedVideo } from './referencedVideo'
+export { default as contactInfo } from './contactInfo'
+export { default as creatorPackage } from './creatorPackage'
+export { default as shareLinks } from './shareLinks'
+export { default as typography } from './typography'
+export { default as colors } from './colors'
+export { default as legacyGuidjar } from './legacyGuidjar'
