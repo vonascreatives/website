@@ -1,0 +1,52 @@
+# Dependencies
+node_modules/
+/.pnp
+.pnp.js
+.yarn/install-state.gz
+package-lock.json
+
+# Build outputs
+dist/
+build/
+.next/
+out/
+.sanity/
+
+# Environment files
+.env
+.env*.local
+*.local
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS files
+.DS_Store
+*.pem
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+# IDE
+.vscode/
+.idea/
+
+# Temporary files
+temp/
+*.tmp
+
+# Python virtual environments
+.venv/
+venv/
+*.pyc
+__pycache__/
+
+# Misc
+coverage/
+.vercel/
+*.tar.gz

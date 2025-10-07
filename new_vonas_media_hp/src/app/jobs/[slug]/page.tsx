@@ -1,0 +1,61 @@
+import { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { getJobPostBySlug } from "@/lib/sanity-queries";
+import { getJobPostSlugs } from "@/lib/sanity/job-posts";
+import JobPostDetailsMain from "@/pages/jobs/job-post-details";
+import { generateMetadata as generateSEOMetadata, generateArticleSchema, StructuredData, SEO_DEFAULTS } from "@/utils/seo";
+
+export async function generateStaticParams() {
+  const slugs = await getJobPostSlugs();
+  return slugs.map((slug) => ({
+    slug: slug,
+  }));
+}
+
+export async function generateMetadata({params}:{params:{slug:string}}): Promise<Metadata> {
+  const jobPost = await getJobPostBySlug(params.slug);
+  
+  if (!jobPost) {
+    return generateSEOMetadata({
+      title: "Job Post Not Found - Vonas Media",
+      description: "The job post you're looking for could not be found.",
+      url: `${SEO_DEFAULTS.siteUrl}/jobs/${params.slug}`,
+    });
+  }
+
+  const description = Array.isArray(jobPost.description) 
+    ? 'Join our team at Vonas Media. Apply now for this exciting opportunity.'
+    : jobPost.description || `Join our team as ${jobPost.title} at Vonas Media. Apply now for this exciting opportunity.`;
+
+  return generateSEOMetadata({
+    title: `${jobPost.title} - Vonas Media Careers`,
+    description,
+    url: `${SEO_DEFAULTS.siteUrl}/jobs/${params.slug}`,
+    type: 'article',
+    keywords: [jobPost.title, 'vonas media jobs', jobPost.team || '', jobPost.location || '', 'career opportunities'].filter(Boolean),
+  });
+}
+
+export default async function JobPostDetailsPage({params}:{params:{slug:string}}) {
+  const jobPost = await getJobPostBySlug(params.slug);
+  
+  if (!jobPost) {
+    notFound();
+  }
+
+  const articleSchema = generateArticleSchema({
+    title: jobPost.title,
+    description: Array.isArray(jobPost.description) ? jobPost.title : (jobPost.description || jobPost.title),
+    author: 'Vonas Media HR Team',
+    publishedAt: jobPost.publishedAt,
+    updatedAt: jobPost.publishedAt,
+    url: `${SEO_DEFAULTS.siteUrl}/jobs/${params.slug}`,
+  });
+
+  return (
+    <>
+      <StructuredData data={articleSchema} />
+      <JobPostDetailsMain jobPost={jobPost} />
+    </>
+  );
+}
