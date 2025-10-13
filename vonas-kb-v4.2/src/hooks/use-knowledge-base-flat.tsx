@@ -58,6 +58,27 @@ function transformKBItem(kbItem: SanityKBItem): KnowledgeBaseItem {
   } as any
 }
 
+async function safeFetchJson(url: string, fallback: any = { ok: false, data: [] }) {
+  try {
+    const response = await fetch(url)
+    if (!response.ok) {
+      console.warn(`API request failed: ${url} (${response.status})`)
+      return fallback
+    }
+    const text = await response.text()
+    if (!text) return fallback
+    try {
+      return JSON.parse(text)
+    } catch (parseError) {
+      console.error(`Failed to parse JSON from ${url}:`, text.substring(0, 100))
+      return fallback
+    }
+  } catch (error) {
+    console.error(`Network error fetching ${url}:`, error)
+    return fallback
+  }
+}
+
 export function useKnowledgeBaseFlat() {
   const [selectedShow, setSelectedShow] = useState<Show | null>(null)
   const [selectedItem, setSelectedItem] = useState<KnowledgeBaseItem | null>(null)
@@ -68,11 +89,9 @@ export function useKnowledgeBaseFlat() {
   const [topLevelSections, setTopLevelSections] = useState<Array<{ _id: string; title: string; slug: { current: string } }>>([])
   const [companyChildren, setCompanyChildren] = useState<SanityKBItem[]>([])
   const [showsChildren, setShowsChildren] = useState<SanityKBItem[]>([])
-  const [teamChildren, setTeamChildren] = useState<SanityKBItem[]>([])
   const [productionChildren, setProductionChildren] = useState<SanityKBItem[]>([])
   const [toolsChildren, setToolsChildren] = useState<SanityKBItem[]>([])
   const [partnersChildren, setPartnersChildren] = useState<SanityKBItem[]>([])
-  const [policiesChildren, setPoliciesChildren] = useState<SanityKBItem[]>([])
 
   useEffect(() => {
     const load = async () => {
@@ -80,31 +99,25 @@ export function useKnowledgeBaseFlat() {
       try {
         const staticSections = [
           { _id: 'nav-company', title: 'Company', slug: { current: 'company' } },
-          { _id: 'nav-team', title: 'Team', slug: { current: 'team' } },
           { _id: 'nav-production', title: 'Production', slug: { current: 'production' } },
           { _id: 'nav-shows', title: 'Shows', slug: { current: 'shows' } },
           { _id: 'nav-tools', title: 'Tools', slug: { current: 'tools' } },
           { _id: 'nav-partners', title: 'Partners', slug: { current: 'partners' } },
-          { _id: 'nav-policies', title: 'Policies', slug: { current: 'policies' } },
         ]
         setTopLevelSections(staticSections)
 
-        const [companyRes, teamRes, productionRes, toolsRes, partnersRes, showsRes, policiesRes] = await Promise.all([
-          fetch('/api/kb/company').then((r)=>r.json()).catch(()=>({ok:false,data:[]})),
-          fetch('/api/kb/team').then((r)=>r.json()).catch(()=>({ok:false,data:[]})),
-          fetch('/api/kb/production').then((r)=>r.json()).catch(()=>({ok:false,data:[]})),
-          fetch('/api/kb/tools').then((r)=>r.json()).catch(()=>({ok:false,data:[]})),
-          fetch('/api/kb/partners').then((r)=>r.json()).catch(()=>({ok:false,data:[]})),
-          fetch('/api/kb/shows').then((r)=>r.json()).catch(()=>({ok:false,data:[]})),
-          fetch('/api/kb/policies').then((r)=>r.json()).catch(()=>({ok:false,data:[]})),
+        const [companyRes, productionRes, toolsRes, partnersRes, showsRes] = await Promise.all([
+          safeFetchJson('/api/kb/company'),
+          safeFetchJson('/api/kb/production'),
+          safeFetchJson('/api/kb/tools'),
+          safeFetchJson('/api/kb/partners'),
+          safeFetchJson('/api/kb/shows'),
         ])
         const showPages = showsRes.ok ? (showsRes.data || []) : []
         setCompanyChildren(companyRes.ok ? (companyRes.data||[]) : [])
-        setTeamChildren(teamRes.ok ? (teamRes.data||[]) : [])
         setProductionChildren(productionRes.ok ? (productionRes.data||[]) : [])
         setToolsChildren(toolsRes.ok ? (toolsRes.data||[]) : [])
         setPartnersChildren(partnersRes.ok ? (partnersRes.data||[]) : [])
-        setPoliciesChildren(policiesRes.ok ? (policiesRes.data||[]) : [])
         setShowsChildren(showPages)
 
         if (showPages.length > 0) {
@@ -126,8 +139,7 @@ export function useKnowledgeBaseFlat() {
   const selectShow = useCallback(async (pageId: string) => {
     setLoading(true)
     try {
-      const res = await fetch(`/api/kb/page/${pageId}`)
-      const data = await res.json()
+      const data = await safeFetchJson(`/api/kb/page/${pageId}`)
       if (data.ok) {
         const pageDoc = data.page
         const sectionsWithItems = Array.isArray(data.sectionsWithItems) ? data.sectionsWithItems : []
@@ -164,14 +176,10 @@ export function useKnowledgeBaseFlat() {
           setSelectedShow(virtualShow)
           const firstItem = virtualShow.sections[0]?.items[0]
           if (firstItem) {
-            try {
-              const full = await fetch(`/api/kb/item/${firstItem.id}`).then(r=>r.json()).catch(()=>({ok:false}))
-              if (full?.ok && full.data) {
-                setSelectedItem(transformKBItem(full.data))
-              } else {
-                setSelectedItem(firstItem)
-              }
-            } catch {
+            const full = await safeFetchJson(`/api/kb/item/${firstItem.id}`)
+            if (full?.ok && full.data) {
+              setSelectedItem(transformKBItem(full.data))
+            } else {
               setSelectedItem(firstItem)
             }
           }
@@ -180,7 +188,7 @@ export function useKnowledgeBaseFlat() {
       }
 
       // Fallback: if no kbItem page found, treat id as youtubeShow
-      const showRes = await fetch(`/api/kb/show/${pageId}/articles`).then(r => r.json()).catch(() => ({ ok: false }))
+      const showRes = await safeFetchJson(`/api/kb/show/${pageId}/articles`)
       if (showRes?.ok && showRes.show) {
         const showDoc = showRes.show
         const sectionsResp = Array.isArray(showRes.sections) ? showRes.sections : null
@@ -207,7 +215,7 @@ export function useKnowledgeBaseFlat() {
 
         let articles = Array.isArray(showRes.articles) ? showRes.articles : []
         if (articles.length === 0 && showDoc?.slug?.current) {
-          const catFallback = await fetch(`/api/kb/category/category-show-specific/articles`).then(r=>r.json()).catch(()=>({ok:false}))
+          const catFallback = await safeFetchJson(`/api/kb/category/category-show-specific/articles`)
           if (catFallback?.ok && Array.isArray(catFallback.articles)) {
             const showSlug = String(showDoc.slug.current)
             articles = catFallback.articles.filter((a:any)=> String(a?.slug?.current||'').includes(showSlug))
@@ -237,7 +245,7 @@ export function useKnowledgeBaseFlat() {
       }
 
       // Fallback to category id
-      const catRes = await fetch(`/api/kb/category/${pageId}/articles`).then(r=>r.json()).catch(()=>({ok:false}))
+      const catRes = await safeFetchJson(`/api/kb/category/${pageId}/articles`)
       if (catRes?.ok && catRes.category) {
         const cat = catRes.category
         const articles = Array.isArray(catRes.articles) ? catRes.articles : []
@@ -274,8 +282,7 @@ export function useKnowledgeBaseFlat() {
 
   const selectItem = useCallback(async (itemId: string) => {
     try {
-      const res = await fetch(`/api/kb/item/${itemId}`)
-      const data = await res.json()
+      const data = await safeFetchJson(`/api/kb/item/${itemId}`)
       if (data.ok && (data.data || data.item)) {
         setSelectedItem(transformKBItem((data.data || data.item)))
         return
@@ -328,10 +335,8 @@ export function useKnowledgeBaseFlat() {
     topLevelSections,
     companyChildren,
     showsChildren,
-    teamChildren,
     productionChildren,
     toolsChildren,
     partnersChildren,
-    policiesChildren,
   }
 }

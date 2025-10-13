@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { Search, User, Menu, Video } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -24,11 +25,9 @@ interface TopNavigationProps {
   sections?: Array<{ _id: string; title: string; slug: { current: string } }>;
   companyChildren?: Array<{ _id: string; title: string; slug: { current: string } }>;
   showsChildren?: Array<{ _id: string; title: string; slug: { current: string } }>;
-  teamChildren?: Array<{ _id: string; title: string; slug: { current: string } }>;
   productionChildren?: Array<{ _id: string; title: string; slug: { current: string } }>;
   toolsChildren?: Array<{ _id: string; title: string; slug: { current: string } }>;
   partnersChildren?: Array<{ _id: string; title: string; slug: { current: string } }>;
-  policiesChildren?: Array<{ _id: string; title: string; slug: { current: string } }>;
 }
 
 // Helper to trim prefixed titles like "Shows / Off the Record"
@@ -48,20 +47,16 @@ export function TopNavigation({
   sections = [],
   companyChildren = [],
   showsChildren = [],
-  teamChildren = [],
   productionChildren = [],
   toolsChildren = [],
   partnersChildren = [],
-  policiesChildren = []
 }: TopNavigationProps) {
   const router = useRouter();
   const [companyDropdown, setCompanyDropdown] = useState(false);
   const [showsDropdown, setShowsDropdown] = useState(false);
-  const [teamDropdown, setTeamDropdown] = useState(false);
   const [productionDropdown, setProductionDropdown] = useState(false);
   const [toolsDropdown, setToolsDropdown] = useState(false);
   const [partnersDropdown, setPartnersDropdown] = useState(false);
-  const [policiesDropdown, setPoliciesDropdown] = useState(false);
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
 
   // Handle cmd+k shortcut
@@ -91,12 +86,13 @@ export function TopNavigation({
           >
             <Menu className="h-4 w-4 text-muted-foreground" />
           </Button>
-          <div className="flex items-center space-x-2">
+          
+          <Link href="/" className="flex items-center space-x-2">
             <div className="w-8 h-8 bg-blue-500 rounded flex items-center justify-center">
               <Video className="h-4 w-4 text-white" />
             </div>
             <span className="font-medium text-gray-900" data-testid="text-brand-name">ProductionDocs</span>
-          </div>
+          </Link>
         </div>
 
         {/* Main Navigation - dynamic dropdowns from CMS */}
@@ -182,24 +178,6 @@ export function TopNavigation({
               )
             }
 
-            if (sectionTitle === 'Team' && teamChildren.length > 0) {
-              return (
-                <div key={section._id} className="dropdown relative" onMouseEnter={()=>setTeamDropdown(true)} onMouseLeave={()=>setTeamDropdown(false)}>
-                  <button className="text-sm text-gray-900 hover:text-blue-600 transition-colors flex items-center space-x-1" onClick={()=>setTeamDropdown(v=>!v)}>
-                    <span>{sectionTitle}</span>
-                    <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" /></svg>
-                  </button>
-                  <div className={`absolute top-full left-0 mt-1 w-56 bg-white border border-gray-200 rounded-lg shadow-lg py-2 z-50 transition-all duration-200 ${teamDropdown ? 'opacity-100 visible' : 'opacity-0 invisible'}`}>
-                    {teamChildren.map((child) => (
-                      <a key={child._id} href="#" className="block px-3 py-2 text-sm text-gray-700 hover:bg-gray-100" onClick={(e)=>{e.preventDefault(); onShowSelect(child._id); setTeamDropdown(false)}}>
-                        {getCleanTitle(child.title)}
-                      </a>
-                    ))}
-                  </div>
-                </div>
-              )
-            }
-
             if (sectionTitle === 'Production' && productionChildren.length > 0) {
               return (
                 <div key={section._id} className="dropdown relative" onMouseEnter={()=>setProductionDropdown(true)} onMouseLeave={()=>setProductionDropdown(false)}>
@@ -253,25 +231,7 @@ export function TopNavigation({
                 </div>
               )
             }
-
-            if (sectionTitle === 'Policies' && policiesChildren.length > 0) {
-              return (
-                <div key={section._id} className="dropdown relative" onMouseEnter={()=>setPoliciesDropdown(true)} onMouseLeave={()=>setPoliciesDropdown(false)}>
-                  <button className="text-sm text-gray-900 hover:text-blue-600 transition-colors flex items-center space-x-1" onClick={()=>setPoliciesDropdown(v=>!v)}>
-                    <span>{sectionTitle}</span>
-                    <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" /></svg>
-                  </button>
-                  <div className={`absolute top-full left-0 mt-1 w-56 bg-white border border-gray-200 rounded-lg shadow-lg py-2 z-50 transition-all duration-200 ${policiesDropdown ? 'opacity-100 visible' : 'opacity-0 invisible'}`}>
-                    {policiesChildren.map((child) => (
-                      <a key={child._id} href="#" className="block px-3 py-2 text-sm text-gray-700 hover:bg-gray-100" onClick={(e)=>{e.preventDefault(); onShowSelect(child._id); setPoliciesDropdown(false)}}>
-                        {getCleanTitle(child.title)}
-                      </a>
-                    ))}
-                  </div>
-                </div>
-              )
-            }
-
+            
             return (
               <a
                 key={section._id}
