@@ -9,7 +9,7 @@ interface SanityKBItem {
   _id: string
   title: string
   slug: { current: string }
-  category: 'company' | 'team' | 'production' | 'shows' | 'tools' | 'partners' | 'policies'
+  category: 'company' | 'production' | 'shows' | 'tools' | 'partners' 
   description: string
   content?: any[]
   type: 'Article' | 'Video' | 'Workflow' | 'Reference'
@@ -45,12 +45,10 @@ function transformSanityItem(sanityItem: SanityKBItem): OriginalKBItem {
 function createVirtualShows(sanityItems: SanityKBItem[]): Show[] {
   const categories = [
     { id: 'company', name: 'Company' },
-    { id: 'team', name: 'Team' },
     { id: 'production', name: 'Production' },
     { id: 'shows', name: 'Shows' },
     { id: 'tools', name: 'Tools' },
     { id: 'partners', name: 'Partners' },
-    { id: 'policies', name: 'Policies' },
   ]
 
   return categories.map(category => {
