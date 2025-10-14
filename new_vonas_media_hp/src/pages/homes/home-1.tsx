@@ -38,9 +38,10 @@ interface HomeMainProps {
   creators?: any[];
   brands?: any[];
   homepageImages?: any;
+  awards?: any[];
 }
 
-const HomeMain = ({ channels, creators, brands, homepageImages }: HomeMainProps) => {
+const HomeMain = ({ channels, creators, brands, homepageImages, awards }: HomeMainProps) => {
   useScrollSmooth();
   useEffect(() => {
     document.body.classList.add("tp-magic-cursor");
@@ -118,7 +119,7 @@ const HomeMain = ({ channels, creators, brands, homepageImages }: HomeMainProps)
             {/* project area */}
 
             {/* award area */}
-            <AwardOne />
+            <AwardOne awards={awards} />
             {/* award area */}
 
             {/* team area */}

@@ -1544,3 +1544,25 @@ export async function getCreatorBySlug(slug: string) {
   // CMS connection is now working properly - no fallback needed
   return fetchSanityData(query, { slug }, null);
 }
+
+export async function getAwardsData() {
+  const query = `*[_type == "award" && isActive == true] | order(displayOrder asc) {
+    _id,
+    title,
+    "slug": slug.current,
+    subtitle,
+    awardDate,
+    "imageUrl": image.asset->url,
+    "imageAlt": image.alt,
+    organization,
+    category,
+    projectUrl,
+    description,
+    displayOrder,
+    featured,
+    isActive
+  }`;
+  
+  // Fetch awards from Sanity CMS with no fallback
+  return fetchSanityData(query, {}, []);
+}
