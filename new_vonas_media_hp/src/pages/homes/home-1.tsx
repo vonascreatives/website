@@ -17,6 +17,8 @@ import BrandOne from "@/components/brand/brand-one";
 import ServiceOne from "@/components/service/service-one";
 import ProjectOne from "@/components/project/project-one";
 import AwardOne from "@/components/award/award-one";
+import PortfolioDetailsShowcaseTwoArea from "@/components/portfolio/details/portfolio-details-showcase-2-area";
+import PortfolioDetailsShowcaseTwoAreaCms from "@/components/portfolio/details/portfolio-details-showcase-2-area-cms";
 import TeamOne from "@/components/team/team-one";
 import TestimonialOne from "@/components/testimonial/testimonial-one";
 import FooterOne from "@/layouts/footers/footer-one";
@@ -39,9 +41,10 @@ interface HomeMainProps {
   brands?: any[];
   homepageImages?: any;
   awards?: any[];
+  featuredCaseStudy?: any;
 }
 
-const HomeMain = ({ channels, creators, brands, homepageImages, awards }: HomeMainProps) => {
+const HomeMain = ({ channels, creators, brands, homepageImages, awards, featuredCaseStudy }: HomeMainProps) => {
   useScrollSmooth();
   useEffect(() => {
     document.body.classList.add("tp-magic-cursor");
@@ -121,6 +124,14 @@ const HomeMain = ({ channels, creators, brands, homepageImages, awards }: HomeMa
             {/* award area */}
             <AwardOne awards={awards} />
             {/* award area */}
+
+            {/* case study area */}
+            {featuredCaseStudy ? (
+              <PortfolioDetailsShowcaseTwoAreaCms caseStudy={featuredCaseStudy} />
+            ) : (
+              <PortfolioDetailsShowcaseTwoArea />
+            )}
+            {/* case study area */}
 
             {/* team area */}
             <TeamOne creators={creators} />

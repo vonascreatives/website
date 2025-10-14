@@ -7,7 +7,8 @@ import {
   getBrandCollaborationData,
   getYouTubeChannelsForHomepage,
   getHomepageImages,
-  getAwardsData
+  getAwardsData,
+  getFeaturedCaseStudy
 } from "@/lib/sanity";
 
 export const metadata: Metadata = {
@@ -16,13 +17,14 @@ export const metadata: Metadata = {
 
 const Home = async () => {
   // Fetch all homepage data
-  const [channels, creators, brands, youtubeChannels, homepageImages, awards] = await Promise.all([
+  const [channels, creators, brands, youtubeChannels, homepageImages, awards, featuredCaseStudy] = await Promise.all([
     getChannelsData(),
     getCreatorsData(),
     getBrandCollaborationData(),
     getYouTubeChannelsForHomepage(), 
     getHomepageImages(),
-    getAwardsData()
+    getAwardsData(),
+    getFeaturedCaseStudy()
   ]);
   
   return (
@@ -32,6 +34,7 @@ const Home = async () => {
       brands={brands}
       homepageImages={homepageImages}
       awards={awards}
+      featuredCaseStudy={featuredCaseStudy}
     />
   );
 };
