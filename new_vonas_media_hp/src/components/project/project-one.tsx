@@ -53,10 +53,17 @@ const ProjectOne = ({ channels, homepageImages }: ProjectOneProps) => {
   const normalizedChannels = Array.isArray(channels) ? channels.filter(Boolean) : [];
   const hasChannels = normalizedChannels.length > 0;
   
+  // Debug: Log what we're receiving from CMS
+  console.log('ProjectOne - channels received:', channels);
+  console.log('ProjectOne - normalizedChannels:', normalizedChannels);
+  console.log('ProjectOne - hasChannels:', hasChannels);
+  
   // Create display items - use CMS data or fallback
   const displayItems = hasChannels 
     ? normalizedChannels.slice(0, 6) // Show max 6 channels
     : fallbackChannels;
+    
+  console.log('ProjectOne - displayItems:', displayItems);
 
   return (
     <>
@@ -87,36 +94,65 @@ const ProjectOne = ({ channels, homepageImages }: ProjectOneProps) => {
         }}
       >
         {displayItems.map((item, index) => {
+          // Determine if this is a CMS item or fallback
+          const isCMSItem = item._id && item.channel_name;
+          
           // Handle both CMS data and fallback data
-          const title = hasChannels 
+          const title = isCMSItem 
             ? (item.channel_name || item.title || `Channel ${index + 1}`)
             : item.title;
           
-          const imageSrc = hasChannels 
-            ? (item.heroImage?.url || item.image || fallbackChannels[index % fallbackChannels.length].img)
-            : item.img;
+          // Extract image with proper fallback chain
+          let imageSrc;
+          if (isCMSItem) {
+            // Try to get CMS image, fallback to static if none
+            imageSrc = item.heroImage?.url || item.image || fallbackChannels[index % fallbackChannels.length].img;
+          } else {
+            imageSrc = item.img;
+          }
           
-          const altText = hasChannels
+          const altText = isCMSItem
             ? (item.heroImage?.alt || item.imageAlt || title)
             : title;
           
-          const slug = hasChannels ? getChannelSlug(item) : null;
+          const slug = isCMSItem ? getChannelSlug(item) : null;
           const href = slug ? `/channels/${slug}` : "/channels";
+          
+          // Debug each item
+          console.log(`Item ${index}:`, {
+            title,
+            imageSrc,
+            isCMSItem,
+            hasHeroImage: !!item.heroImage?.url,
+            hasImageField: !!item.image
+          });
 
           return (
             <div key={item._id || item.id || index} className="tp-project-4-bg project-panel">
               <Link href={href}>
-                <div className="tp-project-4-thumb">
-                  <Image 
-                    src={imageSrc} 
-                    alt={altText}
-                    fill
-                    sizes="100vw"
-                    style={{ 
-                      objectFit: "cover"
-                    }}
-                    priority={index < 2} // Prioritize first two images
-                  />
+                <div 
+                  className="tp-project-4-thumb"
+                  style={{ 
+                    position: 'relative', 
+                    width: '100%', 
+                    minHeight: '500px' 
+                  }}
+                >
+                  {imageSrc && (
+                    <Image 
+                      src={imageSrc} 
+                      alt={altText}
+                      fill
+                      sizes="100vw"
+                      style={{ 
+                        objectFit: "cover"
+                      }}
+                      priority={index < 2} // Prioritize first two images
+                      onError={(e) => {
+                        console.error(`Image failed to load for ${title}:`, imageSrc);
+                      }}
+                    />
+                  )}
                 </div>
                 <div className="tp-project-4-content z-index">
                   <h4 className="tp-project-4-title tp_reveal_anim-2">
