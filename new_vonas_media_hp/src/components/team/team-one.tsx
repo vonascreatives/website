@@ -45,13 +45,6 @@ const TeamOne = ({ spacing = "pt-20", creators }: IProps) => {
   const [showModal, setShowModal] = React.useState(false);
   const [teamItem, setTeamItem] = React.useState<any | null>(null);
   
-  // Debug logging
-  React.useEffect(() => {
-    logger.debug('TEAM ONE COMPONENT', {
-      creatorsCount: creators?.length || 0,
-      usingCMSData: creators && creators.length > 0
-    });
-  }, [creators]);
   
   // Deduplicate team members by name to avoid showing duplicates
   const deduplicateTeamMembers = (members: any[]) => {
@@ -72,11 +65,6 @@ const TeamOne = ({ spacing = "pt-20", creators }: IProps) => {
   // Deduplicate if using CMS data
   const displayData = creators && creators.length > 0 ? deduplicateTeamMembers(rawDisplayData) : rawDisplayData;
   
-  logger.debug('TEAM ONE DISPLAY DATA', {
-    rawCount: rawDisplayData.length,
-    afterDeduplication: displayData.length,
-    displayNames: displayData.map(d => d.name || d.title)
-  });
   
   function handleTeamModal(team: any) {
     setShowModal(!showModal);

@@ -9,14 +9,6 @@ function createSanityClient() {
   // Try write token first, then read token as fallback
   const token = process.env.SANITY_WRITE_TOKEN || process.env.NEXT_PUBLIC_SANITY_READ_TOKEN;
   
-  logger.sanityDebug('CLIENT CONFIGURATION', {
-    projectId,
-    dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
-    apiVersion: process.env.NEXT_PUBLIC_SANITY_API_VERSION,
-    hasToken: !!token,
-    tokenType: process.env.SANITY_WRITE_TOKEN ? 'WRITE' : 'READ',
-    validProjectId: projectId && /^[a-z0-9-]+$/.test(projectId)
-  });
   
   // Only create client if we have a valid project ID
   if (projectId && /^[a-z0-9-]+$/.test(projectId)) {
@@ -27,11 +19,9 @@ function createSanityClient() {
       useCdn: false, // Disable CDN for fresh data
       token: token, // Add read token if available
     });
-    logger.sanitySuccess('Client created successfully', { hasToken: !!token });
     return client;
   }
   
-  logger.sanityError('Failed to create Sanity client - invalid project ID');
   return null;
 }
 
@@ -43,7 +33,7 @@ const builder = sanityClient ? imageUrlBuilder(sanityClient) : null;
 // Helper function to generate image URLs from Sanity image references
 export function urlFor(source: SanityImageSource) {
   if (!builder) {
-    logger.warn('Image URL builder not available - Sanity client not configured');
+    console.error('No Sanity image builder available');
     return null;
   }
   return builder.image(source);
@@ -73,58 +63,36 @@ export function getSanityImageUrl(image: any, width?: number, height?: number): 
     
     return url.url() || '/assets/img/placeholder.jpg';
   } catch (error) {
-    logger.error('Error generating Sanity image URL:', error);
+    console.error('Error generating Sanity image URL:', error);
     return '/assets/img/placeholder.jpg';
   }
 }
 
 // Helper function to fetch data - CMS ONLY mode when fallback is empty array
 export async function fetchSanityData(query: string, params: any = {}, fallback: any = null) {
-  logger.sanityDebug('FETCH SANITY DATA CALLED', {
-    queryPreview: query.substring(0, 100) + '...',
-    params,
-    hasSanityClient: !!sanityClient,
-    hasProjectId: !!process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
-    cmsOnlyMode: Array.isArray(fallback) && fallback.length === 0
-  });
   
   try {
     if (!sanityClient || !process.env.NEXT_PUBLIC_SANITY_PROJECT_ID) {
-      logger.sanityError('Sanity not configured', {
-      hasSanityClient: !!sanityClient,
-      projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID
-    });
+        console.error('Sanity client or project ID is not available');
       
       // In CMS-ONLY mode, return empty array instead of fallback
       if (Array.isArray(fallback) && fallback.length === 0) {
-        logger.sanityDebug('CMS-ONLY mode: returning empty array');
+        console.debug('CMS-ONLY mode: returning empty array');
         return [];
       }
       return fallback;
     }
     
-    logger.sanityDebug('Executing Sanity query...');
     const data = await sanityClient.fetch(query, params);
-    logger.sanitySuccess('Query successful', {
-      dataLength: Array.isArray(data) ? data.length : 'N/A (not array)',
-      sampleData: Array.isArray(data) ? data[0] : data
-    });
     
-    // Return actual data or empty array in CMS-ONLY mode
     const result = data || (Array.isArray(fallback) && fallback.length === 0 ? [] : fallback);
-    logger.sanityDebug('Returning data', {
-      type: Array.isArray(result) ? `${result.length} items` : 'single item'
-    });
     return result;
   } catch (error) {
-    logger.sanityError('Error fetching Sanity data', error);
-    
+    console.error('Error fetching Sanity data:', error);
     // In CMS-ONLY mode, return empty array instead of fallback
     if (Array.isArray(fallback) && fallback.length === 0) {
-      logger.sanityDebug('CMS-ONLY mode: returning empty array on error');
       return [];
     }
-    logger.sanityError('Returning fallback data');
     return fallback;
   }
 }
@@ -676,7 +644,6 @@ export async function getChannelNavigation(currentSlug: string) {
 
 // Team Members (internal company team)
 export async function getTeamMembersData() {
-  console.log('🔍 GETTING TEAM MEMBERS DATA...');
   
   const query = `*[_type == "teamMember"] | order(order asc){
     _id,
@@ -692,7 +659,6 @@ export async function getTeamMembersData() {
     order
   }`;
   
-  console.log('📝 Team query:', query);
   
   const fallback = [
     {
@@ -1673,4 +1639,53 @@ export async function getCaseStudyBySlug(slug: string) {
   }`;
   
   return fetchSanityData(query, { slug }, null);
+}
+
+export async function getFunFactsData(pageLocation: string = 'about') {
+  const query = `*[_type == "funFact" && isActive == true && pageLocation == $pageLocation][0]{
+    _id,
+    title,
+    subtitle,
+    "facts": facts[] | order(displayOrder asc) {
+      title,
+      count,
+      suffix,
+      displayOrder
+    },
+    isActive,
+    pageLocation
+  }`;
+  
+  const fallback = {
+    title: 'Agency Snapshots',
+    subtitle: 'Fun Facts',
+    facts: [
+      {
+        title: 'PROJECTS DELIVERED',
+        count: 200,
+        suffix: '+',
+        displayOrder: 1
+      },
+      {
+        title: 'YEARS OF EXCELLENCE',
+        count: 5,
+        suffix: '+',
+        displayOrder: 2
+      },
+      {
+        title: 'TEAM MEMBERS STRONG',
+        count: 9,
+        suffix: '+',
+        displayOrder: 3
+      },
+      {
+        title: 'AGENCY GROWTH RATE',
+        count: 194,
+        suffix: '%',
+        displayOrder: 4
+      }
+    ]
+  };
+  
+  return fetchSanityData(query, { pageLocation }, fallback);
 }
