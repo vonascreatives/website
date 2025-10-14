@@ -1,8 +1,7 @@
 "use client";
 import React from "react";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 
-// award images
 import a_1 from "@/assets/img/home-01/award/award-1.png";
 import a_2 from "@/assets/img/home-01/award/award-2.png";
 import a_3 from "@/assets/img/home-01/award/award-3.png";
@@ -11,6 +10,7 @@ import a_5 from "@/assets/img/home-01/award/award-5.png";
 import a_6 from "@/assets/img/home-01/award/award-6.png";
 import { Leaf } from "../svg";
 
+// Static fallback data
 const award_data = [
   {
     id: 1,
@@ -56,13 +56,61 @@ const award_data = [
   },
 ];
 
+// Type for CMS award data
+export type AwardData = {
+  _id: string;
+  title: string;
+  slug: string;
+  subtitle: string;
+  awardDate: string;
+  imageUrl: string;
+  imageAlt?: string;
+  organization?: string;
+  category?: string;
+  projectUrl?: string;
+  description?: string;
+  displayOrder: number;
+  featured?: boolean;
+  isActive: boolean;
+};
+
+// Unified type for both CMS and static data
+type AwardItem = {
+  id: string | number;
+  img: StaticImageData | string;
+  subtitle: string;
+  title: string;
+  date: string;
+  alt?: string;
+};
+
 // prop type
 type IProps = {
   cls?: string;
   abStyle?: boolean;
+  awards?: AwardData[]; 
 };
-const AwardOne = ({cls="pt-125 pb-125",abStyle=false}: IProps) => {
-  const [activeThumb, setActiveThumb] = React.useState(1);
+
+const AwardOne = ({cls="pt-125 pb-125", abStyle=false, awards}: IProps) => {
+  const displayAwards: AwardItem[] = awards && awards.length > 0
+    ? awards.map((award, index) => ({
+        id: index + 1, 
+        img: award.imageUrl,
+        subtitle: award.subtitle,
+        title: award.title,
+        date: new Date(award.awardDate).toLocaleDateString('en-US', { 
+          year: 'numeric', 
+          month: 'short', 
+          day: '2-digit' 
+        }),
+        alt: award.imageAlt || award.title,
+      }))
+    : award_data;
+
+  const [activeThumb, setActiveThumb] = React.useState(
+    displayAwards[0]?.id || 1
+  );
+
   return (
     <div className={`tp-award-area ${cls}`}>
       <div className="container container-1630">
@@ -92,23 +140,39 @@ const AwardOne = ({cls="pt-125 pb-125",abStyle=false}: IProps) => {
                 id="tp-award-thumb"
                 className={`tp-award-list-thumb-${activeThumb}`}
               >
-                {award_data.map((item) => (
-                  <Image
-                    key={item.id}
-                    className={`tp-award-list-thumb-${item.id}`}
-                    src={item.img}
-                    alt="list-thumb"
-                  />
-                ))}
+                {displayAwards.map((item) => {
+                  const isActive = activeThumb === item.id;
+                  console.log(`Award ${item.id}: isActive=${isActive}, activeThumb=${activeThumb}`);
+                  return (
+                    <Image
+                      key={item.id}
+                      className={`tp-award-list-thumb-${item.id}`}
+                      src={item.img}
+                      alt={item.alt || "Award image"}
+                      width={typeof item.img === 'string' ? 500 : undefined}
+                      height={typeof item.img === 'string' ? 500 : undefined}
+                      style={{
+                        display: isActive ? 'block' : 'none',
+                        width: '100%',
+                        height: 'auto',
+                        position: isActive ? 'relative' : 'absolute',
+                        opacity: isActive ? 1 : 0,
+                        visibility: isActive ? 'visible' : 'hidden'
+                      }}
+                    />
+                  );
+                })}
               </div>
             </div>
           </div>
           <div className="col-xl-8 col-lg-8 col-md-12">
             <div className="tp-award-list-wrap">
-              {award_data.map((item) => (
+              {displayAwards.map((item) => (
                 <div
                   key={item.id}
-                  onMouseEnter={() => setActiveThumb(item.id)}
+                  onMouseEnter={() => {
+                    setActiveThumb(item.id);
+                  }}
                   className="tp-award-list-item d-flex align-items-center justify-content-between tp_fade_bottom"
                   rel={`tp-award-list-thumb-${item.id}`}
                 >
