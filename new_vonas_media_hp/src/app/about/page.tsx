@@ -1,7 +1,7 @@
 import React from "react";
 import { Metadata } from "next";
 import AboutUsMain from "@/pages/about/about-us";
-import { getAboutData, getTeamMembersData, getAboutPageImages, getBrandCollaborationData } from "@/lib/sanity";
+import { getAboutData, getTeamMembersData, getAboutPageImages, getBrandCollaborationData, getFunFactsData, getAwardsData } from "@/lib/sanity";
 import { generateMetadata as generateSEOMetadata, generateOrganizationSchema, StructuredData, SEO_DEFAULTS } from "@/utils/seo";
 
 export const metadata: Metadata = generateSEOMetadata({
@@ -17,6 +17,8 @@ const AboutPage = async () => {
   const teamMembers = await getTeamMembersData();
   const aboutPageImages = await getAboutPageImages();
   const brandCollaborations = await getBrandCollaborationData();
+  const awards = await getAwardsData();
+  const funFactsData = await getFunFactsData('about');
   
   const organizationSchema = generateOrganizationSchema();
   
@@ -28,6 +30,8 @@ const AboutPage = async () => {
         teamMembers={teamMembers}
         aboutPageImages={aboutPageImages}
         brandCollaborations={brandCollaborations}
+        awards={awards}
+        funFactsData={funFactsData}
       />
     </>
   );

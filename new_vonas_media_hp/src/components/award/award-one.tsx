@@ -142,7 +142,6 @@ const AwardOne = ({cls="pt-125 pb-125", abStyle=false, awards}: IProps) => {
               >
                 {displayAwards.map((item) => {
                   const isActive = activeThumb === item.id;
-                  console.log(`Award ${item.id}: isActive=${isActive}, activeThumb=${activeThumb}`);
                   return (
                     <Image
                       key={item.id}

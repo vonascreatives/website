@@ -10,6 +10,7 @@ import { brandCollaboration } from './sanity/schemas/brandCollaboration'
 import { exclusiveCreator } from './sanity/schemas/exclusiveCreator'
 import { award } from './sanity/schemas/award'
 import { caseStudy } from './sanity/schemas/caseStudy'
+import funFact from './sanity/schemas/funFact'
 
 export default defineConfig({
   name: 'default',
@@ -33,6 +34,7 @@ export default defineConfig({
       exclusiveCreator,
       award,
       caseStudy,
+      funFact,
     ],
   },
 })
