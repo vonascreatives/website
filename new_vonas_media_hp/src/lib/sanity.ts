@@ -1566,3 +1566,111 @@ export async function getAwardsData() {
   // Fetch awards from Sanity CMS with no fallback
   return fetchSanityData(query, {}, []);
 }
+
+export async function getCaseStudiesData() {
+  const query = `*[_type == "caseStudy" && isActive == true] | order(displayOrder asc) {
+    _id,
+    title,
+    "slug": slug.current,
+    subtitle,
+    "heroImageUrl": heroImage.asset->url,
+    "heroImageAlt": heroImage.alt,
+    websiteUrl,
+    summary,
+    client,
+    services,
+    industry,
+    date,
+    sections,
+    "galleryImages": galleryImages[]{
+      "url": asset->url,
+      alt,
+      caption
+    },
+    "fullWidthImageUrl": fullWidthImage.asset->url,
+    "fullWidthImageAlt": fullWidthImage.alt,
+    "gridImageLeftUrl": gridImageLeft.asset->url,
+    "gridImageLeftAlt": gridImageLeft.alt,
+    "gridImageRightUrl": gridImageRight.asset->url,
+    "gridImageRightAlt": gridImageRight.alt,
+    displayOrder,
+    featured,
+    tags
+  }`;
+  
+  return fetchSanityData(query, {}, []);
+}
+
+export async function getFeaturedCaseStudy() {
+  const query = `*[_type == "caseStudy" && isActive == true && featured == true] | order(displayOrder asc)[0]{
+    _id,
+    title,
+    "slug": slug.current,
+    subtitle,
+    "heroImageUrl": heroImage.asset->url,
+    "heroImageAlt": heroImage.alt,
+    websiteUrl,
+    summary,
+    client,
+    services,
+    industry,
+    date,
+    sections,
+    "galleryImages": galleryImages[]{
+      "url": asset->url,
+      alt,
+      caption
+    },
+    "fullWidthImageUrl": fullWidthImage.asset->url,
+    "fullWidthImageAlt": fullWidthImage.alt,
+    "gridImageLeftUrl": gridImageLeft.asset->url,
+    "gridImageLeftAlt": gridImageLeft.alt,
+    "gridImageRightUrl": gridImageRight.asset->url,
+    "gridImageRightAlt": gridImageRight.alt,
+    displayOrder,
+    featured,
+    tags
+  }`;
+  
+  const result = await fetchSanityData(query, {}, null);
+  
+  return result;
+}
+
+export async function getCaseStudyBySlug(slug: string) {
+  const query = `*[_type == "caseStudy" && slug.current == $slug][0]{
+    _id,
+    title,
+    "slug": slug.current,
+    subtitle,
+    "heroImageUrl": heroImage.asset->url,
+    "heroImageAlt": heroImage.alt,
+    websiteUrl,
+    summary,
+    client,
+    services,
+    industry,
+    date,
+    sections[]{
+      sectionTitle,
+      subtitle,
+      content
+    },
+    "galleryImages": galleryImages[]{
+      "url": asset->url,
+      alt,
+      caption
+    },
+    "fullWidthImageUrl": fullWidthImage.asset->url,
+    "fullWidthImageAlt": fullWidthImage.alt,
+    "gridImageLeftUrl": gridImageLeft.asset->url,
+    "gridImageLeftAlt": gridImageLeft.alt,
+    "gridImageRightUrl": gridImageRight.asset->url,
+    "gridImageRightAlt": gridImageRight.alt,
+    displayOrder,
+    featured,
+    tags
+  }`;
+  
+  return fetchSanityData(query, { slug }, null);
+}
