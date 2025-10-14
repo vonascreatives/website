@@ -53,17 +53,10 @@ const ProjectOne = ({ channels, homepageImages }: ProjectOneProps) => {
   const normalizedChannels = Array.isArray(channels) ? channels.filter(Boolean) : [];
   const hasChannels = normalizedChannels.length > 0;
   
-  // Debug: Log what we're receiving from CMS
-  console.log('ProjectOne - channels received:', channels);
-  console.log('ProjectOne - normalizedChannels:', normalizedChannels);
-  console.log('ProjectOne - hasChannels:', hasChannels);
-  
   // Create display items - use CMS data or fallback
   const displayItems = hasChannels 
     ? normalizedChannels.slice(0, 6) // Show max 6 channels
     : fallbackChannels;
-    
-  console.log('ProjectOne - displayItems:', displayItems);
 
   return (
     <>
@@ -80,17 +73,17 @@ const ProjectOne = ({ channels, homepageImages }: ProjectOneProps) => {
 
       {/* Portfolio section - full viewport width */}
       <div
-        className="tp-project-4-area pb-120 project-panel-area"
+        className="tp-project-4-area project-panel-area"
         style={{ 
           backgroundImage: "url(/assets/img/home-04/brand/overly.png)",
-          width: "100vw",
-          minWidth: "100vw",
-          position: "relative",
-          left: "50%",
-          transform: "translateX(-50%)",
-          overflow: "visible",
+          width: "100%",
+          maxWidth: "none",
+          margin: "0",
+          padding: "0",
+          paddingBottom: "120px",
           boxSizing: "border-box",
-          margin: "0"
+          lineHeight: "0",
+          fontSize: "0"
         }}
       >
         {displayItems.map((item, index) => {
@@ -105,59 +98,107 @@ const ProjectOne = ({ channels, homepageImages }: ProjectOneProps) => {
           // Extract image with proper fallback chain
           let imageSrc;
           if (isCMSItem) {
-            // Try to get CMS image, fallback to static if none
-            imageSrc = item.heroImage?.url || item.image || fallbackChannels[index % fallbackChannels.length].img;
+            // Use the simplified heroImageUrl from the query
+            imageSrc = item.heroImageUrl || item.logoImageUrl || fallbackChannels[index % fallbackChannels.length].img;
           } else {
             imageSrc = item.img;
           }
           
           const altText = isCMSItem
-            ? (item.heroImage?.alt || item.imageAlt || title)
+            ? (item.heroImageAlt || item.imageAlt || title)
             : title;
           
           const slug = isCMSItem ? getChannelSlug(item) : null;
           const href = slug ? `/channels/${slug}` : "/channels";
-          
-          // Debug each item
-          console.log(`Item ${index}:`, {
-            title,
-            imageSrc,
-            isCMSItem,
-            hasHeroImage: !!item.heroImage?.url,
-            hasImageField: !!item.image
-          });
 
           return (
-            <div key={item._id || item.id || index} className="tp-project-4-bg project-panel">
-              <Link href={href}>
+            <div 
+              key={item._id || item.id || index} 
+              className="tp-project-4-bg project-panel"
+              style={{
+                width: '100%',
+                maxWidth: '1920px',
+                margin: '0 auto',
+                padding: '0',
+                position: 'relative',
+                display: 'block',
+                lineHeight: '0',
+                fontSize: '0',
+                marginTop: '0',
+                marginBottom: '0'
+              }}
+            >
+              <Link href={href} style={{ display: 'block', width: '100%', position: 'relative', lineHeight: '0', fontSize: '0' }}>
                 <div 
                   className="tp-project-4-thumb"
                   style={{ 
                     position: 'relative', 
-                    width: '100%', 
-                    minHeight: '500px' 
+                    width: '100%',
+                    maxHeight: '800px',
+                    height: 'auto',
+                    aspectRatio: '16/9',
+                    overflow: 'hidden',
+                    margin: '0',
+                    padding: '0',
+                    display: 'block',
+                    lineHeight: '0',
+                    fontSize: '0'
                   }}
                 >
-                  {imageSrc && (
+                  {imageSrc ? (
                     <Image 
                       src={imageSrc} 
                       alt={altText}
-                      fill
-                      sizes="100vw"
+                      width={1920}
+                      height={1080}
                       style={{ 
-                        objectFit: "cover"
+                        width: '100%',
+                        height: '100%',
+                        objectFit: "cover",
+                        objectPosition: "center",
+                        display: 'block',
+                        verticalAlign: 'top',
+                        margin: '0',
+                        padding: '0',
+                        border: 'none',
+                        outline: 'none',
+                        WebkitBackfaceVisibility: 'hidden',
+                        backfaceVisibility: 'hidden'
                       }}
-                      priority={index < 2} // Prioritize first two images
-                      onError={(e) => {
-                        console.error(`Image failed to load for ${title}:`, imageSrc);
-                      }}
+                      priority={index < 2}
+                      quality={90}
+                      sizes="(max-width: 1920px) 100vw, 1920px"
                     />
+                  ) : (
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', color: '#999' }}>
+                      No Image Available
+                    </div>
                   )}
-                </div>
-                <div className="tp-project-4-content z-index">
-                  <h4 className="tp-project-4-title tp_reveal_anim-2">
-                    {title}
-                  </h4>
+                  <div 
+                    className="tp-project-4-content z-index"
+                    style={{
+                      position: 'absolute',
+                      bottom: '50px',
+                      left: '50px',
+                      right: '50px',
+                      zIndex: 10,
+                      pointerEvents: 'none',
+                      lineHeight: 'normal'
+                    }}
+                  >
+                    <h4 
+                      className="tp-project-4-title tp_reveal_anim-2" 
+                      style={{ 
+                        margin: 0,
+                        fontSize: 'clamp(60px, 6vw, 96px)',
+                        lineHeight: '1',
+                        fontWeight: '700',
+                        letterSpacing: '-0.02em'
+                      }}
+                    >
+                      {title}
+                    </h4>
+                  </div>
                 </div>
               </Link>
             </div>

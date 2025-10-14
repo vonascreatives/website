@@ -223,43 +223,11 @@ export async function getYouTubeChannelsForHomepage() {
     channel_number,
     category,
     channel_name,
-    "heroImage": select(
-      defined(heroImage[0].image.asset) => {
-        "url": heroImage[0].image.asset->url,
-        "alt": coalesce(heroImage[0].alt, heroImage[0].image.alt, channel_name)
-      },
-      defined(heroImage[0].asset) => {
-        "url": heroImage[0].asset->url,
-        "alt": coalesce(heroImage[0].alt, channel_name)
-      },
-      defined(heroImage.image.asset) => {
-        "url": heroImage.image.asset->url,
-        "alt": coalesce(heroImage.alt, channel_name)
-      },
-      defined(heroImage.asset) => {
-        "url": heroImage.asset->url,
-        "alt": coalesce(heroImage.alt, channel_name)
-      }
-    ),
-    "image": coalesce(
-      heroImage[0].image.asset->url,
-      heroImage[0].asset->url,
-      heroImage.image.asset->url,
-      heroImage.asset->url,
-      logoImage[0].image.asset->url,
-      thumbnailExample[0].image.asset->url,
-      visual_identity_images[0].image.asset->url
-    ),
-    "imageAlt": coalesce(
-      heroImage[0].alt,
-      heroImage.alt,
-      heroImage[0].image.alt,
-      heroImage.image.alt,
-      logoImage[0].alt,
-      thumbnailExample[0].alt,
-      visual_identity_images[0].alt,
-      channel_name
-    ),
+    heroImage,
+    logoImage,
+    "heroImageUrl": heroImage[0].image.asset->url,
+    "heroImageAlt": heroImage[0].alt,
+    "logoImageUrl": logoImage[0].image.asset->url,
     cta_button_url,
     channel,
     date_started,
@@ -272,12 +240,9 @@ export async function getYouTubeChannelsForHomepage() {
       channel_number: '01',
       category: 'Entertainment',
       channel_name: 'Sample Channel',
-      heroImage: {
-        url: '/assets/img/home-01/project/project-1-1.jpg',
-        alt: 'Sample Channel'
-      },
-      image: '/assets/img/home-01/project/project-1-1.jpg',
-      imageAlt: 'Sample Channel',
+      heroImage: null,
+      heroImageUrl: '/assets/img/home-01/project/project-1-1.jpg',
+      heroImageAlt: 'Sample Channel',
       cta_button_url: '#',
       channel: 'Creator Name',
       slug: { current: 'sample-channel' }
