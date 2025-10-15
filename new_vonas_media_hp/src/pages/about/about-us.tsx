@@ -14,6 +14,7 @@ import AboutUsHero from "@/components/about/about-us-hero";
 import AboutUsArea from "@/components/about/about-us-area";
 import TeamOne from "@/components/team/team-one";
 import FunFactOne from "@/components/fun-fact/fun-fact-one";
+import FunFactOneCms from "@/components/fun-fact/fun-fact-one-cms";
 import BrandFive from "@/components/brand/brand-five";
 import AwardOne from "@/components/award/award-one";
 // animation
@@ -30,14 +31,11 @@ interface AboutUsMainProps {
     backgroundShapes: any[];
   };
   brandCollaborations?: any[];
+  awards?: any[];
+  funFactsData?: any;
 }
 
-const AboutUsMain = ({ aboutData, teamMembers, aboutPageImages, brandCollaborations }: AboutUsMainProps) => {
-  console.log('🏠 ABOUT US MAIN COMPONENT:');
-  console.log('   Team Members prop:', Array.isArray(teamMembers) ? `${teamMembers.length} items` : 'not an array');
-  console.log('   First team member:', teamMembers?.[0]?.name || 'No team members');
-  console.log('   Team members data structure:', teamMembers?.[0] || 'No data');
-  
+const AboutUsMain = ({ aboutData, teamMembers, aboutPageImages, brandCollaborations, awards, funFactsData }: AboutUsMainProps) => {
   useScrollSmooth();
 
   useGSAP(() => {
@@ -73,7 +71,11 @@ const AboutUsMain = ({ aboutData, teamMembers, aboutPageImages, brandCollaborati
             {/* team area */}
 
             {/* fun fact area */}
-            <FunFactOne />
+            {funFactsData ? (
+              <FunFactOneCms funFactsData={funFactsData} />
+            ) : (
+              <FunFactOne />
+            )}
             {/* fun fact area */}
 
             {/* brand area */}
@@ -87,7 +89,7 @@ const AboutUsMain = ({ aboutData, teamMembers, aboutPageImages, brandCollaborati
             {/* brand area */}
 
             {/* award area */}
-            <AwardOne cls="ab-award-style pt-120 pb-120" abStyle={true} />
+            <AwardOne awards={awards} />
             {/* award area */}
           </main>
 

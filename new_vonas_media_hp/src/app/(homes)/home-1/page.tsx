@@ -6,7 +6,9 @@ import {
   getCreatorsData, 
   getBrandCollaborationData,
   getYouTubeChannelsForHomepage,
-  getHomepageImages 
+  getHomepageImages,
+  getAwardsData,
+  getFeaturedCaseStudy
 } from "@/lib/sanity";
 
 export const metadata: Metadata = {
@@ -15,12 +17,14 @@ export const metadata: Metadata = {
 
 const Home = async () => {
   // Fetch all homepage data
-  const [channels, creators, brands, youtubeChannels, homepageImages] = await Promise.all([
+  const [channels, creators, brands, youtubeChannels, homepageImages, awards, featuredCaseStudy] = await Promise.all([
     getChannelsData(),
     getCreatorsData(),
     getBrandCollaborationData(),
     getYouTubeChannelsForHomepage(), 
-    getHomepageImages()
+    getHomepageImages(),
+    getAwardsData(),
+    getFeaturedCaseStudy()
   ]);
   
   return (
@@ -29,6 +33,8 @@ const Home = async () => {
       creators={creators.slice(0, 20)} // Limit to 20 creators for gallery view 
       brands={brands}
       homepageImages={homepageImages}
+      awards={awards}
+      featuredCaseStudy={featuredCaseStudy}
     />
   );
 };

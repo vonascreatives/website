@@ -1,19 +1,39 @@
 import React from "react";
 import { Metadata } from "next";
 import HomeSevenMain from "@/pages/homes/home-7";
-import { getChannelsData } from "@/lib/sanity";
+import { 
+  getChannelsData,
+  getStudioHeroData, 
+  getStudioTestimonialsData,
+  getStudioCounterData 
+} from "@/lib/sanity";
 
 export const metadata: Metadata = {
   title: "Vonas Media - Our Channels",
 };
 
 const ChannelsPage = async () => {
-  // Use all channels data (no limit)
-  const youtubeChannels = await getChannelsData();
-  
-  return (
-    <HomeSevenMain channels={youtubeChannels} />
-  );
+  try {
+    const youtubeChannels = await getChannelsData();
+    const studioHeroData = await getStudioHeroData('studio-home');
+    const testimonialData = await getStudioTestimonialsData('studio-home');
+    const counterData = await getStudioCounterData('studio-home');
+    
+    return (
+      <HomeSevenMain 
+        channels={youtubeChannels}
+        studioHeroData={studioHeroData}
+        testimonialData={testimonialData}
+        counterData={counterData}
+      />
+    );
+  } catch (error) {
+    return (
+      <HomeSevenMain 
+        channels={[]}
+      />
+    );
+  }
 };
 
 export default ChannelsPage;
