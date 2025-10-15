@@ -163,15 +163,16 @@ async function getTeamMemberBySlug(slug: string) {
   }
 }
 
-export default async function TeamDetailsPage({params}: {params: { id: string }}) {
-  const teamMember = await getTeamMemberBySlug(params.id);
+export default async function TeamDetailsPage({params}: {params: Promise<{ id: string }>}) {
+  const { id } = await params;
+  const teamMember = await getTeamMemberBySlug(id);
   
   return teamMember ? (
     <TeamDetailsMain item={teamMember} />
   ) : (
     <div className="text-center pt-100">
       <h2>Team Member Not Found</h2>
-      <p>No team member found with slug: {params.id}</p>
+      <p>No team member found with slug: {id}</p>
       <a href="/about-us" className="tp-btn">Back to About</a>
     </div>
   );
