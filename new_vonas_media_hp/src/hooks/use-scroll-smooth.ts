@@ -2,14 +2,11 @@
 
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-import { ScrollSmoother } from "@/plugins";
-
-type ScrollSmootherModule = {
-  create?: (options: Record<string, unknown>) => { kill: () => void } | null;
-};
-
-const ScrollSmootherPlugin = ScrollSmoother as unknown as ScrollSmootherModule;
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 let smootherInstance: any = null;
 
@@ -33,15 +30,28 @@ export default function useScrollSmooth() {
       smootherInstance = null;
     }
 
-    if (ScrollSmootherPlugin?.create) {
-      smootherInstance = ScrollSmootherPlugin.create({
-        smooth: 2,
-        effects: true,
-        smoothTouch: 0.1,
-        normalizeScroll: false,
-        ignoreMobileResize: true,
+
+  import("@/plugins/gsap-scroll-smoother-export")
+      .then((module) => {
+        let ScrollSmoother = module.ScrollSmoother || module.default;
+        if (ScrollSmoother && typeof ScrollSmoother.create !== "function" && typeof ScrollSmoother.ScrollSmoother?.create === "function") {
+          ScrollSmoother = ScrollSmoother.ScrollSmoother;
+        }
+        if (ScrollSmoother && typeof ScrollSmoother.create === "function") {
+          smootherInstance = ScrollSmoother.create({
+            smooth: 2,
+            effects: true,
+            smoothTouch: 0.1,
+            normalizeScroll: false,
+            ignoreMobileResize: true,
+          });
+        } else {
+          console.warn("ScrollSmoother plugin not found or invalid export.", module);
+        }
+      })
+      .catch((err) => {
+        console.warn("ScrollSmoother failed to load:", err);
       });
-    }
 
     return () => {
       if (smootherInstance?.kill) {

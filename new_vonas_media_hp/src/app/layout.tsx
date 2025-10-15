@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import {
   Syne,
   Aladin,
-  Big_Shoulders_Display,
   Marcellus,
 } from "next/font/google";
 import localFont from "next/font/local";
@@ -58,11 +57,6 @@ const syne = Syne({
   weight: ["400", "500", "600", "700", "800"],
   subsets: ["latin"],
   variable: "--tp-ff-syne",
-});
-const big_shoulders = Big_Shoulders_Display({
-  weight: ["400", "500", "600", "700", "800"],
-  subsets: ["latin"],
-  variable: "--tp-ff-shoulders",
 });
 const marcellus = Marcellus({
   weight: ["400"],
@@ -135,10 +129,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning={true}>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+      </head>
       <body
         id="body"
         suppressHydrationWarning={true}
-        className={`${gellery.variable} ${aladin.variable} ${syne_body.variable} ${syne_heading.variable} ${syne_p.variable} ${syne.variable} ${big_shoulders.variable} ${marcellus.variable}`}
+        className={`${gellery.variable} ${aladin.variable} ${syne_body.variable} ${syne_heading.variable} ${syne_p.variable} ${syne.variable} ${marcellus.variable}`}
       >
         <ErrorProvider>
           <ThemeProvider defaultTheme="light">

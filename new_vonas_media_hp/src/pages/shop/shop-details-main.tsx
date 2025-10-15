@@ -1,7 +1,13 @@
 "use client";
 import React from "react";
 import useScrollSmooth from "@/hooks/use-scroll-smooth";
-// GSAP imports removed to fix syntax error
+import { useGSAP } from "@gsap/react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(useGSAP, ScrollTrigger);
+}
 
 // internal imports
 import Wrapper from "@/layouts/wrapper";

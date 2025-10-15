@@ -12,14 +12,15 @@ export async function generateStaticParams() {
   }));
 }
 
-export async function generateMetadata({params}:{params:{slug:string}}): Promise<Metadata> {
-  const jobPost = await getJobPostBySlug(params.slug);
+export async function generateMetadata({params}:{params:Promise<{slug:string}>}): Promise<Metadata> {
+  const { slug } = await params;
+  const jobPost = await getJobPostBySlug(slug);
   
   if (!jobPost) {
     return generateSEOMetadata({
       title: "Job Post Not Found - Vonas Media",
       description: "The job post you're looking for could not be found.",
-      url: `${SEO_DEFAULTS.siteUrl}/jobs/${params.slug}`,
+      url: `${SEO_DEFAULTS.siteUrl}/jobs/${slug}`,
     });
   }
 
@@ -30,14 +31,15 @@ export async function generateMetadata({params}:{params:{slug:string}}): Promise
   return generateSEOMetadata({
     title: `${jobPost.title} - Vonas Media Careers`,
     description,
-    url: `${SEO_DEFAULTS.siteUrl}/jobs/${params.slug}`,
+    url: `${SEO_DEFAULTS.siteUrl}/jobs/${slug}`,
     type: 'article',
     keywords: [jobPost.title, 'vonas media jobs', jobPost.team || '', jobPost.location || '', 'career opportunities'].filter(Boolean),
   });
 }
 
-export default async function JobPostDetailsPage({params}:{params:{slug:string}}) {
-  const jobPost = await getJobPostBySlug(params.slug);
+export default async function JobPostDetailsPage({params}:{params:Promise<{slug:string}>}) {
+  const { slug } = await params;
+  const jobPost = await getJobPostBySlug(slug);
   
   if (!jobPost) {
     notFound();
@@ -49,7 +51,7 @@ export default async function JobPostDetailsPage({params}:{params:{slug:string}}
     author: 'Vonas Media HR Team',
     publishedAt: jobPost.publishedAt,
     updatedAt: jobPost.publishedAt,
-    url: `${SEO_DEFAULTS.siteUrl}/jobs/${params.slug}`,
+    url: `${SEO_DEFAULTS.siteUrl}/jobs/${slug}`,
   });
 
   return (

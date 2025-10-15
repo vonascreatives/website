@@ -4,6 +4,7 @@
 
 :root {
   font-variant-ligatures: none;
+  --tp-ff-shoulders: 'Big Shoulders Display', sans-serif;
 }
 
 @tailwind base;
