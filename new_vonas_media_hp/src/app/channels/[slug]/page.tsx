@@ -6,9 +6,9 @@ import { getYouTubeChannelById, getChannelNavigation, sanityClient } from "@/lib
 import { generateMetadata as generateSEOMetadata, generateOrganizationSchema, StructuredData, SEO_DEFAULTS } from "@/utils/seo";
 
 interface ChannelDetailPageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 // Generate static params for all channels
@@ -27,7 +27,8 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: ChannelDetailPageProps): Promise<Metadata> {
-  const channel = await getYouTubeChannelById(params.slug);
+  const { slug } = await params;
+  const channel = await getYouTubeChannelById(slug);
   
   if (!channel) {
     return {
@@ -38,7 +39,7 @@ export async function generateMetadata({ params }: ChannelDetailPageProps): Prom
 
   const description = channel.description || `Discover ${channel.title}, a YouTube channel featuring engaging content and creative videos. Subscribe for the latest updates and exclusive content.`;
   const channelImage = channel.thumbnails?.high?.url || channel.thumbnails?.default?.url || SEO_DEFAULTS.defaultImage;
-  const channelUrl = `${SEO_DEFAULTS.siteUrl}/channels/${params.slug}`;
+  const channelUrl = `${SEO_DEFAULTS.siteUrl}/channels/${slug}`;
   
   const keywords = [
     channel.title,
@@ -60,9 +61,10 @@ export async function generateMetadata({ params }: ChannelDetailPageProps): Prom
 }
 
 const ChannelDetailPage = async ({ params }: ChannelDetailPageProps) => {
+  const { slug } = await params;
   const [youtubeChannel, navigation] = await Promise.all([
-    getYouTubeChannelById(params.slug),
-    getChannelNavigation(params.slug)
+    getYouTubeChannelById(slug),
+    getChannelNavigation(slug)
   ]);
   
   // If no channel found, show 404
@@ -76,9 +78,9 @@ const ChannelDetailPage = async ({ params }: ChannelDetailPageProps) => {
     '@type': 'Organization',
     name: youtubeChannel.title,
     description: youtubeChannel.description,
-    url: `${SEO_DEFAULTS.siteUrl}/channels/${params.slug}`,
+    url: `${SEO_DEFAULTS.siteUrl}/channels/${slug}`,
     logo: youtubeChannel.thumbnails?.high?.url || youtubeChannel.thumbnails?.default?.url,
-    sameAs: [`https://www.youtube.com/channel/${params.slug}`],
+    sameAs: [`https://www.youtube.com/channel/${slug}`],
     parentOrganization: {
       '@type': 'Organization',
       name: 'Vonas Media'
