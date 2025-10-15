@@ -1689,3 +1689,175 @@ export async function getFunFactsData(pageLocation: string = 'about') {
   
   return fetchSanityData(query, { pageLocation }, fallback);
 }
+
+export async function getStudioHeroData(pageLocation: string = 'studio-home') {
+  const query = `*[_type == "studioHero" && isActive == true && pageLocation == $pageLocation][0]{
+    _id,
+    title,
+    "heroImageLeft": heroImageLeft.asset->url,
+    "heroImageLeftAlt": heroImageLeft.alt,
+    "heroImageRight": heroImageRight.asset->url,
+    "heroImageRightAlt": heroImageRight.alt,
+    "shapeImage": shapeImage.asset->url,
+    "shapeImageAlt": shapeImage.alt,
+    "thumbnailImages": thumbnailImages[] | order(displayOrder asc) {
+      "url": asset->url,
+      alt,
+      displayOrder
+    },
+    isActive,
+    pageLocation
+  }`;
+  
+  const fallback = {
+    title: 'Content Channel Lab',
+    heroImageLeft: '/assets/img/home-08/hero/img-1.jpg',
+    heroImageLeftAlt: 'Hero image left',
+    heroImageRight: '/assets/img/home-08/hero/img-2.jpg',
+    heroImageRightAlt: 'Hero image right',
+    shapeImage: '/assets/img/home-08/hero/shape-1.png',
+    shapeImageAlt: 'Shape decoration',
+    thumbnailImages: [
+      {
+        url: '/assets/img/home-08/hero/img-3.jpg',
+        alt: 'Thumbnail 1',
+        displayOrder: 1
+      },
+      {
+        url: '/assets/img/home-08/hero/img-4.jpg',
+        alt: 'Thumbnail 2',
+        displayOrder: 2
+      },
+      {
+        url: '/assets/img/home-08/hero/img-5.jpg',
+        alt: 'Thumbnail 3',
+        displayOrder: 3
+      },
+      {
+        url: '/assets/img/home-08/hero/img-6.jpg',
+        alt: 'Thumbnail 4',
+        displayOrder: 4
+      }
+    ]
+  };
+  
+  return fetchSanityData(query, { pageLocation }, fallback);
+}
+
+export async function getStudioTestimonialsData(pageLocation: string = 'studio-home') {
+  const query = `*[_type == "studioTestimonial" && isActive == true && pageLocation == $pageLocation][0]{
+    _id,
+    sectionTitle,
+    subtitle,
+    "shapeImage": shapeImage.asset->url,
+    "shapeImageAlt": shapeImage.alt,
+    "testimonials": testimonials[] | order(displayOrder asc) {
+      clientName,
+      designation,
+      testimonialText,
+      "companyLogo": companyLogo.asset->url,
+      "companyLogoAlt": companyLogo.alt,
+      displayOrder,
+      featured
+    },
+    isActive,
+    pageLocation
+  }`;
+  
+  const fallback = {
+    sectionTitle: 'What Our Clients Say',
+    subtitle: 'Testimonials:',
+    shapeImage: '/assets/img/home-08/testimonial/test-1.png',
+    shapeImageAlt: 'Testimonial shape',
+    testimonials: [
+      {
+        clientName: 'Chris Hughes',
+        designation: 'CEO | Gemini Skincare',
+        testimonialText: '"Our office is something we are pleased with. We consider it the little magnet; it is wanting to come here and afterward difficult to leave it. Our office is additionally a big name."',
+        companyLogo: '/assets/img/home-08/testimonial/test-logo-1.png',
+        companyLogoAlt: 'Gemini Skincare logo',
+        displayOrder: 1,
+        featured: false
+      },
+      {
+        clientName: 'Daniel Smith',
+        designation: 'CEO | Gemini Skincare',
+        testimonialText: '"Our office is something we are pleased with. We consider it the little magnet; it is wanting to come here and afterward difficult to leave it. Our office is additionally a big name."',
+        companyLogo: '/assets/img/home-08/testimonial/test-logo-1.png',
+        companyLogoAlt: 'Gemini Skincare logo',
+        displayOrder: 2,
+        featured: false
+      },
+      {
+        clientName: 'Brandon Smith',
+        designation: 'CEO | Gemini Skincare',
+        testimonialText: '"Our office is something we are pleased with. We consider it the little magnet; it is wanting to come here and afterward difficult to leave it. Our office is additionally a big name."',
+        companyLogo: '/assets/img/home-08/testimonial/test-logo-1.png',
+        companyLogoAlt: 'Gemini Skincare logo',
+        displayOrder: 3,
+        featured: false
+      }
+    ]
+  };
+  
+  return fetchSanityData(query, { pageLocation }, fallback);
+}
+
+export async function getStudioCounterData(pageLocation: string = 'studio-home') {
+  const query = `*[_type == "studioCounter" && isActive == true && pageLocation == $pageLocation][0]{
+    _id,
+    title,
+    "counters": counters[] | order(displayOrder asc) {
+      label,
+      count,
+      prefix,
+      suffix,
+      displayOrder
+    },
+    isActive,
+    pageLocation
+  }`;
+  
+  const fallback = {
+    title: null,
+    counters: [
+      {
+        label: 'Experts',
+        count: 54,
+        prefix: '+',
+        suffix: null,
+        displayOrder: 1
+      },
+      {
+        label: 'Projects',
+        count: 21,
+        prefix: '+',
+        suffix: null,
+        displayOrder: 2
+      },
+      {
+        label: 'Years in business',
+        count: 17,
+        prefix: '+',
+        suffix: null,
+        displayOrder: 3
+      },
+      {
+        label: 'Awards',
+        count: 86,
+        prefix: '+',
+        suffix: null,
+        displayOrder: 4
+      },
+      {
+        label: 'Offices',
+        count: 4,
+        prefix: '+',
+        suffix: null,
+        displayOrder: 5
+      }
+    ]
+  };
+  
+  return fetchSanityData(query, { pageLocation }, fallback);
+}
