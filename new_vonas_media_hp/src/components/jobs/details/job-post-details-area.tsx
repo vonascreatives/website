@@ -15,7 +15,7 @@ export default function JobPostDetailsArea() {
                   <div className="blog-details-top-text tp_fade_bottom">
                     <p>
                       Join our dynamic team at Vonas Media and be part of creating
-                      innovative digital experiences. We're looking for passionate
+                      innovative digital experiences. We&apos;re looking for passionate
                       individuals who share our vision for excellence and creativity
                       in the digital space.{" "}
                     </p>
@@ -27,7 +27,7 @@ export default function JobPostDetailsArea() {
                     <p className="mb-20">
                       <span>This position</span> offers an exciting opportunity to
                       work with cutting-edge technologies and collaborate with
-                      talented professionals. You'll be contributing to projects
+                      talented professionals. You&apos;ll be contributing to projects
                       that make a real impact in the digital media landscape.
                     </p>
                     <p>
@@ -45,7 +45,7 @@ export default function JobPostDetailsArea() {
                       Responsibilities & Growth
                     </h4>
                     <p>
-                      You'll be working on exciting projects that challenge your
+                      You&apos;ll be working on exciting projects that challenge your
                       skills and help you grow professionally. Our collaborative
                       environment encourages innovation and creative problem-solving.
                       We provide mentorship, learning opportunities, and the tools
@@ -57,16 +57,16 @@ export default function JobPostDetailsArea() {
                       <span className="quote-icon">
                         <QuoteThree />
                       </span>
-                      <p>{"Don't"} watch the clock; do what it does. keep going.</p>
+                      <p>Don&apos;t watch the clock; do what it does. keep going.</p>
                       <span className="blockquote-info">Sam Levenson</span>
                     </blockquote>
                   </div>
                   <div className="blog-details-left-content tp_fade_bottom">
                     <p>
                       At Vonas Media, we believe that great work comes from great
-                      people. We're committed to creating an inclusive environment
+                      people. We&apos;re committed to creating an inclusive environment
                       where everyone can thrive. Join us in building the future of
-                      digital media and make your mark in an industry that's
+                      digital media and make your mark in an industry that&apos;s
                       constantly evolving.
                     </p>
                   </div>

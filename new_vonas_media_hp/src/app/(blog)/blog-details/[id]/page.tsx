@@ -4,10 +4,11 @@ import { getNewsData, getNewsArticleBySlug } from "@/lib/sanity";
 import BlogDetailsMain from "@/pages/blog/blog-details";
 import { generateMetadata as generateSEOMetadata, SEO_DEFAULTS } from "@/utils/seo";
 
-export async function generateMetadata({params}:{params:{id:string}}): Promise<Metadata> {
+export async function generateMetadata({params}:{params:Promise<{id:string}>}): Promise<Metadata> {
+  const { id } = await params;
   // Try to find article by numeric ID in fallback data or redirect to slug-based URL
   const articles = await getNewsData();
-  const article = articles.find((a: any, index: number) => index.toString() === params.id || a._id === params.id);
+  const article = articles.find((a: any, index: number) => index.toString() === id || a._id === id);
   
   if (article && article.slug?.current) {
     return generateSEOMetadata({
@@ -21,20 +22,19 @@ export async function generateMetadata({params}:{params:{id:string}}): Promise<M
     });
   }
   
-  return generateSEOMetadata({
-    title: "Blog Article - Vonas Media",
-    description: "Stay updated with the latest news and insights from Vonas Media.",
-    url: `${SEO_DEFAULTS.siteUrl}/blog-details/${params.id}`,
-    type: 'article',
-  });
-}
-
-export default async function BlogDetailsPage({params}:{params:{id:string}}) {
-  // Try to find article by numeric ID and redirect to proper slug-based URL
-  const articles = await getNewsData();
-  const article = articles.find((a: any, index: number) => index.toString() === params.id || a._id === params.id);
+    return generateSEOMetadata({
+      title: "Blog Article - Vonas Media",
+      description: "Stay updated with the latest news and insights from Vonas Media.",
+      url: `${SEO_DEFAULTS.siteUrl}/blog-details/${id}`,
+      type: 'article',
+    });
+  }
   
-  if (article && article.slug?.current) {
+  export default async function BlogDetailsPage({params}:{params:Promise<{id:string}>}) {
+    const { id } = await params;
+
+    const articles = await getNewsData();
+    const article = articles.find((a: any, index: number) => index.toString() === id || a._id === id);  if (article && article.slug?.current) {
     // Redirect to the proper slug-based URL
     redirect(`/news/${article.slug.current}`);
   }
@@ -43,7 +43,7 @@ export default async function BlogDetailsPage({params}:{params:{id:string}}) {
   return (
     <div className="text-center pt-100">
       <h2>Article not found</h2>
-      <p>The article with ID &quot;{params.id}&quot; could not be found.</p>
+      <p>The article with ID &quot;{id}&quot; could not be found.</p>
       <p>Please check our <a href="/blog-list">latest articles</a> instead.</p>
     </div>
   );

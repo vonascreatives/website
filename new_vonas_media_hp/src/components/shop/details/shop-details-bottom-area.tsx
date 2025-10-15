@@ -63,6 +63,7 @@ export default function ShopDetailsBottomArea({ product }: IProps) {
                       role="tab"
                       aria-controls="nav-addInfo"
                       aria-selected="false"
+                      tabIndex={-1}
                       onClick={e => handleActive(e)}
                     >
                       Size & Fit information
@@ -76,6 +77,7 @@ export default function ShopDetailsBottomArea({ product }: IProps) {
                       role="tab"
                       aria-controls="nav-review"
                       aria-selected="false"
+                      tabIndex={-1}
                       onClick={e => handleActive(e)}
                     >
                       Reviews (2)
