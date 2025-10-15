@@ -50,7 +50,5 @@ if (videoProgressBtn) {
 if (video) {
   video.addEventListener("play", progressLoop);
 }
-  
-}
 
 export { projectThreeAnimation, projectDetailsPin,projectDetailsVideoPin };
