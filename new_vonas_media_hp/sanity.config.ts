@@ -11,6 +11,9 @@ import { exclusiveCreator } from './sanity/schemas/exclusiveCreator'
 import { award } from './sanity/schemas/award'
 import { caseStudy } from './sanity/schemas/caseStudy'
 import funFact from './sanity/schemas/funFact'
+import studioHero from './sanity/schemas/studioHero'
+import studioTestimonial from './sanity/schemas/studioTestimonial'
+import studioCounter from './sanity/schemas/studioCounter'
 
 export default defineConfig({
   name: 'default',
@@ -35,6 +38,9 @@ export default defineConfig({
       award,
       caseStudy,
       funFact,
+      studioHero,
+      studioTestimonial,
+      studioCounter,
     ],
   },
 })
