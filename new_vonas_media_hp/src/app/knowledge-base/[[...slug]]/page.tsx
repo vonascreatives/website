@@ -15,9 +15,9 @@ import {
 import { generateMetadata as generateSEOMetadata, generateArticleSchema, generateBreadcrumbSchema, StructuredData, SEO_DEFAULTS } from '@/utils/seo'
 
 interface PageProps {
-  params: {
+  params: Promise<{
     slug?: string[]
-  }
+  }>
 }
 
 export async function generateStaticParams() {
@@ -29,7 +29,8 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const slug = params.slug ? `/knowledge-base/${params.slug.join('/')}` : '/knowledge-base'
+  const { slug: slugArray } = await params
+  const slug = slugArray ? `/knowledge-base/${slugArray.join('/')}` : '/knowledge-base'
   const page = await getDocsPageBySlug(slug)
   
   if (!page) {
@@ -56,7 +57,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function KnowledgeBasePage({ params }: PageProps) {
-  const slug = params.slug ? `/knowledge-base/${params.slug.join('/')}` : '/knowledge-base'
+  const { slug: slugArray } = await params
+  const slug = slugArray ? `/knowledge-base/${slugArray.join('/')}` : '/knowledge-base'
   const [page, navigation] = await Promise.all([
     getDocsPageBySlug(slug),
     getDocsNavigation()
