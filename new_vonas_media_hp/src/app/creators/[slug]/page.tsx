@@ -7,9 +7,9 @@ import { getCreatorFollowerCount, formatFollowers } from "@/utils/formatFollower
 import { generateMetadata as generateSEOMetadata, generatePersonSchema, StructuredData, SEO_DEFAULTS } from "@/utils/seo";
 
 interface CreatorDetailPageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 // Generate static params for all creators
@@ -28,7 +28,8 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: CreatorDetailPageProps): Promise<Metadata> {
-  const creator = await getCreatorBySlug(params.slug);
+  const { slug } = await params;
+  const creator = await getCreatorBySlug(slug);
   
   if (!creator) {
     return {
@@ -43,7 +44,7 @@ export async function generateMetadata({ params }: CreatorDetailPageProps): Prom
   const description = bioText || `Connect with ${creator.name}, a talented content creator with ${formattedFollowers} followers. Discover their exclusive content and creative work.`;
   
   const creatorImage = creator.heroImage?.url || creator.profileImage?.url || SEO_DEFAULTS.defaultImage;
-  const creatorUrl = `${SEO_DEFAULTS.siteUrl}/creators/${params.slug}`;
+  const creatorUrl = `${SEO_DEFAULTS.siteUrl}/creators/${slug}`;
   
   const keywords = [
     creator.name,
@@ -65,7 +66,8 @@ export async function generateMetadata({ params }: CreatorDetailPageProps): Prom
 }
 
 const CreatorDetailPage = async ({ params }: CreatorDetailPageProps) => {
-  const creator = await getCreatorBySlug(params.slug);
+  const { slug } = await params;
+  const creator = await getCreatorBySlug(slug);
   
   if (!creator) {
     notFound();
