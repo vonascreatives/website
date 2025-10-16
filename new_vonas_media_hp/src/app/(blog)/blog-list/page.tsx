@@ -1,6 +1,6 @@
 import React from "react";
 import { Metadata } from "next";
-import BlogListMain from "@/pages/blog/blog-list";
+import BlogListMain from "@/_pages/blog/blog-list";
 
 export const metadata: Metadata = {
   title: "Liko - Blog List page",

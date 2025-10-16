@@ -1,6 +1,6 @@
 import React from "react";
 import { Metadata } from "next";
-import PortfolioDetailsCustomLightMain from "@/pages/portfolio/details/portfolio-custom-light-main";
+import PortfolioDetailsCustomLightMain from "@/_pages/portfolio/details/portfolio-custom-light-main";
 
 
 export const metadata: Metadata = {

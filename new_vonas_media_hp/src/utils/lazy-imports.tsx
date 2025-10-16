@@ -12,7 +12,7 @@ const LoadingSpinner = () => {
 
 // Lazy load heavy components with loading states
 export const LazyBlogDetailsMain = dynamic(
-  () => import('@/pages/blog/blog-details'),
+  () => import('@/_pages/blog/blog-details'),
   {
     loading: () => <LoadingSpinner />,
     ssr: true,
@@ -20,7 +20,7 @@ export const LazyBlogDetailsMain = dynamic(
 );
 
 export const LazyAboutUsMain = dynamic(
-  () => import('@/pages/about/about-us'),
+  () => import('@/_pages/about/about-us'),
   {
     loading: () => <LoadingSpinner />,
     ssr: true,
@@ -28,7 +28,7 @@ export const LazyAboutUsMain = dynamic(
 );
 
 export const LazyContactMain = dynamic(
-  () => import('@/pages/contact/contact'),
+  () => import('@/_pages/contact/contact'),
   {
     loading: () => <LoadingSpinner />,
     ssr: true,
@@ -36,7 +36,7 @@ export const LazyContactMain = dynamic(
 );
 
 export const LazyFaqMain = dynamic(
-  () => import('@/pages/faq/faq-main'),
+  () => import('@/_pages/faq/faq-main'),
   {
     loading: () => <LoadingSpinner />,
     ssr: true,
@@ -44,7 +44,7 @@ export const LazyFaqMain = dynamic(
 );
 
 export const LazyPricingMain = dynamic(
-  () => import('@/pages/pricing/pricing-main'),
+  () => import('@/_pages/pricing/pricing-main'),
   {
     loading: () => <LoadingSpinner />,
     ssr: true,
@@ -52,7 +52,7 @@ export const LazyPricingMain = dynamic(
 );
 
 export const LazyBlogClassicMain = dynamic(
-  () => import('@/pages/blog/blog-classic'),
+  () => import('@/_pages/blog/blog-classic'),
   {
     loading: () => <LoadingSpinner />,
     ssr: true,
@@ -60,7 +60,7 @@ export const LazyBlogClassicMain = dynamic(
 );
 
 export const LazyCreatorsMain = dynamic(
-  () => import('@/pages/creators/creators-main'),
+  () => import('@/_pages/creators/creators-main'),
   {
     loading: () => <LoadingSpinner />,
     ssr: true,
@@ -68,7 +68,7 @@ export const LazyCreatorsMain = dynamic(
 );
 
 export const LazyShopMain = dynamic(
-  () => import('@/pages/shop/shop-main'),
+  () => import('@/_pages/shop/shop-main'),
   {
     loading: () => <LoadingSpinner />,
     ssr: true,

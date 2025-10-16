@@ -1,6 +1,6 @@
 import React from "react";
 import { Metadata } from "next";
-import PricingMain from "@/pages/pricing/pricing-main";
+import PricingMain from "@/_pages/pricing/pricing-main";
 import { generateMetadata as generateSEOMetadata, generateOrganizationSchema, StructuredData, SEO_DEFAULTS } from "@/utils/seo";
 
 export const metadata: Metadata = generateSEOMetadata({

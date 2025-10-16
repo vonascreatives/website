@@ -1,6 +1,6 @@
 import React from "react";
 import { Metadata } from "next";
-import ShopMain from "@/pages/shop/shop-main";
+import ShopMain from "@/_pages/shop/shop-main";
 
 export const metadata: Metadata = {
   title: "Liko - Shop page",

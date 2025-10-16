@@ -1,6 +1,6 @@
 import React from "react";
 import { Metadata } from "next";
-import BlogClassicMain from "@/pages/blog/blog-classic";
+import BlogClassicMain from "@/_pages/blog/blog-classic";
 
 export const metadata: Metadata = {
   title: "Liko - Blog Classic page",

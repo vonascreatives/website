@@ -1,6 +1,6 @@
 import React from "react";
 import { Metadata } from "next";
-import CheckoutMain from "@/pages/checkout/checkout-main";
+import CheckoutMain from "@/_pages/checkout/checkout-main";
 
 export const metadata: Metadata = {
   title: "Creator Project Brief - Vonas Media",

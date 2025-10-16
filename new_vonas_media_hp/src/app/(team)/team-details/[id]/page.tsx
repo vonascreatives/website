@@ -1,6 +1,6 @@
 import React from "react";
 import { Metadata } from "next";
-import TeamDetailsMain from "@/pages/team/team-details";
+import TeamDetailsMain from "@/_pages/team/team-details";
 import { sanityClient } from "@/lib/sanity";
 
 export const metadata: Metadata = {

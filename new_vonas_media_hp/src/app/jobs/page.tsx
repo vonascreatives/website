@@ -1,6 +1,6 @@
 import React from "react";
 import { Metadata } from "next";
-import JobPostsMainNew from "../../pages/jobs/job-posts-new";
+import JobPostsMainNew from "../../_pages/jobs/job-posts-new";
 import { generateMetadata as generateSEOMetadata, SEO_DEFAULTS } from "@/utils/seo";
 import { getJobPosts } from "@/lib/sanity-queries";
 
