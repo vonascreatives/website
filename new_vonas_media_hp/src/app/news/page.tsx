@@ -12,13 +12,14 @@ export const metadata: Metadata = generateSEOMetadata({
   type: 'website',
 });
 
-const NewsPage = async ({ searchParams }: { searchParams: { category?: string } }) => {
+const NewsPage = async ({ searchParams }: { searchParams: Promise<{ category?: string }> }) => {
+  const { category } = await searchParams;
   let articles = await getNewsData();
   
   // Filter by category if provided
-  if (searchParams.category) {
+  if (category) {
     articles = articles.filter((article: any) => 
-      article.categories?.includes(searchParams.category)
+      article.categories?.includes(category)
     );
   }
   

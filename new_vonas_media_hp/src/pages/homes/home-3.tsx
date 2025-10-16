@@ -26,9 +26,13 @@ import { hoverBtn } from "@/utils/hover-btn";
 const HomeThreeMain = () => {
   useScrollSmooth();
   useEffect(() => {
-    document.body.classList.add("tp-smooth-scroll");
+    if (typeof document !== 'undefined') {
+      document.body.classList.add("tp-smooth-scroll");
+    }
     return () => {
-      document.body.classList.remove("tp-smooth-scroll");
+      if (typeof document !== 'undefined') {
+        document.body.classList.remove("tp-smooth-scroll");
+      }
     };
   }, []);
 

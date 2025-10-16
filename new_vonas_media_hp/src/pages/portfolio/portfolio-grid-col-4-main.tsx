@@ -24,9 +24,13 @@ const PortfolioGridColFourMain = () => {
   useScrollSmooth();
 
   useEffect(() => {
-    document.body.classList.add("tp-magic-cursor");
+    if (typeof document !== 'undefined') {
+      document.body.classList.add("tp-magic-cursor");
+    }
     return () => {
-      document.body.classList.remove("tp-magic-cursor");
+      if (typeof document !== 'undefined') {
+        document.body.classList.remove("tp-magic-cursor");
+      }
     }
   }, []);
 

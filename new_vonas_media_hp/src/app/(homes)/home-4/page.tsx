@@ -6,6 +6,8 @@ export const metadata: Metadata = {
   title: "Liko - Home Four Page",
 };
 
+export const dynamic = 'force-dynamic';
+
 const HomePageFour = () => {
   return (
     <HomeFourMain/>
