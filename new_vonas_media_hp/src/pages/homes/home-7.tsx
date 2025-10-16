@@ -30,9 +30,13 @@ const HomeSevenMain = ({ channels, studioHeroData, testimonialData, counterData 
   useScrollSmooth();
   
   useEffect(() => {
-    document.body.classList.add("tp-smooth-scroll");
+    if (typeof document !== 'undefined') {
+      document.body.classList.add("tp-smooth-scroll");
+    }
     return () => {
-      document.body.classList.remove("tp-smooth-scroll");
+      if (typeof document !== 'undefined') {
+        document.body.classList.remove("tp-smooth-scroll");
+      }
     };
   }, []);
 

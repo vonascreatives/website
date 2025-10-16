@@ -4,7 +4,7 @@ import { getJobTests, getJobTestBySlug, JobTest } from '@/lib/sanity-queries'
 import { JobTestDetailsMain } from '@/pages/jobs/job-test-details'
 
 interface JobTestPageProps {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }
 
 export async function generateStaticParams() {
@@ -15,7 +15,8 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: JobTestPageProps): Promise<Metadata> {
-  const jobTest = await getJobTestBySlug(params.slug)
+  const { slug } = await params
+  const jobTest = await getJobTestBySlug(slug)
   
   if (!jobTest) {
     return {
@@ -39,7 +40,7 @@ export async function generateMetadata({ params }: JobTestPageProps): Promise<Me
       title: jobTest.title,
       description,
       type: 'article',
-      url: `/job-tests/${params.slug}`,
+      url: `/job-tests/${slug}`,
     },
     twitter: {
       card: 'summary',
@@ -50,7 +51,8 @@ export async function generateMetadata({ params }: JobTestPageProps): Promise<Me
 }
 
 export default async function JobTestPage({ params }: JobTestPageProps) {
-  const jobTest = await getJobTestBySlug(params.slug)
+  const { slug } = await params
+  const jobTest = await getJobTestBySlug(slug)
   
   if (!jobTest) {
     notFound()
@@ -79,7 +81,7 @@ export default async function JobTestPage({ params }: JobTestPageProps) {
       '@type': 'Organization',
       name: 'Vonas Media'
     },
-    url: `/job-tests/${params.slug}`,
+    url: `/job-tests/${slug}`,
   }
 
   return (
