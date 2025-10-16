@@ -1,6 +1,6 @@
 import React from 'react';
 import { Metadata } from 'next';
-import HomeNineMain from '@/pages/homes/home-9';
+import HomeNineMain from '@/_pages/homes/home-9';
 
 export const metadata: Metadata = {
   title: "Liko - Home Nine Page",

@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { getJobTests, getJobTestBySlug, JobTest } from '@/lib/sanity-queries'
-import { JobTestDetailsMain } from '@/pages/jobs/job-test-details'
+import { JobTestDetailsMain } from '@/_pages/jobs/job-test-details'
 
 interface JobTestPageProps {
   params: Promise<{ slug: string }>

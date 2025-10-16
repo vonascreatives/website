@@ -1,6 +1,6 @@
 import React from "react";
 import { Metadata } from "next";
-import AboutUsMain from "@/pages/about/about-us";
+import AboutUsMain from "@/_pages/about/about-us";
 import { getAboutData, getTeamMembersData, getAboutPageImages, getBrandCollaborationData, getFunFactsData, getAwardsData } from "@/lib/sanity";
 import { generateMetadata as generateSEOMetadata, generateOrganizationSchema, StructuredData, SEO_DEFAULTS } from "@/utils/seo";
 

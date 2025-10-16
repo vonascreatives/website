@@ -1,6 +1,6 @@
 import React from "react";
 import { Metadata } from "next";
-import FaqMain from "@/pages/faq/faq-main";
+import FaqMain from "@/_pages/faq/faq-main";
 import { generateMetadata as generateSEOMetadata, generateOrganizationSchema, StructuredData, SEO_DEFAULTS } from "@/utils/seo";
 
 export const metadata: Metadata = generateSEOMetadata({

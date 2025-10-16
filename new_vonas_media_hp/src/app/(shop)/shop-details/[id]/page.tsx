@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import product_data from "@/data/product-data";
-import ShopDetailsMain from "@/pages/shop/shop-details-main";
+import ShopDetailsMain from "@/_pages/shop/shop-details-main";
 
 export const metadata: Metadata = {
   title: "Liko - Shop Details page",

@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getJobPostBySlug } from "@/lib/sanity-queries";
 import { getJobPostSlugs } from "@/lib/sanity/job-posts";
-import JobPostDetailsMain from "@/pages/jobs/job-post-details";
+import JobPostDetailsMain from "@/_pages/jobs/job-post-details";
 import { generateMetadata as generateSEOMetadata, generateArticleSchema, StructuredData, SEO_DEFAULTS } from "@/utils/seo";
 
 export async function generateStaticParams() {

@@ -1,6 +1,6 @@
 import React from "react";
 import { Metadata } from "next";
-import PortfolioShowcaseMain from "@/pages/portfolio/portfolio-showcase-main";
+import PortfolioShowcaseMain from "@/_pages/portfolio/portfolio-showcase-main";
 
 export const metadata: Metadata = {
   title: "Liko - Portfolio Showcase page",

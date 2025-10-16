@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import ErrorMain from '@/pages/error/error-main'
+import ErrorMain from '@/_pages/error/error-main'
  
 export const metadata: Metadata = {
   title: "Vonas Media - Page Not Found",

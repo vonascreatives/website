@@ -1,6 +1,6 @@
 import React from "react";
 import { Metadata } from "next";
-import ShortlistMain from "@/pages/shortlist/shortlist-main";
+import ShortlistMain from "@/_pages/shortlist/shortlist-main";
 
 export const metadata: Metadata = {
   title: "Shortlist - Vonas Media",
