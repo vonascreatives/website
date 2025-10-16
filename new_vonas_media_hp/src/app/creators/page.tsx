@@ -1,6 +1,6 @@
 import React from "react";
 import { Metadata } from "next";
-import CreatorsMain from "@/pages/creators/creators-main";
+import CreatorsMain from "@/_pages/creators/creators-main";
 import { getCreatorsData } from "@/lib/sanity";
 import { getCreatorFilterData } from "@/lib/sanity";
 

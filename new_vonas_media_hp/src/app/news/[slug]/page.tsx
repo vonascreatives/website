@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import BlogDetailsMain from "@/pages/blog/blog-details";
+import BlogDetailsMain from "@/_pages/blog/blog-details";
 import { getNewsArticleBySlug, getNewsData } from "@/lib/sanity";
 import { generateMetadata as generateSEOMetadata, generateArticleSchema, StructuredData, SEO_DEFAULTS } from "@/utils/seo";
 

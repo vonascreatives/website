@@ -1,6 +1,6 @@
 import React from "react";
 import { Metadata } from "next";
-import ContactMain from "@/pages/contact/contact";
+import ContactMain from "@/_pages/contact/contact";
 import { generateMetadata as generateSEOMetadata, generateOrganizationSchema, StructuredData, SEO_DEFAULTS } from "@/utils/seo";
 
 export const metadata: Metadata = generateSEOMetadata({

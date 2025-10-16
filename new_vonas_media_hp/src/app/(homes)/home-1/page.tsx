@@ -1,6 +1,6 @@
 import React from "react";
 import { Metadata } from "next";
-import HomeMain from "@/pages/homes/home-1";
+import HomeMain from "@/_pages/homes/home-1";
 import { 
   getChannelsData, 
   getCreatorsData, 

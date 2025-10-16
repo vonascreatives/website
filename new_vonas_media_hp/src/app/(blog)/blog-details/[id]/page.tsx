@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { getNewsData, getNewsArticleBySlug } from "@/lib/sanity";
-import BlogDetailsMain from "@/pages/blog/blog-details";
+import BlogDetailsMain from "@/_pages/blog/blog-details";
 import { generateMetadata as generateSEOMetadata, SEO_DEFAULTS } from "@/utils/seo";
 
 export async function generateMetadata({params}:{params:Promise<{id:string}>}): Promise<Metadata> {

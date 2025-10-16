@@ -1,6 +1,6 @@
 import React from "react";
 import { Metadata } from "next";
-import AboutUsMain from "@/pages/about/about-us";
+import AboutUsMain from "@/_pages/about/about-us";
 import { getAboutPageImages, getBrandCollaborationData, getTeamMembersData } from "@/lib/sanity";
 
 export const metadata: Metadata = {
