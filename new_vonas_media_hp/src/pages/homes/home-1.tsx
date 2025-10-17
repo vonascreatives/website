@@ -32,7 +32,7 @@ import { videoAnimOne } from "@/utils/video-anim";
 import { teamMarqueAnim } from "@/utils/scroll-marque";
 import { hoverBtn } from "@/utils/hover-btn";
 import { footerTwoAnimation } from "@/utils/footer-anim";
-import { bounceAnimation, charAnimation, fadeAnimation } from "@/utils/title-animation";
+import { bounceAnimation, charAnimation, fadeAnimation, revelAnimationTwo } from "@/utils/title-animation";
 import { panelTwoAnimation } from "@/utils/panel-animation";
 
 interface HomeMainProps {
@@ -84,6 +84,7 @@ const HomeMain = ({ channels, creators, brands, homepageImages, awards, featured
       charAnimation();
       bounceAnimation();
       panelTwoAnimation();
+      revelAnimationTwo();
     }, 100);
     return () => clearTimeout(timer);
   });
