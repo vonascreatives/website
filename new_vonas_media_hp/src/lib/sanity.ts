@@ -1539,7 +1539,14 @@ export async function getCreatorBySlug(slug: string) {
     seo,
     // Additional exclusiveCreator fields
     exclusiveContent,
-    joinDate
+    joinDate,
+    // Portfolio/recent work
+    portfolio[]{
+      title,
+      type,
+      "image": image.asset->url,
+      alt
+    }
   }`;
   
   // CMS connection is now working properly - no fallback needed

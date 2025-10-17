@@ -60,27 +60,6 @@ export default function CreatorDetailsDescription({ creator }: CreatorDetailsDes
         </div>
       </div>
       
-      <h4 className="tp-product-details-description-title">Creator Highlights</h4>
-      <div className="tp-product-details-description-content">
-        <div className="row">
-          <div className="col-xl-6">
-            <ul className="tp-product-details-description-list">
-              <li>✓ Professional content creator with {formattedFollowers} followers</li>
-              <li>✓ Based in {creator.location || 'United States'}</li>
-              <li>✓ Available for brand collaborations</li>
-              <li>✓ Custom content creation services</li>
-            </ul>
-          </div>
-          <div className="col-xl-6">
-            <ul className="tp-product-details-description-list">
-              <li>✓ High engagement rates and authentic audience</li>
-              <li>✓ Professional video and photo content</li>
-              <li>✓ Quick turnaround times</li>
-              <li>✓ Brand-safe content guaranteed</li>
-            </ul>
-          </div>
-        </div>
-      </div>
     </div>
   );
 }

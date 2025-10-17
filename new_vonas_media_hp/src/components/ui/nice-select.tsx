@@ -46,8 +46,21 @@ const NiceSelect = ({
       tabIndex={0}
       onClick={() => setOpen((prev) => !prev)}
       ref={ref}
+      style={{ position: 'relative' }}
     >
       <span className="current">{current?.label || placeholder}</span>
+      
+      <style>{`
+        .nice-select,
+        .nice-select.open {
+          max-width: 240px;
+        }
+        .nice-select:after,
+        .nice-select.open:after {
+          margin-left: 10px !important;
+          margin-right: 16px !important;
+        }
+      `}</style>
       <ul
         className="list"
         role="menubar"
