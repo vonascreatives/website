@@ -1,9 +1,17 @@
 "use client";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
+import { useGSAP } from "@gsap/react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "@/plugins";
 
 import ProjectTextLine from "./project-text-line";
+
+// Register GSAP plugin
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 // Fallback images for when CMS is not available
 import p_1 from "@/assets/img/home-01/project/project-1-1.jpg";
@@ -49,6 +57,8 @@ const getChannelSlug = (channel?: ChannelRecord | null) => {
 };
 
 const ProjectOne = ({ channels, homepageImages }: ProjectOneProps) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  
   // Use CMS data if available, otherwise fallback to static data
   const normalizedChannels = Array.isArray(channels) ? channels.filter(Boolean) : [];
   const hasChannels = normalizedChannels.length > 0;
@@ -57,6 +67,58 @@ const ProjectOne = ({ channels, homepageImages }: ProjectOneProps) => {
   const displayItems = hasChannels 
     ? normalizedChannels.slice(0, 6) // Show max 6 channels
     : fallbackChannels;
+
+  // Add custom styles to enforce max-height
+  useEffect(() => {
+    if (typeof document === 'undefined') return;
+    
+    const styleId = 'project-one-custom-styles';
+    if (!document.getElementById(styleId)) {
+      const style = document.createElement('style');
+      style.id = styleId;
+      style.textContent = `
+        .project-one-container .tp-project-4-thumb {
+          max-height: 800px !important;
+          height: auto !important;
+          overflow: hidden !important;
+        }
+        .project-one-container .tp-project-4-thumb img {
+          max-height: 800px !important;
+          width: 100% !important;
+          height: 100% !important;
+          object-fit: cover !important;
+        }
+      `;
+      document.head.appendChild(style);
+    }
+  }, []);
+
+  // Only use GSAP ScrollTrigger for reveal animation
+  useGSAP(() => {
+    if (typeof window === 'undefined' || !containerRef.current) return;
+
+    const anim_reveal2 = containerRef.current.querySelectorAll(".tp_reveal_anim-2");
+    if (anim_reveal2.length > 0) {
+      anim_reveal2.forEach((areveal) => {
+        const duration_value = Number((areveal as HTMLElement).getAttribute("data-duration")) || 2;
+        const data_delay = Number((areveal as HTMLElement).getAttribute("data-delay")) || 0.1;
+
+        gsap.from(areveal, {
+          duration: duration_value,
+          delay: data_delay,
+          ease: "circ.out",
+          y: 200,
+          opacity: 0,
+          scrollTrigger: {
+            trigger: areveal,
+            start: "top 90%",
+            end: "bottom 10%",
+            toggleActions: "play none none none",
+          },
+        });
+      });
+    }
+  }, { scope: containerRef, dependencies: [displayItems] });
 
   return (
     <>
@@ -73,7 +135,8 @@ const ProjectOne = ({ channels, homepageImages }: ProjectOneProps) => {
 
       {/* Portfolio section - full viewport width */}
       <div
-        className="tp-project-4-area project-panel-area"
+        ref={containerRef}
+        className="tp-project-4-area project-panel-area project-one-container"
         style={{ 
           backgroundImage: "url(/assets/img/home-04/brand/overly.png)",
           width: "100%",
@@ -134,9 +197,8 @@ const ProjectOne = ({ channels, homepageImages }: ProjectOneProps) => {
                   style={{ 
                     position: 'relative', 
                     width: '100%',
-                    maxHeight: '800px',
+                    maxHeight: '800px !important' as any,
                     height: 'auto',
-                    aspectRatio: '16/9',
                     overflow: 'hidden',
                     margin: '0',
                     padding: '0',
@@ -151,9 +213,11 @@ const ProjectOne = ({ channels, homepageImages }: ProjectOneProps) => {
                       alt={altText}
                       width={1920}
                       height={1080}
+                      className="project-one-image"
                       style={{ 
                         width: '100%',
                         height: '100%',
+                        maxHeight: '800px',
                         objectFit: "cover",
                         objectPosition: "center",
                         display: 'block',
