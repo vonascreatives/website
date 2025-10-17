@@ -1,23 +1,15 @@
 "use client";
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
-import { useGSAP } from "@gsap/react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "@/plugins";
 
 import ProjectTextLine from "./project-text-line";
 
-// Register GSAP plugin
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger);
-}
-
-// Fallback images for when CMS is not available
-import p_1 from "@/assets/img/home-01/project/project-1-1.jpg";
-import p_2 from "@/assets/img/home-01/project/project-1-2.jpg";
-import p_3 from "@/assets/img/home-01/project/project-1-3.jpg";
-import p_4 from "@/assets/img/home-01/project/project-1-4.jpg";
+// Fallback images from project-three (home-04/portfolio)
+import p_1 from "@/assets/img/home-04/portfolio/port-1.jpg";
+import p_2 from "@/assets/img/home-04/portfolio/port-2.jpg";
+import p_3 from "@/assets/img/home-04/portfolio/port-3.jpg";
+import p_4 from "@/assets/img/home-04/portfolio/port-4.jpg";
 
 type FallbackChannel = {
   id: number;
@@ -57,8 +49,6 @@ const getChannelSlug = (channel?: ChannelRecord | null) => {
 };
 
 const ProjectOne = ({ channels, homepageImages }: ProjectOneProps) => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  
   // Use CMS data if available, otherwise fallback to static data
   const normalizedChannels = Array.isArray(channels) ? channels.filter(Boolean) : [];
   const hasChannels = normalizedChannels.length > 0;
@@ -67,58 +57,6 @@ const ProjectOne = ({ channels, homepageImages }: ProjectOneProps) => {
   const displayItems = hasChannels 
     ? normalizedChannels.slice(0, 6) // Show max 6 channels
     : fallbackChannels;
-
-  // Add custom styles to enforce max-height
-  useEffect(() => {
-    if (typeof document === 'undefined') return;
-    
-    const styleId = 'project-one-custom-styles';
-    if (!document.getElementById(styleId)) {
-      const style = document.createElement('style');
-      style.id = styleId;
-      style.textContent = `
-        .project-one-container .tp-project-4-thumb {
-          max-height: 800px !important;
-          height: auto !important;
-          overflow: hidden !important;
-        }
-        .project-one-container .tp-project-4-thumb img {
-          max-height: 800px !important;
-          width: 100% !important;
-          height: 100% !important;
-          object-fit: cover !important;
-        }
-      `;
-      document.head.appendChild(style);
-    }
-  }, []);
-
-  // Only use GSAP ScrollTrigger for reveal animation
-  useGSAP(() => {
-    if (typeof window === 'undefined' || !containerRef.current) return;
-
-    const anim_reveal2 = containerRef.current.querySelectorAll(".tp_reveal_anim-2");
-    if (anim_reveal2.length > 0) {
-      anim_reveal2.forEach((areveal) => {
-        const duration_value = Number((areveal as HTMLElement).getAttribute("data-duration")) || 2;
-        const data_delay = Number((areveal as HTMLElement).getAttribute("data-delay")) || 0.1;
-
-        gsap.from(areveal, {
-          duration: duration_value,
-          delay: data_delay,
-          ease: "circ.out",
-          y: 200,
-          opacity: 0,
-          scrollTrigger: {
-            trigger: areveal,
-            start: "top 90%",
-            end: "bottom 10%",
-            toggleActions: "play none none none",
-          },
-        });
-      });
-    }
-  }, { scope: containerRef, dependencies: [displayItems] });
 
   return (
     <>
@@ -133,126 +71,60 @@ const ProjectOne = ({ channels, homepageImages }: ProjectOneProps) => {
         </div>
       </div>
 
-      {/* Portfolio section - full viewport width */}
+      {/* Portfolio section - matches project-three */}
       <div
-        ref={containerRef}
-        className="tp-project-4-area project-panel-area project-one-container"
-        style={{ 
-          backgroundImage: "url(/assets/img/home-04/brand/overly.png)",
-          width: "100vw",
-          minWidth: "100vw",
-          position: "relative",
-          left: "50%",
-          transform: "translateX(-50%)",
-          overflow: "visible",
-          boxSizing: "border-box",
-          margin: "0"
-        }}
+        className="tp-project-4-area pb-120 project-panel-area"
+        style={{ backgroundImage: "url(/assets/img/home-04/brand/overly.png)" }}
       >
-        {displayItems.map((item, index) => {
-          // Handle both CMS data and fallback data
-          const title = hasChannels 
-            ? (item.channel_name || item.title || `Channel ${index + 1}`)
-            : item.title;
-          
-          const imageSrc = hasChannels 
-            ? (item.heroImage?.url || item.image || fallbackChannels[index % fallbackChannels.length].img)
-            : item.img;
-          
-          const altText = hasChannels
-            ? (item.heroImage?.alt || item.imageAlt || title)
-            : title;
-          
-          const slug = hasChannels ? getChannelSlug(item) : null;
-          const href = slug ? `/channels/${slug}` : "/channels";
+        <div className="container-fluid p-0">
+          <div className="row g-0">
+            <div className="col-xl-12">
+              {displayItems.map((item, index) => {
+                const title = hasChannels 
+                  ? (item.channel_name || item.title || `Channel ${index + 1}`)
+                  : item.title;
+                
+                const imageSrc = hasChannels 
+                  ? (item.heroImage?.url || item.image || fallbackChannels[index % fallbackChannels.length].img)
+                  : item.img;
+                
+                const altText = hasChannels
+                  ? (item.heroImage?.alt || item.imageAlt || title)
+                  : title;
+                
+                const slug = hasChannels ? getChannelSlug(item) : null;
+                const href = slug ? `/channels/${slug}` : "/channels";
 
-          return (
-            <div 
-              key={item._id || item.id || index} 
-              className="tp-project-4-bg project-panel"
-              style={{
-                width: '100%',
-                maxWidth: '1920px',
-                margin: '0 auto',
-                padding: '0',
-                position: 'relative',
-                display: 'block',
-                lineHeight: '0',
-                fontSize: '0',
-                marginTop: '0',
-                marginBottom: '0'
-              }}
-            >
-              <Link href={href} style={{ display: 'block', width: '100%', position: 'relative', lineHeight: '0', fontSize: '0' }}>
-                <div 
-                  className="tp-project-4-thumb"
-                  style={{ 
-                    position: 'relative', 
-                    width: '100%',
-                    maxHeight: '800px !important' as any,
-                    height: 'auto',
-                    overflow: 'hidden',
-                    margin: '0',
-                    padding: '0',
-                    display: 'block',
-                    lineHeight: '0',
-                    fontSize: '0'
-                  }}
-                >
-                  {imageSrc ? (
-                    <Image 
-                      src={imageSrc} 
-                      alt={altText}
-                      width={1920}
-                      height={1080}
-                      className="project-one-image"
-                      style={{ 
-                        width: '100%',
-                        height: '100%',
-                        maxHeight: '800px',
-                        objectFit: "cover",
-                        objectPosition: "center",
-                        display: 'block',
-                        verticalAlign: 'top',
-                        margin: '0',
-                        padding: '0',
-                        border: 'none',
-                        outline: 'none',
-                        WebkitBackfaceVisibility: 'hidden',
-                        backfaceVisibility: 'hidden'
-                      }}
-                      priority={index < 2}
-                      quality={90}
-                      sizes="(max-width: 1920px) 100vw, 1920px"
-                    />
-                  ) : (
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', color: '#999' }}>
-                      No Image Available
-                    </div>
-                  )}
-                  <div 
-                    className="tp-project-4-content z-index"
-                    style={{
-                      position: 'absolute',
-                      bottom: '50px',
-                      left: '50px',
-                      right: '50px',
-                      zIndex: 10,
-                      pointerEvents: 'none',
-                      lineHeight: 'normal'
-                    }}
-                    priority={index < 2} // Prioritize first two images
-                  />
-                </div>
-                <div className="tp-project-4-content z-index">
-                  <h4 className="tp-project-4-title tp_reveal_anim-2">
-                    {title}
-                  </h4>
-                </div>
-              </Link>
+                return (
+                  <div key={item._id || item.id || index} className="tp-project-4-bg project-panel">
+                    <Link href={href}>
+                      <div className="tp-project-4-thumb">
+                        <Image 
+                          src={imageSrc} 
+                          alt={altText}
+                          width={1920}
+                          height={1080}
+                          style={{ 
+                            height: "auto",
+                            width: "100%",
+                            objectFit: "cover",
+                            aspectRatio: "16/9"
+                          }}
+                          priority={index < 2}
+                        />
+                      </div>
+                      <div className="tp-project-4-content z-index">
+                        <h4 className="tp-project-4-title tp_reveal_anim-2" style={{ fontSize: "clamp(6rem, 6vw, 6.5rem)" }}>
+                          {title}
+                        </h4>
+                      </div>
+                    </Link>
+                  </div>
+                );
+              })}
             </div>
-          );
-        })}
+          </div>
+        </div>
       </div>
     </>
   );
