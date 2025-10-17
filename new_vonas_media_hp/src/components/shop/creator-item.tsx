@@ -78,14 +78,14 @@ export default function CreatorItem({ creator, handleCreatorModal }: IProps) {
               src={creator.image}
               alt={creator.imageAlt || creator.name}
               width={300}
-              height={300}
-              style={{ height: "300px", objectFit: "cover" }}
+              height={500}
+              style={{ height: "500px", objectFit: "cover" }}
             />
           ) : (
             <div 
               className="w-100 d-flex align-items-center justify-content-center"
               style={{ 
-                height: "300px", 
+                height: "500px", 
                 backgroundColor: "#f5f5f5",
                 color: "#666",
                 fontSize: "14px"
@@ -97,41 +97,46 @@ export default function CreatorItem({ creator, handleCreatorModal }: IProps) {
         </Link>
         
         {/* Hover overlay with name and followers */}
-        {isHovered && (
+        <div 
+          className="position-absolute d-flex align-items-end"
+          style={{
+            bottom: 0,
+            left: 0,
+            width: '100%',
+            zIndex: 1,
+            pointerEvents: 'none'
+          }}
+        >
           <div 
-            className="position-absolute w-100 h-100 d-flex align-items-end"
+            className="d-flex justify-content-between align-items-center w-100 p-3" 
             style={{
-              top: 0,
-              left: 0,
-              background: 'linear-gradient(0deg, rgba(0,0,0,0.7) 0%, transparent 50%)',
-              zIndex: 1,
-              pointerEvents: 'none'
+              backgroundColor: 'rgba(0,0,0,0.8)',
+              transform: isHovered ? 'translateY(0)' : 'translateY(100%)',
+              transition: 'transform 0.3s ease-in-out',
             }}
           >
-            <div className="d-flex justify-content-between align-items-end w-100 p-3">
-              <div>
-                <h5 className="text-white mb-0" style={{ 
-                  fontSize: '16px', 
-                  fontWeight: '600',
-                  textOverflow: 'ellipsis',
-                  overflow: 'hidden',
-                  whiteSpace: 'nowrap',
-                  maxWidth: '120px'
-                }}>
-                  {creator.name}
-                </h5>
-              </div>
-              <div>
-                <span className="text-white" style={{ 
-                  fontSize: '14px', 
-                  fontWeight: '500'
-                }}>
-                  {followerCountFormatted}
-                </span>
-              </div>
+            <div>
+              <h5 className="text-white mb-0" style={{ 
+                fontSize: '16px', 
+                fontWeight: '600',
+                textOverflow: 'ellipsis',
+                overflow: 'hidden',
+                whiteSpace: 'nowrap',
+                maxWidth: '120px'
+              }}>
+                {creator.name}
+              </h5>
+            </div>
+            <div>
+              <span className="text-white" style={{ 
+                fontSize: '14px', 
+                fontWeight: '500'
+              }}>
+                {followerCountFormatted}
+              </span>
             </div>
           </div>
-        )}
+        </div>
       </div>
       
       {/* Action buttons - Heart and Contact */}
