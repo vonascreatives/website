@@ -139,39 +139,31 @@ const ProjectOne = ({ channels, homepageImages }: ProjectOneProps) => {
         className="tp-project-4-area project-panel-area project-one-container"
         style={{ 
           backgroundImage: "url(/assets/img/home-04/brand/overly.png)",
-          width: "100%",
-          maxWidth: "none",
-          margin: "0",
-          padding: "0",
-          paddingBottom: "120px",
+          width: "100vw",
+          minWidth: "100vw",
+          position: "relative",
+          left: "50%",
+          transform: "translateX(-50%)",
+          overflow: "visible",
           boxSizing: "border-box",
-          lineHeight: "0",
-          fontSize: "0"
+          margin: "0"
         }}
       >
         {displayItems.map((item, index) => {
-          // Determine if this is a CMS item or fallback
-          const isCMSItem = item._id && item.channel_name;
-          
           // Handle both CMS data and fallback data
-          const title = isCMSItem 
+          const title = hasChannels 
             ? (item.channel_name || item.title || `Channel ${index + 1}`)
             : item.title;
           
-          // Extract image with proper fallback chain
-          let imageSrc;
-          if (isCMSItem) {
-            // Use the simplified heroImageUrl from the query
-            imageSrc = item.heroImageUrl || item.logoImageUrl || fallbackChannels[index % fallbackChannels.length].img;
-          } else {
-            imageSrc = item.img;
-          }
+          const imageSrc = hasChannels 
+            ? (item.heroImage?.url || item.image || fallbackChannels[index % fallbackChannels.length].img)
+            : item.img;
           
-          const altText = isCMSItem
-            ? (item.heroImageAlt || item.imageAlt || title)
+          const altText = hasChannels
+            ? (item.heroImage?.alt || item.imageAlt || title)
             : title;
           
-          const slug = isCMSItem ? getChannelSlug(item) : null;
+          const slug = hasChannels ? getChannelSlug(item) : null;
           const href = slug ? `/channels/${slug}` : "/channels";
 
           return (
@@ -249,20 +241,13 @@ const ProjectOne = ({ channels, homepageImages }: ProjectOneProps) => {
                       pointerEvents: 'none',
                       lineHeight: 'normal'
                     }}
-                  >
-                    <h4 
-                      className="tp-project-4-title tp_reveal_anim-2" 
-                      style={{ 
-                        margin: 0,
-                        fontSize: 'clamp(60px, 6vw, 96px)',
-                        lineHeight: '1',
-                        fontWeight: '700',
-                        letterSpacing: '-0.02em'
-                      }}
-                    >
-                      {title}
-                    </h4>
-                  </div>
+                    priority={index < 2} // Prioritize first two images
+                  />
+                </div>
+                <div className="tp-project-4-content z-index">
+                  <h4 className="tp-project-4-title tp_reveal_anim-2">
+                    {title}
+                  </h4>
                 </div>
               </Link>
             </div>

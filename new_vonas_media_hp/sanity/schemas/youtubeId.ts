@@ -40,59 +40,6 @@ export const youtubeId = defineType({
       name: 'channel',
       title: 'Creator Name',
       type: 'string'
-    }),
-    // missing description field
-    defineField({
-      name: 'heroImage',
-      title: 'Hero Image',
-      type: 'array',
-      of: [
-        {
-          type: 'object',
-          fields: [
-            {
-              name: 'image',
-              title: 'Image',
-              type: 'image',
-              options: {
-                hotspot: true
-              }
-            },
-            {
-              name: 'alt',
-              title: 'Alt Text',
-              type: 'string'
-            }
-          ]
-        }
-      ],
-      description: 'Main hero image for the channel (displayed in project gallery on homepage)'
-    }),
-    defineField({
-      name: 'logoImage',
-      title: 'Logo Image',
-      type: 'array',
-      of: [
-        {
-          type: 'object',
-          fields: [
-            {
-              name: 'image',
-              title: 'Image',
-              type: 'image',
-              options: {
-                hotspot: true
-              }
-            },
-            {
-              name: 'alt',
-              title: 'Alt Text',
-              type: 'string'
-            }
-          ]
-        }
-      ],
-      description: 'Channel logo (fallback if hero image not provided)'
     })
   ],
   preview: {

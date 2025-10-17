@@ -152,6 +152,17 @@ const HomeMain = ({ channels, creators, brands, homepageImages, awards, featured
         </div>
       </div>
 
+      {/* footer shape */}
+      <div className="tp-footer-shape-wrap z-index-5 smooth">
+        <Link href="/contact">
+            <div className="tp-footer-shape p-relative">
+                <Image className="img-1" src={shape_1} alt="shape"/>
+                <Image className="img-2" src={shape_2} alt="shape"/>
+                <span>Lets Create</span>
+            </div>
+          </Link>
+        </div>
+      {/* footer shape */}
     </Wrapper>
   );
 };
