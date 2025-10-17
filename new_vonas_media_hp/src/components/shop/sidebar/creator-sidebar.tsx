@@ -63,14 +63,14 @@ export default function CreatorSidebar({
       <div className="tp-shop-widget mb-50">
         <h3 className="tp-shop-widget-title">Follower Count</h3>
         <div className="tp-shop-widget-content">
-          <div className="tp-shop-widget-filter">
+            <div className="tp-shop-widget-filter" style={{ padding: '12px 0' }}>
             <NiceSelect
               options={followerRanges}
               defaultCurrent={followerRanges.findIndex(range => range.value === filters.followerRange)}
               onChange={(item) => updateFilter('followerRange', item.value)}
               name="FollowerRange"
             />
-          </div>
+            </div>
         </div>
       </div>
 
