@@ -1905,7 +1905,7 @@ export async function getStudioCounterData(pageLocation: string = 'studio-home')
 }
 
 export async function getFaqData() {
-  const query = `*[_type == "faq"][0] {
+  const query = `*[_type == "faqV2"][0] {
     _id,
     sidebarTitle,
     sidebarDescription,
@@ -1920,6 +1920,8 @@ export async function getFaqData() {
       isActive
     }
   }`;
+  
+  console.log('🔍 FAQ Query:', query);
   
   const fallback = {
     _id: 'faq-default',
@@ -1974,5 +1976,8 @@ export async function getFaqData() {
     ]
   };
   
-  return fetchSanityData(query, {}, fallback);
+  const result = await fetchSanityData(query, {}, fallback);
+  console.log('📦 FAQ Result from CMS:', result ? '✅ Got data' : '⚠️ Using fallback');
+  
+  return result;
 }
