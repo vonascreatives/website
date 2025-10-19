@@ -15,7 +15,7 @@ import BigText from "@/components/big-text";
 import FooterTwo from "@/layouts/footers/footer-two";
 // animation
 import { charAnimation, titleAnimation } from "@/utils/title-animation";
-import FaqArea from "@/components/faq/faq-area";
+import FaqAreaWrapper from "@/components/faq/faq-area-wrapper";
 
 const FaqMain = () => {
   useScrollSmooth();
@@ -68,7 +68,7 @@ const FaqMain = () => {
               {/* faq hero */}
 
               {/* faq area */}
-              <FaqArea/>
+              <FaqAreaWrapper/>
               {/* faq area */}
 
               {/* big text */}

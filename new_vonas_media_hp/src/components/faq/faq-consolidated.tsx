@@ -7,9 +7,12 @@ import FaqItem from "./faq-item";
 
 // type 
 type IFaq = {
-  id: number;
+  id?: number;
   question: string;
   answer: string;
+  order: number;
+  category?: string;
+  isActive: boolean;
 }
 
 // faq data
@@ -19,36 +22,54 @@ export const faq_data: IFaq[] = [
     question: "Do you only work with exclusive creators?",
     answer:
       "No. We work with both in-house creators and non-exclusive collaborators. All get access to the same strategy, editorial edge, and production craft from our team.",
+    order: 1,
+    category: 'general',
+    isActive: true,
   },
   {
     id: 2,
     question: "Can brands build a channel with you?",
     answer:
       "Yes. We design, launch, and scale channels that brands fully own. We treat every channel like a startup with identity, audience, format, and growth strategy.",
+    order: 2,
+    category: 'brands',
+    isActive: true,
   },
   {
     id: 3,
     question: "What types of content do you focus on?",
     answer:
       "Our sweet spot is story-driven video—YouTube shows, docs, and creator-led formats. We engineer repeatable structures that scale beyond one-off campaigns.",
+    order: 3,
+    category: 'content',
+    isActive: true,
   },
   {
     id: 4,
     question: "Are you a production house or an agency?",
     answer:
       "Neither. We're a content-first media lab. We combine editorial DNA from journalism, production muscle from studios, and culture sense from the streets.",
+    order: 4,
+    category: 'general',
+    isActive: true,
   },
   {
     id: 5,
     question: "How do you select creators to work with?",
     answer:
       "We look for storytellers who think like journalists but move like entrepreneurs. Technical skills matter, but cultural awareness and authentic voice matter more.",
+    order: 5,
+    category: 'creators',
+    isActive: true,
   },
   {
     id: 6,
     question: "What makes your approach different?",
     answer:
       "We build formats over campaigns. Creators as partners. Content at the core. We don't chase trends—we shape culture with stories that stick.",
+    order: 6,
+    category: 'general',
+    isActive: true,
   },
 ];
 
@@ -83,8 +104,8 @@ export default function FaqConsolidated({
               <div className="fq-faq-wrapper">
                 <div className="tp-service-2-accordion-box">
                   <div className="accordion" id="accordionExample">
-                    {data.map((item) => (
-                      <FaqItem key={item.id} item={item} />
+                    {data.map((item, idx) => (
+                      <FaqItem key={item.id || idx} item={item} />
                     ))}
                   </div>
                 </div>
@@ -151,8 +172,8 @@ export default function FaqConsolidated({
                 <div className="fq-faq-wrapper">
                   <div className="tp-service-2-accordion-box">
                     <div className="accordion" id="accordionExample">
-                      {data.map((item) => (
-                        <FaqItem key={item.id} item={item} />
+                      {data.map((item, idx) => (
+                        <FaqItem key={item.id || idx} item={item} />
                       ))}
                     </div>
                   </div>
@@ -176,8 +197,8 @@ export default function FaqConsolidated({
       )}
       <div className="tp-service-2-accordion-box">
         <div className="accordion" id="accordionExample">
-          {data.map((item) => (
-            <FaqItem key={item.id} item={item} />
+          {data.map((item, idx) => (
+            <FaqItem key={item.id || idx} item={item} />
           ))}
         </div>
       </div>
