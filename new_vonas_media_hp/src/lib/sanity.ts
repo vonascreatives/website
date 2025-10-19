@@ -1984,9 +1984,9 @@ export async function getFaqData() {
 export async function getAffiliateLinksData() {
   const query = `*[_type == "affiliateLink" && isActive == true] | order(displayOrder asc) {
     _id,
-    title,
+    commissionOffer,
     "slug": slug.current,
-    category,
+    brandName,
     year,
     "image": image.asset->url,
     "imageAlt": image.alt,

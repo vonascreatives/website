@@ -8,9 +8,9 @@ import { useIsotop } from "@/hooks/use-isotop";
 // Type definitions
 type AffiliateLink = {
   _id: string;
-  title: string;
+  commissionOffer: string;
   slug: string;
-  category: string;
+  brandName: string;
   year: string;
   image: string;
   imageAlt: string;
@@ -37,7 +37,7 @@ export default function AffiliateLinksGridArea({
   }, [initIsotop]);
 
   // Helper function to get filter classes for isotope
-  const getFilterClasses = (category: string): string => {
+  const getFilterClasses = (brandName: string): string => {
     const categoryMap: { [key: string]: string } = {
       'Agency': 'cat1',
       'Visual': 'cat2',
@@ -47,7 +47,7 @@ export default function AffiliateLinksGridArea({
       'Creative': 'cat2 cat4 cat3',
       'Concept': 'cat4 cat2 cat3',
     };
-    return categoryMap[category] || 'cat4';
+    return categoryMap[brandName] || 'cat4';
   };
 
   return (
@@ -102,7 +102,7 @@ export default function AffiliateLinksGridArea({
             initialAffiliateLinks.map((item) => (
               <div
                 key={item._id}
-                className={`col-xl-4 col-lg-6 col-md-6 grid-item ${getFilterClasses(item.category)}`}
+                className={`col-xl-4 col-lg-6 col-md-6 grid-item ${getFilterClasses(item.brandName)}`}
               >
                 <div 
                   className="tp-project-5-2-thumb mb-30 p-relative not-hide-cursor" 
@@ -112,17 +112,17 @@ export default function AffiliateLinksGridArea({
                     <Image
                       className="anim-zoomin"
                       src={item.image}
-                      alt={item.imageAlt || item.title}
+                      alt={item.imageAlt || item.commissionOffer}
                       width={style_2 ? 573 : 486}
                       height={style_2 ? 683 : 576}
                       style={{ height: "100%" }}
                     />
                     <div className="tp-project-5-2-category tp_fade_anim">
-                      <span>{item.category}</span>
+                      <span>{item.brandName}</span>
                     </div>
                     <div className="tp-project-5-2-content tp_fade_anim">
                       <span className="tp-project-5-2-meta">{item.year}</span>
-                      <h4 className="tp-project-5-2-title-sm">{item.title}</h4>
+                      <h4 className="tp-project-5-2-title-sm">{item.commissionOffer}</h4>
                     </div>
                   </Link>
                 </div>
