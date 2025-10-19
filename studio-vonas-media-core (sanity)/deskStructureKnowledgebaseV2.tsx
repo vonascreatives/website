@@ -949,6 +949,9 @@ export const deskStructure: StructureResolver = (S) => {
                 .title('FAQs')
                 .child(S.documentTypeList('faq')),
               S.listItem()
+                .title('FAQ Section')
+                .child(S.documentTypeList('faqV2')),
+              S.listItem()
                 .title('Job Board')
                 .child(S.documentTypeList('jobBoard')),
               S.listItem()

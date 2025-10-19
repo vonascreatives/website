@@ -15,6 +15,7 @@ import shortlist from './shortlist'
 import jobBoard from './jobBoard'
 import teamMember from './teamMember'
 import faq from './faqSimple'
+import faqv2 from './faq-v2'
 import brandCollaboration from './brandCollaboration'
 import youtubeId from './youtubeId'
 import homepageImage from './homepageImage'
@@ -62,6 +63,7 @@ export const schemaTypes = [
   shortlist,
   jobBoard,
   faq,
+  faqv2,
   brandCollaboration,
   youtubeId,
   homepageImage,
