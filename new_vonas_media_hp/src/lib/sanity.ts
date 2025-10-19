@@ -1903,3 +1903,80 @@ export async function getStudioCounterData(pageLocation: string = 'studio-home')
   
   return fetchSanityData(query, { pageLocation }, fallback);
 }
+
+export async function getFaqData() {
+  const query = `*[_type == "faqV2"][0] {
+    _id,
+    sidebarTitle,
+    sidebarDescription,
+    "sidebarBannerUrl": sidebarBanner.asset->url,
+    "sidebarBannerAlt": sidebarBanner.alt,
+    searchPlaceholder,
+    "items": items[isActive == true] | order(order asc) {
+      question,
+      answer,
+      order,
+      category,
+      isActive
+    }
+  }`;
+  
+  
+  const fallback = {
+    _id: 'faq-default',
+    sidebarTitle: 'Q&A',
+    sidebarDescription: 'Got questions about channels, creators, or collaborations?\nFind answers here.',
+    sidebarBannerUrl: null,
+    sidebarBannerAlt: 'faq-banner',
+    searchPlaceholder: 'Search questions',
+    items: [
+      {
+        question: "Do you only work with exclusive creators?",
+        answer: "No. We work with both in-house creators and non-exclusive collaborators. All get access to the same strategy, editorial edge, and production craft from our team.",
+        order: 1,
+        category: 'general',
+        isActive: true
+      },
+      {
+        question: "Can brands build a channel with you?",
+        answer: "Yes. We design, launch, and scale channels that brands fully own. We treat every channel like a startup with identity, audience, format, and growth strategy.",
+        order: 2,
+        category: 'brands',
+        isActive: true
+      },
+      {
+        question: "What types of content do you focus on?",
+        answer: "Our sweet spot is story-driven video—YouTube shows, docs, and creator-led formats. We engineer repeatable structures that scale beyond one-off campaigns.",
+        order: 3,
+        category: 'content',
+        isActive: true
+      },
+      {
+        question: "Are you a production house or an agency?",
+        answer: "Neither. We're a content-first media lab. We combine editorial DNA from journalism, production muscle from studios, and culture sense from the streets.",
+        order: 4,
+        category: 'general',
+        isActive: true
+      },
+      {
+        question: "How do you select creators to work with?",
+        answer: "We look for storytellers who think like journalists but move like entrepreneurs. Technical skills matter, but cultural awareness and authentic voice matter more.",
+        order: 5,
+        category: 'creators',
+        isActive: true
+      },
+      {
+        question: "What makes your approach different?",
+        answer: "We build formats over campaigns. Creators as partners. Content at the core. We don't chase trends—we shape culture with stories that stick.",
+        order: 6,
+        category: 'general',
+        isActive: true
+      }
+    ]
+  };
+  
+  const result = await fetchSanityData(query, {}, fallback);
+  console.log('📦 FAQ Result from CMS:', result ? '✅ Got data' : '⚠️ Using fallback');
+  
+  return result;
+}

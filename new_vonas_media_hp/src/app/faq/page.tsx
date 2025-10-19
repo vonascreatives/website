@@ -1,6 +1,7 @@
 import React from "react";
 import { Metadata } from "next";
 import FaqMain from "@/_pages/faq/faq-main";
+import { getFaqData } from "@/lib/sanity";
 import { generateMetadata as generateSEOMetadata, generateOrganizationSchema, StructuredData, SEO_DEFAULTS } from "@/utils/seo";
 
 export const metadata: Metadata = generateSEOMetadata({
@@ -11,13 +12,14 @@ export const metadata: Metadata = generateSEOMetadata({
   type: 'website',
 });
 
-const FaqPage = () => {
+const FaqPage = async () => {
+  const faqData = await getFaqData();
   const organizationSchema = generateOrganizationSchema();
   
   return (
     <>
       <StructuredData data={organizationSchema} />
-      <FaqMain/>
+      <FaqMain initialFaqData={faqData} />
     </>
   );
 };
