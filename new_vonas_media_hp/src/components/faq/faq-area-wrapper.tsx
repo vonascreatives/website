@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Image from "next/image";
 import { Search } from "../svg";
 import faq_banner from '@/assets/img/inner-faq/faq/banner-faq.jpg';
@@ -23,54 +23,37 @@ type IFaqData = {
   items: IFaqItem[];
 }
 
-function FaqLoading() {
-  return (
-    <div className="fq-faq-area fq-faq-bdr pt-80 pb-140">
-      <div className="container">
-        <div className="row">
-          <div className="col-xl-8 col-lg-8">
-            <div className="fq-faq-wrapper">
-              <p>Loading FAQs...</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+type FaqAreaWrapperProps = {
+  initialFaqData?: IFaqData;
 }
 
-export default function FaqAreaWrapper() {
-  const [faqData, setFaqData] = useState<IFaqData | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    async function fetchFaqData() {
-      try {
-        const response = await fetch('/api/faq');
-        const data = await response.json();
-        setFaqData(data);
-      } catch (error) {
-        console.error('Error fetching FAQ data:', error);
-        setFaqData({
-          _id: 'faq-default',
-          sidebarTitle: 'Q&A',
-          sidebarDescription: 'Got questions about channels, creators, or collaborations?\nFind answers here.',
-          sidebarBannerUrl: null,
-          sidebarBannerAlt: 'faq-banner',
-          searchPlaceholder: 'Search questions',
-          items: []
-        });
-      } finally {
-        setLoading(false);
-      }
+const defaultFaqData: IFaqData = {
+  _id: 'faq-default',
+  sidebarTitle: 'Q&A',
+  sidebarDescription: 'Got questions about channels, creators, or collaborations?\nFind answers here.',
+  sidebarBannerUrl: null,
+  sidebarBannerAlt: 'faq-banner',
+  searchPlaceholder: 'Search questions',
+  items: [
+    {
+      question: "Do you only work with exclusive creators?",
+      answer: "No. We work with both in-house creators and non-exclusive collaborators. All get access to the same strategy, editorial edge, and production craft from our team.",
+      order: 1,
+      category: 'general',
+      isActive: true
+    },
+    {
+      question: "Can brands build a channel with you?",
+      answer: "Yes. We design, launch, and scale channels that brands fully own. We treat every channel like a startup with identity, audience, format, and growth strategy.",
+      order: 2,
+      category: 'brands',
+      isActive: true
     }
+  ]
+};
 
-    fetchFaqData();
-  }, []);
-
-  if (loading || !faqData) {
-    return <FaqLoading />;
-  }
+export default function FaqAreaWrapper({ initialFaqData }: FaqAreaWrapperProps) {
+  const faqData = initialFaqData || defaultFaqData;
 
   return (
     <div className="fq-faq-area fq-faq-bdr pt-80 pb-140">

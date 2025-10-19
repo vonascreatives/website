@@ -1921,7 +1921,6 @@ export async function getFaqData() {
     }
   }`;
   
-  console.log('🔍 FAQ Query:', query);
   
   const fallback = {
     _id: 'faq-default',

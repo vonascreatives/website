@@ -17,7 +17,29 @@ import FooterTwo from "@/layouts/footers/footer-two";
 import { charAnimation, titleAnimation } from "@/utils/title-animation";
 import FaqAreaWrapper from "@/components/faq/faq-area-wrapper";
 
-const FaqMain = () => {
+type IFaqItem = {
+  question: string;
+  answer: string;
+  order: number;
+  category?: string;
+  isActive: boolean;
+}
+
+type IFaqData = {
+  _id: string;
+  sidebarTitle: string;
+  sidebarDescription: string;
+  sidebarBannerUrl: string | null;
+  sidebarBannerAlt: string;
+  searchPlaceholder: string;
+  items: IFaqItem[];
+}
+
+type FaqMainProps = {
+  initialFaqData?: IFaqData;
+}
+
+const FaqMain = ({ initialFaqData }: FaqMainProps) => {
   useScrollSmooth();
 
   useGSAP(() => {
@@ -68,7 +90,7 @@ const FaqMain = () => {
               {/* faq hero */}
 
               {/* faq area */}
-              <FaqAreaWrapper/>
+              <FaqAreaWrapper initialFaqData={initialFaqData} />
               {/* faq area */}
 
               {/* big text */}
