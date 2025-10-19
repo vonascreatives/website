@@ -1976,7 +1976,71 @@ export async function getFaqData() {
   };
   
   const result = await fetchSanityData(query, {}, fallback);
-  console.log('📦 FAQ Result from CMS:', result ? '✅ Got data' : '⚠️ Using fallback');
   
   return result;
+}
+
+// Affiliate Links data
+export async function getAffiliateLinksData() {
+  const query = `*[_type == "affiliateLink" && isActive == true] | order(displayOrder asc) {
+    _id,
+    title,
+    "slug": slug.current,
+    category,
+    year,
+    "image": image.asset->url,
+    "imageAlt": image.alt,
+    affiliateUrl,
+    hoverText,
+    displayOrder,
+    featured,
+    isActive
+  }`;
+  
+  const fallback = [
+    {
+      _id: '1',
+      title: 'The Stage',
+      slug: 'the-stage',
+      category: 'Branding',
+      year: '2024',
+      image: '/assets/img/inner-project/portfolio-col-2/port-9.jpg',
+      imageAlt: 'The Stage',
+      affiliateUrl: '/portfolio-details-1',
+      hoverText: 'View Demo',
+      displayOrder: 1,
+      featured: false,
+      isActive: true
+    },
+    {
+      _id: '2',
+      title: 'Big dream',
+      slug: 'big-dream',
+      category: 'Creative',
+      year: '2023',
+      image: '/assets/img/inner-project/portfolio-col-2/port-8.jpg',
+      imageAlt: 'Big dream',
+      affiliateUrl: '/portfolio-details-1',
+      hoverText: 'View Demo',
+      displayOrder: 2,
+      featured: false,
+      isActive: true
+    },
+    {
+      _id: '3',
+      title: 'Sed Lectus',
+      slug: 'sed-lectus',
+      category: 'Concept',
+      year: '2023',
+      image: '/assets/img/inner-project/portfolio-col-2/port-7.jpg',
+      imageAlt: 'Sed Lectus',
+      affiliateUrl: '/portfolio-details-1',
+      hoverText: 'View Demo',
+      displayOrder: 3,
+      featured: false,
+      isActive: true
+    },
+  ];
+  
+  return fetchSanityData(query, {}, fallback);
 }
