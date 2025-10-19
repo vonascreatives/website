@@ -989,5 +989,13 @@ export const deskStructure: StructureResolver = (S) => {
                 .child(S.documentTypeList('author')),
             ])
         ),
+
+        S.listItem()
+          .title('Affiliate Links')
+          .icon(StarIcon)
+          .child(
+            S.documentTypeList('affiliateLink')
+              .title('Affiliate Links')
+          ),
     ])
 }

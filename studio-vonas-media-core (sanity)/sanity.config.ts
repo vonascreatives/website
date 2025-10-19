@@ -26,7 +26,7 @@ export default defineConfig({
     structureTool({structure: deskStructure}),
     media(),
     visionTool(),
-    dashboardTool(),
+    dashboardTool({}),
     colorInput(),
     assist(),
   ],
@@ -42,7 +42,7 @@ export default defineConfig({
       ]
     },
   },
-  actions: (prev, context) => {
+  actions: (prev: any[], context: any) => {
     switch (context.schemaType) {
       case 'kb':
         return [SetSlugAndPublishAction, ...prev]

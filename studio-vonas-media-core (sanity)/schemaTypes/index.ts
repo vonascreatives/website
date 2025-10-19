@@ -7,6 +7,7 @@ import kbCategory from './kbCategory'
 import kbTag from './kbTag' // New tag system
 
 // KB Page Builder Modules
+import affiliateLink  from './affiliate-links'
 import kbModules from './objects/kbModules'
 import exclusiveCreator from './exclusiveCreator'
 import creator from './creator'
@@ -51,6 +52,8 @@ export const schemaTypes = [
   author,
   teamMember,
   mediaAsset,
+  // Affiliate Links 
+  affiliateLink,
   // Knowledge Base
   kbCategory,
   kbTag, // New tag system
