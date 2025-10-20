@@ -1,10 +1,9 @@
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { CheckCircle } from 'lucide-react';
 import { ContentHeader } from './content-header';
-import { StepCounter } from './step-counter';
 import { RelatedArticles } from './related-articles';
-import { WorkflowSteps } from './workflow-steps';
 import { PortableText } from '@portabletext/react';
 import type { KnowledgeBaseItem } from '@/data/knowledge-base-data';
 
@@ -14,6 +13,7 @@ interface MainContentProps {
 }
 
 export function MainContent({ item, relatedArticles }: MainContentProps) {
+  const router = useRouter();
   const [selectedTags, setSelectedTags] = useState<Set<string>>(new Set());
 
   if (!item) {
@@ -31,16 +31,8 @@ export function MainContent({ item, relatedArticles }: MainContentProps) {
     );
   }
 
-  const toggleTag = (tag: string) => {
-    setSelectedTags(prev => {
-      const newSet = new Set(prev);
-      if (newSet.has(tag)) {
-        newSet.delete(tag);
-      } else {
-        newSet.add(tag);
-      }
-      return newSet;
-    });
+  const handleTagClick = (tag: string) => {
+    router.push(`/kb/tag/${encodeURIComponent(tag)}`);
   };
 
   const isWorkflow = item.type === 'Workflow';
@@ -171,14 +163,14 @@ export function MainContent({ item, relatedArticles }: MainContentProps) {
             <h3 className="text-base font-medium text-gray-900 mb-3">Tags</h3>
             <div className="flex flex-wrap gap-2">
               {item.tags.map((tag) => (
-                <span
+                <button
                   key={tag}
-                  className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded cursor-pointer hover:bg-gray-200 transition-colors"
-                  onClick={() => toggleTag(tag)}
+                  className="px-3 py-1.5 bg-blue-50 text-blue-700 text-xs rounded-full cursor-pointer hover:bg-blue-100 transition-colors font-medium"
+                  onClick={() => handleTagClick(tag)}
                   data-testid={`tag-${tag}`}
                 >
-                  {tag}
-                </span>
+                  #{tag}
+                </button>
               ))}
             </div>
           </div>

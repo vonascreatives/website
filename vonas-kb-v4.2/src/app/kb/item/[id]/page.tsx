@@ -26,11 +26,9 @@ export default function KBItemPage(props: any) {
     topLevelSections,
     companyChildren,
     showsChildren,
-    teamChildren,
     productionChildren,
     toolsChildren,
     partnersChildren,
-    policiesChildren,
   } = useKnowledgeBaseFlat()
 
   useEffect(() => {
@@ -67,11 +65,9 @@ export default function KBItemPage(props: any) {
         sections={topLevelSections}
         companyChildren={companyChildren}
         showsChildren={showsChildren}
-        teamChildren={teamChildren}
         productionChildren={productionChildren}
         toolsChildren={toolsChildren}
         partnersChildren={partnersChildren}
-        policiesChildren={policiesChildren}
       />
 
       <div className="flex pt-14 max-w-screen-2xl mx-auto">
