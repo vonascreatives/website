@@ -27,12 +27,10 @@ export default defineType({
       options: {
         list: [
           { title: 'Company', value: 'company' },
-          { title: 'Team', value: 'team' },
           { title: 'Production', value: 'production' },
           { title: 'Shows', value: 'shows' },
           { title: 'Tools', value: 'tools' },
           { title: 'Partners', value: 'partners' },
-          { title: 'Policies', value: 'policies' },
         ],
         layout: 'radio',
       },
@@ -314,12 +312,10 @@ export default defineType({
     prepare({ title, category, itemType, parentPage, section, status, media, type }) {
       const categoryMap = {
         company: 'Company',
-        team: 'Team',
         production: 'Production',
         shows: 'Shows',
         tools: 'Tools',
         partners: 'Partners',
-        policies: 'Policies',
       }
       
       // Build hierarchical display for organization

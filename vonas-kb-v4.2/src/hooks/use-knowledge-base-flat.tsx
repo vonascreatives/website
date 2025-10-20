@@ -80,31 +80,44 @@ export function useKnowledgeBaseFlat() {
       try {
         const staticSections = [
           { _id: 'nav-company', title: 'Company', slug: { current: 'company' } },
-          { _id: 'nav-team', title: 'Team', slug: { current: 'team' } },
           { _id: 'nav-production', title: 'Production', slug: { current: 'production' } },
           { _id: 'nav-shows', title: 'Shows', slug: { current: 'shows' } },
           { _id: 'nav-tools', title: 'Tools', slug: { current: 'tools' } },
           { _id: 'nav-partners', title: 'Partners', slug: { current: 'partners' } },
-          { _id: 'nav-policies', title: 'Policies', slug: { current: 'policies' } },
         ]
         setTopLevelSections(staticSections)
 
-        const [companyRes, teamRes, productionRes, toolsRes, partnersRes, showsRes, policiesRes] = await Promise.all([
-          fetch('/api/kb/company').then((r)=>r.json()).catch(()=>({ok:false,data:[]})),
-          fetch('/api/kb/team').then((r)=>r.json()).catch(()=>({ok:false,data:[]})),
-          fetch('/api/kb/production').then((r)=>r.json()).catch(()=>({ok:false,data:[]})),
-          fetch('/api/kb/tools').then((r)=>r.json()).catch(()=>({ok:false,data:[]})),
-          fetch('/api/kb/partners').then((r)=>r.json()).catch(()=>({ok:false,data:[]})),
-          fetch('/api/kb/shows').then((r)=>r.json()).catch(()=>({ok:false,data:[]})),
-          fetch('/api/kb/policies').then((r)=>r.json()).catch(()=>({ok:false,data:[]})),
+        const fetchWithErrorHandling = async (url: string) => {
+          try {
+            const response = await fetch(url)
+            if (!response.ok) {
+              console.warn(`API ${url} returned ${response.status}`)
+              return { ok: false, data: [] }
+            }
+            const contentType = response.headers.get('content-type')
+            if (!contentType || !contentType.includes('application/json')) {
+              console.warn(`API ${url} returned non-JSON response`)
+              return { ok: false, data: [] }
+            }
+            return await response.json()
+          } catch (error) {
+            console.error(`Error fetching ${url}:`, error)
+            return { ok: false, data: [] }
+          }
+        }
+
+        const [companyRes, productionRes, toolsRes, partnersRes, showsRes] = await Promise.all([
+          fetchWithErrorHandling('/api/kb/company'),
+          fetchWithErrorHandling('/api/kb/production'),
+          fetchWithErrorHandling('/api/kb/tools'),
+          fetchWithErrorHandling('/api/kb/partners'),
+          fetchWithErrorHandling('/api/kb/shows'),
         ])
         const showPages = showsRes.ok ? (showsRes.data || []) : []
         setCompanyChildren(companyRes.ok ? (companyRes.data||[]) : [])
-        setTeamChildren(teamRes.ok ? (teamRes.data||[]) : [])
         setProductionChildren(productionRes.ok ? (productionRes.data||[]) : [])
         setToolsChildren(toolsRes.ok ? (toolsRes.data||[]) : [])
         setPartnersChildren(partnersRes.ok ? (partnersRes.data||[]) : [])
-        setPoliciesChildren(policiesRes.ok ? (policiesRes.data||[]) : [])
         setShowsChildren(showPages)
 
         if (showPages.length > 0) {
@@ -127,6 +140,11 @@ export function useKnowledgeBaseFlat() {
     setLoading(true)
     try {
       const res = await fetch(`/api/kb/page/${pageId}`)
+      if (!res.ok) {
+        console.warn(`[selectShow] API returned ${res.status}`)
+        setLoading(false)
+        return
+      }
       const data = await res.json()
       if (data.ok) {
         const pageDoc = data.page
@@ -275,6 +293,10 @@ export function useKnowledgeBaseFlat() {
   const selectItem = useCallback(async (itemId: string) => {
     try {
       const res = await fetch(`/api/kb/item/${itemId}`)
+      if (!res.ok) {
+        console.warn(`[selectItem] API returned ${res.status}`)
+        return
+      }
       const data = await res.json()
       if (data.ok && (data.data || data.item)) {
         setSelectedItem(transformKBItem((data.data || data.item)))

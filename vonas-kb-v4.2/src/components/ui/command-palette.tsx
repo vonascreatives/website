@@ -58,6 +58,11 @@ export function CommandPalette({ open, onOpenChange, onItemSelect, shows, query,
     const run = async () => {
       try {
         const res = await fetch(`/api/kb/search?q=${encodeURIComponent(q)}`, { signal: controller.signal });
+        if (!res.ok) {
+          console.warn(`[CommandPalette] Search API returned ${res.status}`);
+          setRemoteResults([]);
+          return;
+        }
         const json = await res.json();
         if (json?.ok && Array.isArray(json.data)) {
           const mapped = json.data.map((it: any) => ({

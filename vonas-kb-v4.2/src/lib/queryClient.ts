@@ -38,6 +38,14 @@ export const getQueryFn: <T>(options: {
     }
 
     await throwIfResNotOk(res);
+    
+    // Check content-type before parsing JSON
+    const contentType = res.headers.get("content-type");
+    if (!contentType || !contentType.includes("application/json")) {
+      console.warn(`[queryClient] Non-JSON response from ${queryKey.join("/")} (${contentType})`);
+      throw new Error("Server returned non-JSON response");
+    }
+    
     return await res.json();
   };
 

@@ -3,7 +3,7 @@ export interface KnowledgeBaseItem {
   _id: string
   title: string
   slug: { current: string }
-  category: 'company' | 'team' | 'production' | 'shows' | 'tools' | 'partners' | 'policies'
+  category: 'company' | 'production' | 'shows' | 'tools' | 'partners' 
   description: string
   content?: any[] // Rich text content from Sanity
   type: 'Article' | 'Video' | 'Workflow' | 'Reference'
@@ -25,12 +25,10 @@ export interface CategorySection {
 
 export const CATEGORIES = [
   { id: 'company', title: 'Company' },
-  { id: 'team', title: 'Team' },
   { id: 'production', title: 'Production' },
   { id: 'shows', title: 'Shows' },
   { id: 'tools', title: 'Tools' },
   { id: 'partners', title: 'Partners' },
-  { id: 'policies', title: 'Policies' },
 ] as const
 
 export type CategoryId = typeof CATEGORIES[number]['id']
