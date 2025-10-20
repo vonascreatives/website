@@ -962,8 +962,8 @@ export const deskStructure: StructureResolver = (S) => {
                 .title('Awards & Recognition')
                 .child(S.documentTypeList('award')),
               S.listItem()
-                .title('Case Studies')
-                .child(S.documentTypeList('caseStudy')),
+                .title('Use Cases')
+                .child(S.documentTypeList('useCase')),
               S.listItem()
                 .title('Fun Facts')
                 .child(S.documentTypeList('funFact')),

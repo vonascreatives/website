@@ -1,15 +1,15 @@
 import { defineField, defineType } from 'sanity'
 
 export default defineType({
-  name: 'caseStudy',
-  title: 'Case Study',
+  name: 'useCase',
+  title: 'Use Case',
   type: 'document',
   fields: [
     defineField({
       name: 'title',
-      title: 'Case Study Title',
+      title: 'Use Case Title',
       type: 'string',
-      description: 'Main title of the case study',
+      description: 'Main title of the use case',
       validation: Rule => Rule.required()
     }),
     defineField({
@@ -33,7 +33,7 @@ export default defineType({
       name: 'heroImage',
       title: 'Hero Background Image',
       type: 'image',
-      description: 'Large background image for the case study hero section',
+      description: 'Large background image for the use case hero section',
       options: {
         hotspot: true
       },
@@ -100,7 +100,7 @@ export default defineType({
       name: 'sections',
       title: 'Content Sections',
       type: 'array',
-      description: 'Different sections of the case study',
+      description: 'Different sections of the use case',
       of: [
         {
           type: 'object',
@@ -115,14 +115,14 @@ export default defineType({
               validation: Rule => Rule.required()
             },
             {
-              name: 'subtitle',
-              title: 'Subtitle',
+              name: 'goal',
+              title: 'Goal',
               type: 'string',
-              description: 'Section subtitle or category (e.g., "Objective", "An introduction")'
+              description: 'Section goal or category (e.g., "An introduction")'
             },
             {
-              name: 'content',
-              title: 'Content',
+              name: 'caseDetails',
+              title: 'Case Details',
               type: 'array',
               of: [
                 {
@@ -131,20 +131,18 @@ export default defineType({
                   lists: [],
                 }
               ],
-              description: 'Text content for this section'
+              description: 'Detailed content for this section'
             }
           ],
           preview: {
             select: {
               title: 'sectionTitle',
-              subtitle: 'subtitle'
+              subtitle: 'goal'
             }
           }
         }
       ]
-    }),
-    
-    // Gallery Images
+    }),    // Gallery Images
     defineField({
       name: 'galleryImages',
       title: 'Gallery Images',
@@ -234,13 +232,13 @@ export default defineType({
       name: 'displayOrder',
       title: 'Display Order',
       type: 'number',
-      description: 'Order in which this case study should appear (lower numbers appear first)',
+      description: 'Order in which this use case should appear (lower numbers appear first)',
       validation: Rule => Rule.required().min(1),
       initialValue: 1
     }),
     defineField({
       name: 'featured',
-      title: 'Featured Case Study',
+      title: 'Featured Use Case',
       type: 'boolean',
       description: 'Mark as featured to highlight on homepage',
       initialValue: false
@@ -249,7 +247,7 @@ export default defineType({
       name: 'isActive',
       title: 'Active',
       type: 'boolean',
-      description: 'Show/hide this case study on the website',
+      description: 'Show/hide this use case on the website',
       initialValue: true
     }),
     defineField({
@@ -260,7 +258,7 @@ export default defineType({
       options: {
         layout: 'tags'
       },
-      description: 'Categories or tags for filtering case studies'
+      description: 'Categories or tags for filtering use cases'
     })
   ],
   preview: {

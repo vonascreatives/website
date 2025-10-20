@@ -7,10 +7,10 @@ export default defineType({
   type: 'document',
   fields: [
     defineField({
-      name: 'commissionOffer',
-      title: 'Commission Offer',
+      name: 'offerText',
+      title: 'Offer Text',
       type: 'string',
-      description: 'Commission or offer for this affiliate link',
+      description: 'Offer text for this affiliate link',
       validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -18,16 +18,16 @@ export default defineType({
       title: 'Slug',
       type: 'slug',
       options: {
-        source: 'commissionOffer',
+        source: 'offerText',
         maxLength: 96,
       },
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: 'brandName',
-      title: 'Brand Name',
+      name: 'appName',
+      title: 'App Name',
       type: 'string',
-      description: 'Brand name for this affiliate link',
+      description: 'App name for this affiliate link',
       validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -94,8 +94,8 @@ export default defineType({
   ],
   preview: {
     select: {
-      title: 'commissionOffer',
-      subtitle: 'brandName',
+      title: 'offerText',
+      subtitle: 'appName',
       media: 'image',
       year: 'year',
       isActive: 'isActive',

@@ -26,7 +26,7 @@ import studioHero from './studiohero'
 import studioCounter from './studiocounterstats'
 import studioTestimonial from './studiotestimonials'
 import award  from './award'
-import caseStudy from './casestudy'
+import useCase from './usecase'
 import funFact from './funfact'
 
 // Documentation types
@@ -84,7 +84,7 @@ export const schemaTypes = [
   studioCounter,
   studioTestimonial,
   award,
-  caseStudy,
+  useCase,
   funFact,
   
   // Documentation types

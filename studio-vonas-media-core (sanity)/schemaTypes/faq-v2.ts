@@ -90,10 +90,9 @@ export default defineType({
               options: {
                 list: [
                   { title: 'General', value: 'general' },
-                  { title: 'Creators', value: 'creators' },
+                  { title: 'Freelancer', value: 'freelancer' },
                   { title: 'Brands', value: 'brands' },
-                  { title: 'Content', value: 'content' },
-                  { title: 'Channels', value: 'channels' },
+                  { title: 'Creator', value: 'creator' },
                 ],
               },
             },
