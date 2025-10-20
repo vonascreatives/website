@@ -61,8 +61,8 @@ const VideOne = () => {
     tl.to(videoEl, {
       scale: 1,
       autoAlpha: 1,
-      duration: 1.2,
-      ease: "power3.out",
+      duration: 2.5,
+      ease: "power2.out",
     });
 
     return () => {
