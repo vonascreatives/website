@@ -41,10 +41,10 @@ interface HomeMainProps {
   brands?: any[];
   homepageImages?: any;
   awards?: any[];
-  featuredCaseStudy?: any;
+  featuredUseCase?: any;
 }
 
-const HomeMain = ({ channels, creators, brands, homepageImages, awards, featuredCaseStudy }: HomeMainProps) => {
+const HomeMain = ({ channels, creators, brands, homepageImages, awards, featuredUseCase }: HomeMainProps) => {
   useScrollSmooth();
   useEffect(() => {
     if (typeof document !== 'undefined') {
@@ -129,13 +129,13 @@ const HomeMain = ({ channels, creators, brands, homepageImages, awards, featured
             <AwardOne awards={awards} />
             {/* award area */}
 
-            {/* case study area */}
-            {featuredCaseStudy ? (
-              <PortfolioDetailsShowcaseTwoAreaCms caseStudy={featuredCaseStudy} />
+            {/* use case area */}
+            {featuredUseCase ? (
+              <PortfolioDetailsShowcaseTwoAreaCms useCase={featuredUseCase} />
             ) : (
               <PortfolioDetailsShowcaseTwoArea />
             )}
-            {/* case study area */}
+            {/* use case area */}
 
             {/* team area */}
             <TeamOne creators={creators} />
