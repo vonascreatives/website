@@ -7,12 +7,12 @@ import { urlFor } from '@/lib/sanity';
 // Types
 interface SectionType {
   sectionTitle: string;
-  subtitle?: string;
-  content?: any[];
+  goal?: string;
+  caseDetails?: any[];
 }
 
-interface CaseStudyProps {
-  caseStudy: {
+interface UseCaseProps {
+  useCase: {
     title: string;
     subtitle?: string;
     heroImageUrl: string;
@@ -69,15 +69,15 @@ const portableTextComponents = {
   },
 };
 
-export default function PortfolioDetailsShowcaseTwoAreaCms({ caseStudy }: CaseStudyProps) {
+export default function PortfolioDetailsShowcaseTwoAreaCms({ useCase }: UseCaseProps) {
   
   return (
     <>
     {/* portfolio hero */}
-    <div className="showcase-details-2-area showcase-details-2-bg p-relative" style={{backgroundImage: `url(${caseStudy.heroImageUrl})`}}>
-          {caseStudy.websiteUrl && (
+    <div className="showcase-details-2-area showcase-details-2-bg p-relative" style={{backgroundImage: `url(${useCase.heroImageUrl})`}}>
+          {useCase.websiteUrl && (
             <div className="showcase-details-2-link">
-              <a className="project-details-custom-link" href={caseStudy.websiteUrl} target="_blank" rel="noopener noreferrer">
+              <a className="project-details-custom-link" href={useCase.websiteUrl} target="_blank" rel="noopener noreferrer">
                   Visit Website
                   <span>
                     <UpArrow/>
@@ -90,39 +90,39 @@ export default function PortfolioDetailsShowcaseTwoAreaCms({ caseStudy }: CaseSt
                 <div className="row">
                   <div className="col-xl-8">
                       <div className="showcase-details-2-title-box">
-                        <h5 className="showcase-details-2-title mb-20 tp-char-animation">{caseStudy.title}</h5>
-                        {caseStudy.subtitle && (
-                          <span className="showcase-details-2-subtitle tp_title_anim">{caseStudy.subtitle}</span>
+                        <h5 className="showcase-details-2-title mb-20 tp-char-animation">{useCase.title}</h5>
+                        {useCase.subtitle && (
+                          <span className="showcase-details-2-subtitle tp_title_anim">{useCase.subtitle}</span>
                         )}
                       </div>
                   </div>
                   <div className="col-xxl-7 col-xl-10">
                       <div className="showcase-details-2-content tp_title_anim">
-                        <p>{caseStudy.summary}</p>
+                        <p>{useCase.summary}</p>
                       </div>
                       <div className="showcase-details-2-info-wrap d-flex align-items-center justify-content-between">
-                        {caseStudy.client && (
+                        {useCase.client && (
                           <div className="showcase-details-2-info tp_fade_bottom">
                               <span>CLIENT</span>
-                              <h5>{caseStudy.client}</h5>
+                              <h5>{useCase.client}</h5>
                           </div>
                         )}
-                        {caseStudy.services && (
+                        {useCase.services && (
                           <div className="showcase-details-2-info tp_fade_bottom">
                               <span>Services</span>
-                              <h5>{caseStudy.services}</h5>
+                              <h5>{useCase.services}</h5>
                           </div>
                         )}
-                        {caseStudy.industry && (
+                        {useCase.industry && (
                           <div className="showcase-details-2-info tp_fade_bottom">
                               <span>INDUSTRIES</span>
-                              <h5>{caseStudy.industry}</h5>
+                              <h5>{useCase.industry}</h5>
                           </div>
                         )}
-                        {caseStudy.date && (
+                        {useCase.date && (
                           <div className="showcase-details-2-info tp_fade_bottom">
                               <span>Date</span>
-                              <h5>{new Date(caseStudy.date).toLocaleDateString('en-US', {month: 'long', year: 'numeric'})}</h5>
+                              <h5>{new Date(useCase.date).toLocaleDateString('en-US', {month: 'long', year: 'numeric'})}</h5>
                           </div>
                         )}
                       </div>
@@ -134,14 +134,14 @@ export default function PortfolioDetailsShowcaseTwoAreaCms({ caseStudy }: CaseSt
       {/* portfolio hero */}
 
       {/* content section 1 */}
-      {caseStudy.sections && caseStudy.sections.length > 0 && (
+      {useCase.sections && useCase.sections.length > 0 && (
         <div className="showcase-details-2-area pt-120 pb-120">
           <div className="container">
-            {caseStudy.sections[0].sectionTitle && (
+            {useCase.sections[0].sectionTitle && (
               <div className="row">
                 <div className="col-xl-8">
                   <div className="showcase-details-2-section-box">
-                    <h4 className="showcase-details-2-section-title tp-char-animation">{caseStudy.sections[0].sectionTitle}</h4>
+                    <h4 className="showcase-details-2-section-title tp-char-animation">{useCase.sections[0].sectionTitle}</h4>
                   </div>
                 </div>
               </div>
@@ -151,15 +151,15 @@ export default function PortfolioDetailsShowcaseTwoAreaCms({ caseStudy }: CaseSt
                 <div className="showcase-details-2-section-left">
                   <span className="ab-inner-subtitle mb-25">
                     <Leaf/>
-                    {caseStudy.sections[0].subtitle || "Overview"}
+                    {useCase.sections[0].goal || "Overview"}
                   </span>
                 </div>
               </div>
               <div className="col-xl-9">
                 <div className="showcase-details-2-section-right tp_title_anim">
-                  {caseStudy.sections[0].content && (
+                  {useCase.sections[0].caseDetails && (
                     <PortableText 
-                      value={caseStudy.sections[0].content}
+                      value={useCase.sections[0].caseDetails}
                       components={portableTextComponents}
                     />
                   )}
@@ -172,8 +172,8 @@ export default function PortfolioDetailsShowcaseTwoAreaCms({ caseStudy }: CaseSt
       {/* content section 1 */}
 
       {/* moving image gallery */}
-      {caseStudy.galleryImages && caseStudy.galleryImages.length > 0 && (() => {
-        const galleryImages = caseStudy.galleryImages;
+      {useCase.galleryImages && useCase.galleryImages.length > 0 && (() => {
+        const galleryImages = useCase.galleryImages;
         const halfLength = Math.ceil(galleryImages.length / 2);
         
         return (
@@ -213,14 +213,14 @@ export default function PortfolioDetailsShowcaseTwoAreaCms({ caseStudy }: CaseSt
       {/* moving image gallery */}
 
       {/* content section 2 */}
-      {caseStudy.sections && caseStudy.sections.length > 1 && (
+      {useCase.sections && useCase.sections.length > 1 && (
         <div className="showcase-details-2-area pt-120 pb-120">
           <div className="container">
-            {caseStudy.sections[1].sectionTitle && (
+            {useCase.sections[1].sectionTitle && (
               <div className="row">
                 <div className="col-xl-8">
                   <div className="showcase-details-2-section-box">
-                    <h4 className="showcase-details-2-section-title tp-char-animation">{caseStudy.sections[1].sectionTitle}</h4>
+                    <h4 className="showcase-details-2-section-title tp-char-animation">{useCase.sections[1].sectionTitle}</h4>
                   </div>
                 </div>
               </div>
@@ -230,15 +230,15 @@ export default function PortfolioDetailsShowcaseTwoAreaCms({ caseStudy }: CaseSt
                 <div className="showcase-details-2-section-left">
                   <span className="ab-inner-subtitle mb-25">
                     <Leaf/>
-                    {caseStudy.sections[1].subtitle || "Overview"}
+                    {useCase.sections[1].goal || "Overview"}
                   </span>
                 </div>
               </div>
               <div className="col-xl-9">
                 <div className="showcase-details-2-section-right tp_title_anim">
-                  {caseStudy.sections[1].content && (
+                  {useCase.sections[1].caseDetails && (
                     <PortableText 
-                      value={caseStudy.sections[1].content}
+                      value={useCase.sections[1].caseDetails}
                       components={portableTextComponents}
                     />
                   )}
@@ -251,12 +251,12 @@ export default function PortfolioDetailsShowcaseTwoAreaCms({ caseStudy }: CaseSt
       {/* content section 2 */}
 
       {/* full width image */}
-      {caseStudy.fullWidthImageUrl && (
+      {useCase.fullWidthImageUrl && (
         <div className="showcase-details-2-fullwidth-img">
           <img 
             data-speed=".8" 
-            src={caseStudy.fullWidthImageUrl} 
-            alt={caseStudy.fullWidthImageAlt || "Project showcase"} 
+            src={useCase.fullWidthImageUrl} 
+            alt={useCase.fullWidthImageAlt || "Project showcase"} 
             style={{height:'auto', width:'100%'}}
           />
         </div>
@@ -264,14 +264,14 @@ export default function PortfolioDetailsShowcaseTwoAreaCms({ caseStudy }: CaseSt
       {/* full width image */}
 
       {/* content section 2 */}
-      {caseStudy.sections && caseStudy.sections.length > 2 && (
+      {useCase.sections && useCase.sections.length > 2 && (
         <div className="showcase-details-2-area pt-120 pb-120">
           <div className="container">
-            {caseStudy.sections[2].sectionTitle && (
+            {useCase.sections[2].sectionTitle && (
               <div className="row">
                 <div className="col-xl-8">
                   <div className="showcase-details-2-section-box">
-                    <h4 className="showcase-details-2-section-title tp-char-animation">{caseStudy.sections[2].sectionTitle}</h4>
+                    <h4 className="showcase-details-2-section-title tp-char-animation">{useCase.sections[2].sectionTitle}</h4>
                   </div>
                 </div>
               </div>
@@ -281,15 +281,15 @@ export default function PortfolioDetailsShowcaseTwoAreaCms({ caseStudy }: CaseSt
                 <div className="showcase-details-2-section-left">
                   <span className="ab-inner-subtitle mb-25">
                     <Leaf/>
-                    {caseStudy.sections[2].subtitle || "Overview"}
+                    {useCase.sections[2].goal || "Overview"}
                   </span>
                 </div>
               </div>
               <div className="col-xl-9">
                 <div className="showcase-details-2-section-right tp_title_anim">
-                  {caseStudy.sections[2].content && (
+                  {useCase.sections[2].caseDetails && (
                     <PortableText 
-                      value={caseStudy.sections[2].content}
+                      value={useCase.sections[2].caseDetails}
                       components={portableTextComponents}
                     />
                   )}
@@ -302,29 +302,29 @@ export default function PortfolioDetailsShowcaseTwoAreaCms({ caseStudy }: CaseSt
       {/* content section 2 */}
 
       {/* grid images */}
-      {(caseStudy.gridImageLeftUrl || caseStudy.gridImageRightUrl) && (
+      {(useCase.gridImageLeftUrl || useCase.gridImageRightUrl) && (
         <div className="showcase-details-2-grid-area pb-90">
           <div className="container">
             <div className="row">
-              {caseStudy.gridImageLeftUrl && (
+              {useCase.gridImageLeftUrl && (
                 <div className="col-xl-6 col-lg-6">
                   <div className="showcase-details-2-grid-img mb-30">
                     <img 
                       className="img-left" 
-                      src={caseStudy.gridImageLeftUrl} 
-                      alt={caseStudy.gridImageLeftAlt || "Left grid image"} 
+                      src={useCase.gridImageLeftUrl} 
+                      alt={useCase.gridImageLeftAlt || "Left grid image"} 
                       style={{height:'auto', width:'100%'}}
                     />
                   </div>
                 </div>
               )}
-              {caseStudy.gridImageRightUrl && (
+              {useCase.gridImageRightUrl && (
                 <div className="col-xl-6 col-lg-6">
                   <div className="showcase-details-2-grid-img mb-30">
                     <img 
                       className="img-right" 
-                      src={caseStudy.gridImageRightUrl} 
-                      alt={caseStudy.gridImageRightAlt || "Right grid image"} 
+                      src={useCase.gridImageRightUrl} 
+                      alt={useCase.gridImageRightAlt || "Right grid image"} 
                       style={{height:'auto', width:'100%'}}
                     />
                   </div>
@@ -337,7 +337,7 @@ export default function PortfolioDetailsShowcaseTwoAreaCms({ caseStudy }: CaseSt
       {/* grid images */}
 
       {/* content section 3 */}
-      {caseStudy.sections && caseStudy.sections.length > 3 && (
+      {useCase.sections && useCase.sections.length > 3 && (
         <div className="showcase-details-2-area pb-120">
           <div className="container">
             <div className="row">
@@ -345,15 +345,15 @@ export default function PortfolioDetailsShowcaseTwoAreaCms({ caseStudy }: CaseSt
                 <div className="showcase-details-2-section-left">
                   <span className="ab-inner-subtitle mb-25">
                     <Leaf/>
-                    {caseStudy.sections[3].subtitle || "Overview"}
+                    {useCase.sections[3].goal || "Overview"}
                   </span>
                 </div>
               </div>
               <div className="col-xl-9">
                 <div className="showcase-details-2-section-right tp_title_anim">
-                  {caseStudy.sections[3].content && (
+                  {useCase.sections[3].caseDetails && (
                     <PortableText 
-                      value={caseStudy.sections[3].content}
+                      value={useCase.sections[3].caseDetails}
                       components={portableTextComponents}
                     />
                   )}
