@@ -957,6 +957,25 @@ export const deskStructure: StructureResolver = (S) => {
               S.listItem()
                 .title('Brand Collaborations')
                 .child(S.documentTypeList('brandCollaboration')),
+              S.divider(),
+              S.listItem()
+                .title('Awards & Recognition')
+                .child(S.documentTypeList('award')),
+              S.listItem()
+                .title('Case Studies')
+                .child(S.documentTypeList('caseStudy')),
+              S.listItem()
+                .title('Fun Facts')
+                .child(S.documentTypeList('funFact')),
+              S.listItem()
+                .title('Studio Hero Sections')
+                .child(S.documentTypeList('studioHero')),
+              S.listItem()
+                .title('Studio Counter Stats')
+                .child(S.documentTypeList('studioCounter')),
+              S.listItem()
+                .title('Studio Testimonials')
+                .child(S.documentTypeList('studioTestimonial')),
             ])
         ),
 

@@ -22,6 +22,13 @@ import youtubeId from './youtubeId'
 import homepageImage from './homepageImage'
 import jobTests from './jobTests'
 
+import studioHero from './studiohero'
+import studioCounter from './studiocounterstats'
+import studioTestimonial from './studiotestimonials'
+import award  from './award'
+import caseStudy from './casestudy'
+import funFact from './funfact'
+
 // Documentation types
 import docsSection from './docsSection'
 import docsPage from './docsPage'
@@ -71,6 +78,14 @@ export const schemaTypes = [
   youtubeId,
   homepageImage,
   jobTests,
+  
+  // Homepage Content Schemas
+  studioHero,
+  studioCounter,
+  studioTestimonial,
+  award,
+  caseStudy,
+  funFact,
   
   // Documentation types
   docsSection,
