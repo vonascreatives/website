@@ -1575,8 +1575,8 @@ export async function getAwardsData() {
   return fetchSanityData(query, {}, []);
 }
 
-export async function getCaseStudiesData() {
-  const query = `*[_type == "caseStudy" && isActive == true] | order(displayOrder asc) {
+export async function getUseCasesData() {
+  const query = `*[_type == "useCase" && isActive == true] | order(displayOrder asc) {
     _id,
     title,
     "slug": slug.current,
@@ -1589,7 +1589,11 @@ export async function getCaseStudiesData() {
     services,
     industry,
     date,
-    sections,
+    sections[]{
+      sectionTitle,
+      goal,
+      caseDetails
+    },
     "galleryImages": galleryImages[]{
       "url": asset->url,
       alt,
@@ -1609,8 +1613,8 @@ export async function getCaseStudiesData() {
   return fetchSanityData(query, {}, []);
 }
 
-export async function getFeaturedCaseStudy() {
-  const query = `*[_type == "caseStudy" && isActive == true && featured == true] | order(displayOrder asc)[0]{
+export async function getFeaturedUseCase() {
+  const query = `*[_type == "useCase" && isActive == true && featured == true] | order(displayOrder asc)[0]{
     _id,
     title,
     "slug": slug.current,
@@ -1623,7 +1627,11 @@ export async function getFeaturedCaseStudy() {
     services,
     industry,
     date,
-    sections,
+    sections[]{
+      sectionTitle,
+      goal,
+      caseDetails
+    },
     "galleryImages": galleryImages[]{
       "url": asset->url,
       alt,
@@ -1645,8 +1653,8 @@ export async function getFeaturedCaseStudy() {
   return result;
 }
 
-export async function getCaseStudyBySlug(slug: string) {
-  const query = `*[_type == "caseStudy" && slug.current == $slug][0]{
+export async function getUseCaseBySlug(slug: string) {
+  const query = `*[_type == "useCase" && slug.current == $slug][0]{
     _id,
     title,
     "slug": slug.current,
@@ -1661,8 +1669,8 @@ export async function getCaseStudyBySlug(slug: string) {
     date,
     sections[]{
       sectionTitle,
-      subtitle,
-      content
+      goal,
+      caseDetails
     },
     "galleryImages": galleryImages[]{
       "url": asset->url,
@@ -1984,9 +1992,9 @@ export async function getFaqData() {
 export async function getAffiliateLinksData() {
   const query = `*[_type == "affiliateLink" && isActive == true] | order(displayOrder asc) {
     _id,
-    commissionOffer,
+    offerText,
     "slug": slug.current,
-    brandName,
+    appName,
     year,
     "image": image.asset->url,
     "imageAlt": image.alt,
