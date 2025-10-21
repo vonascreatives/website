@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import { faq_data } from "./faq-area";
+import { faq_data } from "./faq-consolidated";
 import FaqItem from "./faq-item";
 import shape from '@/assets/img/home-02/service/sv-shape-1.png';
 

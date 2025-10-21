@@ -16,25 +16,9 @@ import BigText from "@/components/big-text";
 import FooterTwo from "@/layouts/footers/footer-two";
 import { hoverBtn } from "@/utils/hover-btn";
 import {charAnimation,fadeAnimation,titleAnimation,zoomAnimation} from "@/utils/title-animation";
+import { AffiliateLink, AffiliateLinksProps } from "@/types/affiliate";
 
-type AffiliateLink = {
-  _id: string;
-  title: string;
-  slug: string;
-  category: string;
-  year: string;
-  image: string;
-  imageAlt: string;
-  affiliateUrl: string;
-  hoverText: string;
-  displayOrder: number;
-  featured: boolean;
-  isActive: boolean;
-};
-
-type AffiliateLinksMainProps = {
-  initialAffiliateLinks?: AffiliateLink[];
-};
+type AffiliateLinksMainProps = AffiliateLinksProps;
 
 const AffiliateLinksMain = ({ initialAffiliateLinks = [] }: AffiliateLinksMainProps) => {
   useScrollSmooth();
