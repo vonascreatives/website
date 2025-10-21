@@ -4,23 +4,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { UpArrow } from "../svg";
 import { useIsotop } from "@/hooks/use-isotop";
+import { AffiliateLink } from "@/types/affiliate";
 
 // Type definitions
-type AffiliateLink = {
-  _id: string;
-  offerText: string;
-  slug: string;
-  appName: string;
-  year: string;
-  image: string;
-  imageAlt: string;
-  affiliateUrl: string;
-  hoverText: string;
-  displayOrder: number;
-  featured: boolean;
-  isActive: boolean;
-};
-
 type AffiliateLinksGridAreaProps = {
   initialAffiliateLinks?: AffiliateLink[];
   style_2?: boolean;

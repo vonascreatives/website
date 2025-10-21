@@ -4,23 +4,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { UpArrow } from "../svg";
 import { useIsotop } from "@/hooks/use-isotop";
+import { AffiliateLink } from "@/types/affiliate";
 
 // Type definitions
-type AffiliateLink = {
-  _id: string;
-  commissionOffer: string;
-  slug: string;
-  brandName: string;
-  year: string;
-  image: string;
-  imageAlt: string;
-  affiliateUrl: string;
-  hoverText: string;
-  displayOrder: number;
-  featured: boolean;
-  isActive: boolean;
-};
-
 type AffiliateLinksGridAreaProps = {
   initialAffiliateLinks?: AffiliateLink[];
   style_2?: boolean;
@@ -37,7 +23,7 @@ export default function AffiliateLinksGridArea({
   }, [initIsotop]);
 
   // Helper function to get filter classes for isotope
-  const getFilterClasses = (brandName: string): string => {
+  const getFilterClasses = (appName: string): string => {
     const categoryMap: { [key: string]: string } = {
       'Agency': 'cat1',
       'Visual': 'cat2',
@@ -47,7 +33,7 @@ export default function AffiliateLinksGridArea({
       'Creative': 'cat2 cat4 cat3',
       'Concept': 'cat4 cat2 cat3',
     };
-    return categoryMap[brandName] || 'cat4';
+    return categoryMap[appName] || 'cat4';
   };
 
   return (
@@ -102,7 +88,7 @@ export default function AffiliateLinksGridArea({
             initialAffiliateLinks.map((item) => (
               <div
                 key={item._id}
-                className={`col-xl-4 col-lg-6 col-md-6 grid-item ${getFilterClasses(item.brandName)}`}
+                className={`col-xl-4 col-lg-6 col-md-6 grid-item ${getFilterClasses(item.appName)}`}
               >
                 <div 
                   className="tp-project-5-2-thumb mb-30 p-relative not-hide-cursor" 
@@ -112,17 +98,17 @@ export default function AffiliateLinksGridArea({
                     <Image
                       className="anim-zoomin"
                       src={item.image}
-                      alt={item.imageAlt || item.commissionOffer}
+                      alt={item.imageAlt || item.offerText}
                       width={style_2 ? 573 : 486}
                       height={style_2 ? 683 : 576}
                       style={{ height: "100%" }}
                     />
                     <div className="tp-project-5-2-category tp_fade_anim">
-                      <span>{item.brandName}</span>
+                      <span>{item.appName}</span>
                     </div>
                     <div className="tp-project-5-2-content tp_fade_anim">
                       <span className="tp-project-5-2-meta">{item.year}</span>
-                      <h4 className="tp-project-5-2-title-sm">{item.commissionOffer}</h4>
+                      <h4 className="tp-project-5-2-title-sm">{item.offerText}</h4>
                     </div>
                   </Link>
                 </div>
