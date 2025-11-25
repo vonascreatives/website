@@ -8,6 +8,7 @@ export interface CreatorFilters {
   platforms: string[];
   location: string[];
   sortBy: string;
+  searchQuery: string;
 }
 
 const initialFilters: CreatorFilters = {
@@ -15,7 +16,8 @@ const initialFilters: CreatorFilters = {
   followerRange: '',
   platforms: [],
   location: [],
-  sortBy: ''
+  sortBy: '',
+  searchQuery: ''
 };
 
 export function useCreatorFilters(initialCreators: any[] = []) {
@@ -52,10 +54,11 @@ export function useCreatorFilters(initialCreators: any[] = []) {
   };
 
   const hasActiveFilters = () => {
-    return filters.niches.length > 0 || 
-           filters.followerRange !== '' || 
-           filters.platforms.length > 0 || 
-           filters.location.length > 0;
+    return filters.niches.length > 0 ||
+           filters.followerRange !== '' ||
+           filters.platforms.length > 0 ||
+           filters.location.length > 0 ||
+           filters.searchQuery !== '';
   };
 
   const toggleFilterSidebar = () => {

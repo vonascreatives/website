@@ -61,9 +61,22 @@ const TeamOne = ({ spacing = "pt-20", creators }: IProps) => {
   
   // Use creators data if available, otherwise fallback to static team_data
   let rawDisplayData = creators && creators.length > 0 ? creators : team_data;
-  
+
   // Deduplicate if using CMS data
-  const displayData = creators && creators.length > 0 ? deduplicateTeamMembers(rawDisplayData) : rawDisplayData;
+  let displayData = creators && creators.length > 0 ? deduplicateTeamMembers(rawDisplayData) : rawDisplayData;
+
+  // Prioritize items with images from Sanity CMS
+  if (creators && creators.length > 0) {
+    displayData = [...displayData].sort((a, b) => {
+      const aHasImage = Boolean(a.image || a.photo);
+      const bHasImage = Boolean(b.image || b.photo);
+
+      // Items with images come first
+      if (aHasImage && !bHasImage) return -1;
+      if (!aHasImage && bHasImage) return 1;
+      return 0;
+    });
+  }
   
   
   function handleTeamModal(team: any) {

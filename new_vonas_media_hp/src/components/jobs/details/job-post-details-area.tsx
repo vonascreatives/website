@@ -3,7 +3,11 @@ import { QuoteThree, Share, Tag } from "@/components/svg";
 import BlogDetailsAuthor from "@/components/blog/details/blog-details-author";
 import BlogDetailsNavigation from "@/components/blog/details/blog-details-navigation";
 
-export default function JobPostDetailsArea() {
+interface JobPostDetailsAreaProps {
+  operationsManager?: any;
+}
+
+export default function JobPostDetailsArea({ operationsManager }: JobPostDetailsAreaProps) {
   return (
     <section className="postbox__area tp-blog-sidebar-sticky-area pt-120 pb-120">
       <div className="container">
@@ -114,7 +118,7 @@ export default function JobPostDetailsArea() {
                     </div>
                   </div>
                   {/* blog details author */}
-                  <BlogDetailsAuthor />
+                  <BlogDetailsAuthor operationsManager={operationsManager} />
                   {/* blog details author */}
 
                   {/* blog details navigation */}

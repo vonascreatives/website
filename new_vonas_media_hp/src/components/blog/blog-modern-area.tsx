@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import { getNewsData, getSanityImageUrl } from "@/lib/sanity";
+import { getNewsData } from "@/lib/sanity";
 import usePagination from "@/hooks/use-pagination";
 import Pagination from "../ui/pagination";
 import BlogItem from "./blog-item/blog-item";
@@ -56,10 +56,11 @@ export default function BlogModern() {
                 {first_blog?.heroImage && (
                   <Image 
                     data-speed=".8" 
-                    src={getSanityImageUrl(first_blog.heroImage)} 
-                    alt={first_blog.title}
+                    src={first_blog.heroImage} 
+                    alt={first_blog.heroImageAlt || first_blog.title}
                     width={800}
                     height={600}
+                    style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
                   />
                 )}
                 <div className="tp-blog-standard-title-box d-none d-sm-block">
@@ -87,10 +88,11 @@ export default function BlogModern() {
           <div className="row">
             {currentItems.map((item) => {
               // Transform Sanity blog post to match BlogItem expected format
+              // heroImage is already a URL string from the GROQ query
               const transformedItem = {
                 id: item._id,
                 title: item.title,
-                img: item.heroImage ? getSanityImageUrl(item.heroImage) : '/assets/img/blog/blog-placeholder.jpg',
+                img: item.heroImage || '/assets/img/blog/blog-placeholder.jpg',
                 date: new Date(item.publishedAt).toLocaleDateString('en-US', {
                   day: '2-digit',
                   month: '2-digit',

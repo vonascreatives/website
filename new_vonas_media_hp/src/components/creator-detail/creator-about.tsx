@@ -138,7 +138,12 @@ export default function CreatorAbout({ creator }: CreatorAboutProps) {
                 
                 <li>
                   <span>Status:</span>
-                  <span className="tp-creator-status available">Available for Hire</span>
+                  <span className={`tp-creator-status ${(creator.availability || 'unknown').toString().toLowerCase()}`} style={{
+                    color: creator.availability === 'Available' ? '#28a745' : 
+                           creator.availability === 'Busy' ? '#dc3545' : '#ffc107'
+                  }}>
+                    {creator.availability || 'Unknown'}
+                  </span>
                 </li>
                 
                 {creator.verified && (
@@ -214,8 +219,11 @@ export default function CreatorAbout({ creator }: CreatorAboutProps) {
                 {/* Availability and metrics table */}
                 {creator.availability && (
                   <div className="mb-3">
-                    <strong>Availability:</strong> <span className={`tp-availability-badge ${(creator.availability.status || creator.availability).toString().toLowerCase()}`}>
-                      {creator.availability.status || creator.availability}
+                    <strong>Availability:</strong> <span className={`tp-availability-badge ${creator.availability.toString().toLowerCase()}`} style={{
+                      color: creator.availability === 'Available' ? '#28a745' : 
+                             creator.availability === 'Busy' ? '#dc3545' : '#ffc107'
+                    }}>
+                      {creator.availability}
                     </span>
                   </div>
                 )}

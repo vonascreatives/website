@@ -13,9 +13,10 @@ import details_thumb_3 from "@/assets/img/inner-blog/blog-details/blog-details-4
 
 interface IProps {
   blog?: any;
+  operationsManager?: any;
 }
 
-export default function BlogDetailsAreaTwo({ blog }: IProps) {
+export default function BlogDetailsAreaTwo({ blog, operationsManager }: IProps) {
   return (
     <section className="postbox__area tp-blog-sidebar-sticky-area pt-120 pb-120">
       <div className="container">
@@ -183,7 +184,7 @@ export default function BlogDetailsAreaTwo({ blog }: IProps) {
                     </div>
                   </div>
                   {/* blog details author */}
-                  <BlogDetailsAuthor />
+                  <BlogDetailsAuthor operationsManager={operationsManager} />
                   {/* blog details author */}
 
                   {/* blog details navigation */}

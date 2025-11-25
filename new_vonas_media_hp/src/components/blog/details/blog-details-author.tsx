@@ -4,17 +4,21 @@ import avatar from '@/assets/img/inner-blog/blog-details/avatar/avatar-1.jpg'
 
 interface BlogDetailsAuthorProps {
   author?: any;
+  operationsManager?: any;
 }
 
-export default function BlogDetailsAuthor({ author }: BlogDetailsAuthorProps) {
-  const authorName = author?.name || "Lea Cohen";
-  
+export default function BlogDetailsAuthor({ author, operationsManager }: BlogDetailsAuthorProps) {
+
+  const authorData = operationsManager || author;
+
+  const authorName = authorData?.name || "Lea Cohen";
+
   // Handle author bio - it might be an array of blocks or a string
   let authorBio = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor.!";
-  if (author?.bio) {
-    if (Array.isArray(author.bio)) {
-      // Extract text from Sanity blocks
-      authorBio = author.bio
+
+  if (authorData?.bio) {
+    if (Array.isArray(authorData.bio)) {
+      const extractedText = authorData.bio
         .map((block: any) => {
           if (block._type === 'block' && block.children) {
             return block.children.map((child: any) => child.text || '').join(' ');
@@ -23,12 +27,17 @@ export default function BlogDetailsAuthor({ author }: BlogDetailsAuthorProps) {
         })
         .filter(Boolean)
         .join(' ');
-    } else if (typeof author.bio === 'string') {
-      authorBio = author.bio;
+
+      if (extractedText) {
+        authorBio = extractedText;
+      }
+    } else if (typeof authorData.bio === 'string') {
+      authorBio = authorData.bio;
     }
   }
-  
-  const authorImage = author?.image || avatar;
+
+
+  const authorImage = authorData?.image || authorData?.photo || avatar;
   return (
     <div className="blog-details-author d-flex mb-60">
       <div className="blog-details-author-img">
