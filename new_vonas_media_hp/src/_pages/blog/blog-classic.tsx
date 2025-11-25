@@ -17,7 +17,7 @@ import { charAnimation } from "@/utils/title-animation";
 import BlogClassicSlider from "@/components/blog/slider/blog-classic-slider";
 import BlogClassicArea from "@/components/blog/blog-classic-area";
 import VideoPopup from "@/components/modal/video-popup";
-import { getNewsData, getSanityImageUrl } from "@/lib/sanity";
+import { getNewsData } from "@/lib/sanity";
 
 interface BlogClassicMainProps {
   blogs?: any[];
@@ -33,10 +33,11 @@ const BlogClassicMain = ({ blogs: propBlogs = [] }: BlogClassicMainProps) => {
         try {
           const posts = await getNewsData();
           // Transform Sanity posts to match expected format
+          // heroImage is already a URL string from the GROQ query
           const transformedPosts = posts.map((post: any) => ({
             id: post._id,
             title: post.title,
-            img: post.heroImage ? getSanityImageUrl(post.heroImage) : '/assets/img/blog/blog-placeholder.jpg',
+            img: post.heroImage || '/assets/img/blog/blog-placeholder.jpg',
             date: new Date(post.publishedAt).toLocaleDateString('en-US', {
               day: '2-digit',
               month: '2-digit',

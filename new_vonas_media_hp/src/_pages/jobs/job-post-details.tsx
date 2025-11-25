@@ -13,9 +13,11 @@ import { JobPost } from "@/lib/sanity-queries";
 // prop type for Job Post data
 interface JobPostDetailsMainProps {
   jobPost: JobPost;
+  operationsManager?: any;
 }
 
-const JobPostDetailsMain = ({ jobPost }: JobPostDetailsMainProps) => {
+const JobPostDetailsMain = ({ jobPost, operationsManager }: JobPostDetailsMainProps) => {
+
   useScrollSmooth();
 
   return (
@@ -32,7 +34,7 @@ const JobPostDetailsMain = ({ jobPost }: JobPostDetailsMainProps) => {
             {/* job post details hero */}
 
             {/* job post details area */}
-            <JobPostDetailsArea />
+            <JobPostDetailsArea operationsManager={operationsManager} />
             {/* job post details area */}
           </main>
 

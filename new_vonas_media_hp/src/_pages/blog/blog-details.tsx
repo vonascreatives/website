@@ -39,9 +39,11 @@ type IProps = {
     tags?: any[];
     _type?: string;
   };
+  operationsManager?: any;
 };
 
-const BlogDetailsMain = ({ blog }: IProps) => {
+const BlogDetailsMain = ({ blog, operationsManager }: IProps) => {
+
   useScrollSmooth();
 
   useGSAP(() => {
@@ -65,7 +67,7 @@ const BlogDetailsMain = ({ blog }: IProps) => {
             {/* blog details hero */}
 
             {/* blog details area */}
-            <BlogDetailsArea blog={blog} />
+            <BlogDetailsArea blog={blog} operationsManager={operationsManager} />
             {/* blog details area */}
 
             {/* related posts */}

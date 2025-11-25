@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getJobPostBySlug } from "@/lib/sanity-queries";
 import { getJobPostSlugs } from "@/lib/sanity/job-posts";
+import { getOperationsManager } from "@/lib/sanity";
 import JobPostDetailsMain from "@/_pages/jobs/job-post-details";
 import { generateMetadata as generateSEOMetadata, generateArticleSchema, StructuredData, SEO_DEFAULTS } from "@/utils/seo";
 
@@ -40,10 +41,13 @@ export async function generateMetadata({params}:{params:Promise<{slug:string}>})
 export default async function JobPostDetailsPage({params}:{params:Promise<{slug:string}>}) {
   const { slug } = await params;
   const jobPost = await getJobPostBySlug(slug);
-  
+
   if (!jobPost) {
     notFound();
   }
+
+  // Fetch Operations Manager for author section
+  const operationsManager = await getOperationsManager();
 
   const articleSchema = generateArticleSchema({
     title: jobPost.title,
@@ -57,7 +61,7 @@ export default async function JobPostDetailsPage({params}:{params:Promise<{slug:
   return (
     <>
       <StructuredData data={articleSchema} />
-      <JobPostDetailsMain jobPost={jobPost} />
+      <JobPostDetailsMain jobPost={jobPost} operationsManager={operationsManager} />
     </>
   );
 }

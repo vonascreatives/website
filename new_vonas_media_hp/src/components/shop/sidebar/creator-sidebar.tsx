@@ -27,8 +27,7 @@ export default function CreatorSidebar({
   filterOptions = { categories: [], locations: [], platforms: [] }
 }: CreatorSidebarProps) {
 
-  // Use dynamic filter options from Sanity CMS, filter out null/undefined values
-  const niches = (filterOptions.categories || []).filter(Boolean);
+  const niches = [...new Set((filterOptions.categories || []).filter(Boolean))];
 
   const followerRanges = [
     { value: '', label: 'All Followers' },
@@ -40,9 +39,8 @@ export default function CreatorSidebar({
     { value: '1m+', label: '1M+ Followers' }
   ];
 
-  // Use dynamic filter options from Sanity CMS, filter out null/undefined values
-  const platforms = (filterOptions.platforms || []).filter(Boolean);
-  const locations = (filterOptions.locations || []).filter(Boolean);
+  const platforms = [...new Set((filterOptions.platforms || []).filter(Boolean))];
+  const locations = [...new Set((filterOptions.locations || []).filter(Boolean))];
 
   return (
     <div className={`tp-shop-sidebar mr-10 ${isOpen ? 'sidebar-open' : ''}`}>
