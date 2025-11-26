@@ -50,17 +50,23 @@ const JobPostsMainNew = ({ initialJobs = [] }: JobPostsMainNewProps) => {
   useScrollSmooth();
   
   // Use CMS data if available, otherwise fallback to sample data
-  const job_items = initialJobs.length > 0 ? initialJobs.map(job => ({
-    id: job._id,
-    date: new Date(job.publishedAt).toLocaleDateString('en-US', { 
-      day: '2-digit', 
-      month: 'short', 
-      year: 'numeric' 
-    }).replace(',', '').toUpperCase(),
-    img: job.mainImage || '/assets/img/inner-blog/blog-right-sidebar/blog-1.jpg',
-    title: job.title,
-    slug: job.slug.current
-  })) : sample_jobs;
+  const job_items = initialJobs.length > 0 ? initialJobs.map(job => {
+    const imageUrl = job.mainImage 
+      || job.seo?.image?.image?.asset?.url
+      || '/assets/img/inner-blog/blog-right-sidebar/blog-1.jpg';
+    
+    return {
+      id: job._id,
+      date: new Date(job.publishedAt).toLocaleDateString('en-US', { 
+        day: '2-digit', 
+        month: 'short', 
+        year: 'numeric' 
+      }).replace(',', '').toUpperCase(),
+      img: imageUrl,
+      title: job.title,
+      slug: job.slug.current
+    };
+  }) : sample_jobs;
 
   return (
     <Wrapper>

@@ -634,7 +634,7 @@ export async function getJobPosts(): Promise<JobPost[]> {
       applyUrl,
       active,
       publishedAt,
-      "mainImage": mainImage.asset->url
+      "mainImage": seo.image.image.asset->url
     }`
     
     const jobs = await client.fetch(query)
@@ -659,7 +659,8 @@ export async function getJobPostBySlug(slug: string): Promise<JobPost | null> {
       compensation,
       applyUrl,
       active,
-      publishedAt
+      publishedAt,
+      "mainImage": seo.image.image.asset->url
     }`
     
     const job = await client.fetch(query, { slug })

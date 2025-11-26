@@ -65,8 +65,8 @@ export default function MobileOffcanvasTwo({openOffcanvas,setOpenOffcanvas}:IPro
                 <p>Platinum 2000, 7 Annapolis, San Juan, Manila, Philippines</p>
               </div>
               <div className="tpoffcanvas__mail">
-                <a href="mailto:hey@vonas-media.com">
-                  hey@vonas-media.com
+                <a href="mailto:hello@vonas-media.com">
+                  hello@vonas-media.com
                 </a>
               </div>
               <div className="tpoffcanvas__text">

@@ -96,8 +96,13 @@ export default function CreatorsMain({
     return getCreatorFollowerCount(creator);
   }, []);
 
-  // Client-side filtering logic
+  // Client-side filtering logic - strictly use CMS data only, no fallbacks
   const applyClientSideFiltering = React.useMemo(() => {
+    // Only use CMS creators - if filteredCreators is empty, use initialCreators from CMS
+    // Do not use any static fallback data
+    if (!initialCreators || initialCreators.length === 0) {
+      return [];
+    }
     let filtered = [...(filteredCreators.length > 0 ? filteredCreators : initialCreators)];
 
     // Apply filters based on CMS data structure
@@ -133,12 +138,13 @@ export default function CreatorsMain({
     if (filters.niches.length > 0) {
       filtered = filtered.filter(creator => {
         const mainCat = creator.mainCategory || '';
-        const niches = creator.niches || [];
+        // Filter out null/undefined values from niches array
+        const niches = (creator.niches || []).filter((n: any) => n != null);
         
         return filters.niches.some(filterNiche => {
           // Convert filter niche to match data format
           const filterSlug = filterNiche.toLowerCase().replace(/\s+/g, '-').replace(/&/g, '&');
-          return mainCat.includes(filterSlug) || niches.some((n: string) => n.includes(filterSlug));
+          return mainCat.includes(filterSlug) || niches.some((n: string) => n && n.includes(filterSlug));
         });
       });
     }
@@ -362,10 +368,11 @@ export default function CreatorsMain({
                             </div>
                           </div>
                         ) : currentCreators.length > 0 ? (
-                          // Creators grid
+                          // Creators grid - strictly CMS data only
                           currentCreators.map((creator) => {
-                            if (!creator || !creator._id) {
-                              console.warn('Invalid creator data:', creator);
+                            // Validate this is a real CMS creator with required fields
+                            if (!creator || !creator._id || !creator.name) {
+                              console.warn('Invalid or non-CMS creator data skipped:', creator);
                               return null;
                             }
                             return (

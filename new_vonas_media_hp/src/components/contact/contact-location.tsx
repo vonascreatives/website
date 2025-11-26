@@ -1,9 +1,9 @@
 import React from "react";
 import Image from "next/image";
 // images
-import location_1 from "@/assets/img/inner-contact/contact/info-1.jpg";
-import location_2 from "@/assets/img/inner-contact/contact/info-2.jpg";
-import location_3 from "@/assets/img/inner-contact/contact/info-3.jpg";
+import location_1 from "@/assets/img/inner-contact/contact/info-1.png";
+import location_2 from "@/assets/img/inner-contact/contact/info-2.png";
+import location_3 from "@/assets/img/inner-contact/contact/info-3.png";
 
 // data
 const location_data = [
@@ -14,7 +14,7 @@ const location_data = [
     time: "2:00 pm GMT+8",
     location_title: "Vonas Media",
     address: "Content Channel Lab <br /> Manila, Philippines",
-    phone: "(+63) 2 8123 4567",
+    phone: "(+63) 967 145 5245",
     email: "hello@vonas-media.com",
   },
   {
@@ -24,8 +24,8 @@ const location_data = [
     time: "Brand Partnerships",
     location_title: "Brand Collab",
     address: "For brand partnerships <br /> and channel building",
-    phone: "(+63) 2 8123 4567",
-    email: "collab@vonas-media.com",
+    phone: "(+63) 967 145 5245",
+    email: "hello@vonas-media.com",
   },
   {
     id: 3,
@@ -34,8 +34,8 @@ const location_data = [
     time: "Join the Team",
     location_title: "Work with Us",
     address: "Creators, editors, strategists <br /> always welcome",
-    phone: "(+63) 2 8123 4567",
-    email: "jobs@vonas-media.com",
+    phone: "(+63) 967 145 5245",
+    email: "higher@vonas-media.com",
   },
 ];
 
@@ -75,7 +75,7 @@ const ContactLocation = () => {
                         ></a>
                       </div>
                       <div className="cn-contact-map">
-                        <a href="#">Google Maps</a>
+                        <a href="https://www.google.com/maps/place/Platinum+2000/@14.6057631,121.0560092,17z/data=!4m14!1m7!3m6!1s0x3397b7ddf3db85c1:0xe46177e2c9c94c6a!2sPlatinum+2000!8m2!3d14.6059385!4d121.0560538!16s%2Fg%2F11c3tr3r21!3m5!1s0x3397b7ddf3db85c1:0xe46177e2c9c94c6a!8m2!3d14.6059385!4d121.0560538!16s%2Fg%2F11c3tr3r21?entry=ttu&g_ep=EgoyMDI1MTEyMy4xIKXMDSoASAFQAw%3D%3D">Google Maps</a>
                       </div>
                     </div>
                     <div className="cn-contact-right-info text-start text-md-end">

@@ -17,7 +17,8 @@ export const jobPostsQuery = groq`
     applyUrl,
     publishedAt,
     active,
-    seo
+    seo,
+    "mainImage": seo.image.image.asset->url
   }
 `;
 
@@ -38,7 +39,8 @@ export const jobPostBySlugQuery = groq`
     applyUrl,
     publishedAt,
     active,
-    seo
+    seo,
+    "mainImage": seo.image.image.asset->url
   }
 `;
 
@@ -60,7 +62,8 @@ export const jobPostsPaginatedQuery = groq`
       applyUrl,
       publishedAt,
       active,
-      seo
+      seo,
+      "mainImage": seo.image.image.asset->url
     },
     "total": count(*[_type == "jobBoard" && active == true])
   }
