@@ -79,7 +79,7 @@ export default function FooterTwo({ whiteFooter = false,topCls='footer-top' }: I
                 </div>
                 <div className="tp-footer-2-contact-item">
                   <span>
-                    <a href="mailto:hey@vonas-media.com">E: hey@vonas-media.com</a>
+                    <a href="mailto:hello@vonas-media.com">E: hello@vonas-media.com</a>
                   </span>
                 </div>
               </div>
@@ -121,9 +121,9 @@ export default function FooterTwo({ whiteFooter = false,topCls='footer-top' }: I
             </div>
             <div className="col-xl-8 col-lg-7">
               <div className="tp-copyright-2-social text-center text-lg-end">
-                <a className="mb-10" href="#">Linkedin</a>
-                <a className="mb-10" href="#">Twitter</a>
-                <a className="mb-10" href="#">Instagram</a>
+                <a className="mb-10" href="https://www.linkedin.com/in/vonas-ph-1203a817b/">Linkedin</a>
+                <a className="mb-10" href="https://www.facebook.com/vonas.creative">Facebook</a>
+                <a className="mb-10" href="https://www.instagram.com/vonas.creatives/">Instagram</a>
               </div>
             </div>
           </div>

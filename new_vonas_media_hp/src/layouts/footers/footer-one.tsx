@@ -77,16 +77,13 @@ export default function FooterOne() {
                         </h4>
                         <ul className="tp-footer-widget-social">
                           <li className="tp_fade_bottom">
-                            <a href="#">YouTube</a>
+                            <a href="https://www.instagram.com/vonas.creatives/">Instagram</a>
                           </li>
                           <li className="tp_fade_bottom">
-                            <a href="#">Instagram</a>
+                            <a href="https://www.facebook.com/vonas.creative">Facebook</a>
                           </li>
                           <li className="tp_fade_bottom">
-                            <a href="#">TikTok</a>
-                          </li>
-                          <li className="tp_fade_bottom">
-                            <a href="#">Twitter</a>
+                            <a href="https://www.linkedin.com/in/vonas-ph-1203a817b/">Linkedin</a>
                           </li>
                         </ul>
                       </div>

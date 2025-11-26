@@ -3,11 +3,9 @@ import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, FreeMode } from "swiper/modules";
 import { SwiperOptions } from "swiper/types";
-import team_data from "@/data/team-data";
 import TeamItem from "./team-item";
-import { ITeamDT } from "@/types/team-d-t";
 import TeamModal from "../modal/team-modal";
-import { logger } from "@/utils/logger";
+import { getCreatorFollowerCount } from "@/utils/formatFollowers";
 
 const slider_setting: SwiperOptions = {
   slidesPerView: 6,
@@ -45,6 +43,11 @@ const TeamOne = ({ spacing = "pt-20", creators }: IProps) => {
   const [showModal, setShowModal] = React.useState(false);
   const [teamItem, setTeamItem] = React.useState<any | null>(null);
   
+  // Strictly use CMS creators only - no fallback data
+  // Return null if no creators from CMS
+  if (!creators || creators.length === 0) {
+    return null;
+  }
   
   // Deduplicate team members by name to avoid showing duplicates
   const deduplicateTeamMembers = (members: any[]) => {
@@ -59,24 +62,28 @@ const TeamOne = ({ spacing = "pt-20", creators }: IProps) => {
     });
   };
   
-  // Use creators data if available, otherwise fallback to static team_data
-  let rawDisplayData = creators && creators.length > 0 ? creators : team_data;
+  // Use only CMS creators data - deduplicate and sort
+  let displayData = deduplicateTeamMembers(creators);
 
-  // Deduplicate if using CMS data
-  let displayData = creators && creators.length > 0 ? deduplicateTeamMembers(rawDisplayData) : rawDisplayData;
+  // Prioritize items by follower count (highest first), then by having images
+  displayData = [...displayData].sort((a, b) => {
+    // Get follower counts
+    const aFollowers = getCreatorFollowerCount(a);
+    const bFollowers = getCreatorFollowerCount(b);
 
-  // Prioritize items with images from Sanity CMS
-  if (creators && creators.length > 0) {
-    displayData = [...displayData].sort((a, b) => {
-      const aHasImage = Boolean(a.image || a.photo);
-      const bHasImage = Boolean(b.image || b.photo);
+    // Sort by followers (descending - highest first)
+    if (aFollowers !== bFollowers) {
+      return bFollowers - aFollowers;
+    }
 
-      // Items with images come first
-      if (aHasImage && !bHasImage) return -1;
-      if (!aHasImage && bHasImage) return 1;
-      return 0;
-    });
-  }
+    // If follower counts are equal, prioritize items with images
+    const aHasImage = Boolean(a.image || a.photo);
+    const bHasImage = Boolean(b.image || b.photo);
+
+    if (aHasImage && !bHasImage) return -1;
+    if (!aHasImage && bHasImage) return 1;
+    return 0;
+  });
   
   
   function handleTeamModal(team: any) {

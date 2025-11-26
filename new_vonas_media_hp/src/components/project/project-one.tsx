@@ -98,7 +98,14 @@ const ProjectOne = ({ channels, homepageImages }: ProjectOneProps) => {
                 return (
                   <div key={item._id || item.id || index} className="tp-project-4-bg project-panel">
                     <Link href={href}>
-                      <div className="tp-project-4-thumb" style={{ width: "100%", height: "600px", overflow: "hidden", position: "relative" }}>
+                      <div className="tp-project-4-thumb" style={{ 
+                        width: "100%", 
+                        maxWidth: "1000px",
+                        aspectRatio: "16/9",
+                        overflow: "hidden", 
+                        position: "relative",
+                        margin: "0 auto"
+                      }}>
                         <Image 
                           src={imageSrc} 
                           alt={altText}
@@ -107,8 +114,9 @@ const ProjectOne = ({ channels, homepageImages }: ProjectOneProps) => {
                           style={{ 
                             width: "100%",
                             height: "100%",
-                            objectFit: "cover",
-                            objectPosition: "center"
+                            objectFit: "contain",
+                            objectPosition: "center",
+                            backgroundColor: "#000"
                           }}
                           priority={index < 2}
                         />

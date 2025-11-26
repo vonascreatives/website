@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Behance, CloseTwo, CloseThree, Dribble, InstagramTwo, Youtube } from "../svg";
+import { CloseTwo, CloseThree, Linkdin, InstagramTwo, Facebook } from "../svg";
 
 // images
 import logo from "@/assets/img/logo/logo.png";
@@ -87,7 +87,7 @@ export default function UnifiedMobileOffcanvas({
                 <h3 className="tp-offcanvas-title sm">Information</h3>
                 <ul>
                   <li>
-                    <a href="mailto:hey@vonas-media.com">hey@vonas-media.com</a>
+                    <a href="mailto:hello@vonas-media.com">hello@vonas-media.com</a>
                   </li>
                   <li>
                     <a href="https://www.google.com/maps" target="_blank">Platinum 2000, 7 Annapolis, San Juan, Manila, Philippines</a>
@@ -99,16 +99,13 @@ export default function UnifiedMobileOffcanvas({
                   <h3 className="tp-offcanvas-title sm">Follow Us</h3>
                   <ul>
                     <li>
-                      <a href="#"><InstagramTwo /></a>
+                      <a href="https://www.instagram.com/vonas.creatives/"><InstagramTwo /></a>
                     </li>
                     <li>
-                      <a href="#"><Dribble /></a>
+                      <a href="https://www.facebook.com/vonas.creative"><Facebook /></a>
                     </li>
                     <li>
-                      <a href="#"> <Behance /></a>
-                    </li>
-                    <li>
-                      <a href="#"><Youtube /></a>
+                      <a href="https://www.linkedin.com/in/vonas-ph-1203a817b/"> <Linkdin /></a>
                     </li>
                   </ul>
                 </div>
@@ -177,8 +174,8 @@ export default function UnifiedMobileOffcanvas({
                 <p>Platinum 2000, 7 Annapolis, San Juan, Manila, Philippines</p>
               </div>
               <div className="tpoffcanvas__mail">
-                <a href="mailto:hey@vonas-media.com">
-                  hey@vonas-media.com
+                <a href="mailto:hello@vonas-media.com">
+                  hello@vonas-media.com
                 </a>
               </div>
               <div className="tpoffcanvas__text">
