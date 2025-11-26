@@ -167,9 +167,10 @@ export default function CreatorDetailsRightWrap({ creator }: CreatorDetailsRight
         <div className="tp-shop-details-query-item d-flex align-items-center">
           <span>Availability:</span>
           <p style={{ 
-            color: creator.availability?.status === 'available' ? '#28a745' : '#ffc107'
+            color: (creator.availability === 'Available' || creator.availability?.status === 'available') ? '#28a745' : 
+                   (creator.availability === 'Busy' || creator.availability?.status === 'busy') ? '#dc3545' : '#ffc107'
           }}>
-            {creator.availability?.status || 'Available for Hire'}
+            {creator.availability || creator.availability?.status || 'Unknown'}
           </p>
         </div>
         <div className="tp-shop-details-query-item d-flex align-items-center">

@@ -20,7 +20,12 @@ import BlogDetailsAreaTwo from "@/components/blog/details/blog-details-area-2";
 // image
 import blog_bg from "@/assets/img/inner-blog/blog-details-without-sidebar/blog-details-3.jpg";
 
-const BlogDetailsTwoMain = () => {
+type IProps = {
+  operationsManager?: any;
+};
+
+const BlogDetailsTwoMain = ({ operationsManager }: IProps) => {
+
   useScrollSmooth();
 
   useGSAP(() => {
@@ -95,7 +100,7 @@ const BlogDetailsTwoMain = () => {
             {/* blog details hero */}
 
             {/* blog details area */}
-            <BlogDetailsAreaTwo />
+            <BlogDetailsAreaTwo operationsManager={operationsManager} />
             {/* blog details area */}
 
             {/* related posts */}

@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Behance, CloseTwo, Dribble, InstagramTwo, Youtube } from "../svg";
+import { Behance, CloseTwo, Facebook, InstagramTwo, Youtube } from "../svg";
 
 // images
 import logo from "@/assets/img/logo/logo.png";
@@ -65,7 +65,7 @@ export default function MobileOffcanvas({openOffcanvas,setOpenOffcanvas}: IProps
 
               <ul>
                 <li>
-                  <a href="mailto:hey@vonas-media.com">hey@vonas-media.com</a>
+                  <a href="mailto:hey@vonas-media.com">hello@vonas-media.com</a>
                 </li>
                 <li>
                   <a href="https://www.google.com/maps" target="_blank">Platinum 2000, 7 Annapolis, San Juan, Manila, Philippines</a>
@@ -79,7 +79,7 @@ export default function MobileOffcanvas({openOffcanvas,setOpenOffcanvas}: IProps
                   <a href="#"><InstagramTwo /></a>
                 </li>
                 <li>
-                  <a href="#"><Dribble /></a>
+                  <a href="#"><Facebook /></a>
                 </li>
                 <li>
                   <a href="#"> <Behance /></a>

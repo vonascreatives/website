@@ -20,6 +20,7 @@ import { withErrorBoundary } from '@/components/error/error-boundary';
 
 interface BlogDetailsAreaProps {
   blog: any;
+  operationsManager?: any;
 }
 
 // Error boundary for PortableText rendering
@@ -54,7 +55,8 @@ class ErrorBoundary extends React.Component<
   }
 }
 
-export default function BlogDetailsArea({ blog }: BlogDetailsAreaProps) {
+export default function BlogDetailsArea({ blog, operationsManager }: BlogDetailsAreaProps) {
+
   const isFromCMS = blog && blog._id && !blog.id;
   const excerpt = isFromCMS ? blog.excerpt : "The metaverse can be viewed as an evolution of today\'s internet, which in turn evolved from passive media that we simply consumed. In the age of radio and television, the consumer\'s only job was to listen and decide if they wanted to buy.";
   const bodyContent = isFromCMS ? blog.body : null;
@@ -374,7 +376,7 @@ export default function BlogDetailsArea({ blog }: BlogDetailsAreaProps) {
                 </div>
               </div>
               {/* blog details author */}
-              <BlogDetailsAuthor author={isFromCMS ? blog.author : null} />
+              <BlogDetailsAuthor author={isFromCMS ? blog.author : null} operationsManager={operationsManager} />
               {/* blog details author */}
 
               {/* blog details navigation */}

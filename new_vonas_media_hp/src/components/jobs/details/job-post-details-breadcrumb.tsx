@@ -19,7 +19,7 @@ export default function JobPostDetailsBreadcrumb({ jobPost }: JobPostDetailsBrea
         {/* Featured Image */}
         <div className="blog-details-hero-image" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 1 }}>
           <Image 
-            src="/assets/img/home-01/hero/hero-1-2.jpg"
+            src={jobPost.mainImage || "/assets/img/home-01/hero/hero-1-2.jpg"}
             alt={jobPost.title}
             fill
             style={{ objectFit: 'cover' }}

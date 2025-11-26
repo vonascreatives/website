@@ -3,7 +3,11 @@ import { QuoteThree, Share, Tag } from "@/components/svg";
 import BlogDetailsAuthor from "@/components/blog/details/blog-details-author";
 import BlogDetailsNavigation from "@/components/blog/details/blog-details-navigation";
 
-export default function JobPostDetailsArea() {
+interface JobPostDetailsAreaProps {
+  operationsManager?: any;
+}
+
+export default function JobPostDetailsArea({ operationsManager }: JobPostDetailsAreaProps) {
   return (
     <section className="postbox__area tp-blog-sidebar-sticky-area pt-120 pb-120">
       <div className="container">
@@ -75,22 +79,7 @@ export default function JobPostDetailsArea() {
 
               <div className="row justify-content-center">
                 <div className="col-xl-8">
-                  <div className="blog-details-left-content tp_fade_bottom">
-                    <h4 className="blog-details-left-title">
-                      What is Lorem Ipsum?
-                    </h4>
-                    <p>
-                      <span>Lorem Ipsum</span> is simply dummy text of the printing
-                      and typesetting industry. Lorem Ipsum has been the industry
-                      standard dummy text ever since the 1500s, when an unknown
-                      printer took a galley of type and scrambled it to make a type
-                      specimen book.
-                    </p>
-                    <p>
-                      It has survived not only five centuries, but also the leap
-                      into electronic typesetting, remaining essentially unchanged
-                    </p>
-                  </div>
+                  
                   <div className="blog-details-share-wrap mb-40">
                     <div className="row">
                       <div className="col-xl-8">
@@ -114,7 +103,7 @@ export default function JobPostDetailsArea() {
                     </div>
                   </div>
                   {/* blog details author */}
-                  <BlogDetailsAuthor />
+                  <BlogDetailsAuthor operationsManager={operationsManager} />
                   {/* blog details author */}
 
                   {/* blog details navigation */}

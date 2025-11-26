@@ -449,26 +449,34 @@ export async function getChannelsData() {
 
 // Exclusive Creators data - unified collection
 export async function getCreatorsData() {
-  const query = `*[_type == "exclusiveCreator"]{
+  // Query both `exclusiveCreator` and legacy `creator` types and normalize fields
+  const query = `*[_type in ["exclusiveCreator", "creator"]]{
     _id,
     _type,
     name,
     slug,
-    "headline": coalesce(headline, niche + " specialist with " + coalesce(subscribers, "followers")),
+    // headline may exist on exclusiveCreator; fallback to niche/headline-like text
+    "headline": coalesce(headline, niche, mainCategory),
+    // Normalize images from different schemas
     "image": coalesce(
       heroImage[0].image.asset->url,
-      heroImage.image.asset->url
+      heroImage.image.asset->url,
+      image.asset->url,
+      heroImage[0].asset->url
     ),
     "imageAlt": coalesce(
       heroImage[0].alt,
       heroImage.alt,
+      image.alt,
       name
     ),
-    "mainCategory": niche,
-    "niches": coalesce(niches, [niche]),
+    // Normalize category/niche fields
+    "mainCategory": coalesce(niche, mainCategory),
+    "niches": coalesce(niches, [coalesce(niche, mainCategory)]),
+    // Platform and follower fields normalized across both types
     "mainPlatform": coalesce(mainPlatform, "youtube"),
-    "totalFollowers": totalFollowers,
-    "followers": subscribers,
+    "totalFollowers": coalesce(totalFollowers, followers, subscribers),
+    "followers": coalesce(subscribers, followers, totalFollowers),
     socialLinks,
     availability,
     featured,
@@ -478,7 +486,7 @@ export async function getCreatorsData() {
     joinDate,
     bio
   } | order(featured desc, name asc)`;
-  
+
   return fetchSanityData(query, {}, []);
 }
 
@@ -677,9 +685,50 @@ export async function getChannelNavigation(currentSlug: string) {
   }
 }
 
+// Get Operations Manager for blog author sections
+export async function getOperationsManager() {
+  const query = `*[_type == "teamMember" && role match "*Operations Manager*"][0]{
+    _id,
+    name,
+    slug,
+    "image": photo[0].image.asset->url,
+    "photoAlt": photo[0].alt,
+    role,
+    bio,
+    socialLinks,
+    email
+  }`;
+
+  const fallback = {
+    _id: 'ops-manager-fallback',
+    name: 'Operations Manager',
+    image: '/assets/img/home-01/team/team-1-1.jpg',
+    photoAlt: 'Operations Manager',
+    role: 'Operations Manager',
+    bio: [
+      {
+        _type: 'block',
+        children: [
+          { text: 'Managing operations and ensuring smooth execution of all projects.' }
+        ]
+      }
+    ],
+    email: null,
+    socialLinks: null
+  };
+
+  try {
+    const result = await fetchSanityData(query, {}, fallback);
+    return result;
+  } catch (error) {
+    console.error('Error fetching Operations Manager:', error);
+    return fallback;
+  }
+}
+
 // Team Members (internal company team)
 export async function getTeamMembersData() {
-  
+
   const query = `*[_type == "teamMember"] | order(order asc){
     _id,
     name,
@@ -693,8 +742,8 @@ export async function getTeamMembersData() {
     email,
     order
   }`;
-  
-  
+
+
   const fallback = [
     {
       _id: '1',
@@ -1404,39 +1453,28 @@ export async function getKnowledgeBaseCategories() {
   return fetchSanityData(query, {}, fallback);
 }
 
-// Creator filter aggregations
+// Creator filter aggregations - CMS only, no fallback
 export async function getCreatorFilterData() {
+  // Query both exclusiveCreator and creator types for filter options
   const query = `{
-    "categories": array::unique(*[_type == "creator"].mainCategory),
-    "platforms": array::unique(*[_type == "creator"].mainPlatform),
-    "niches": array::unique(*[_type == "creator"].niches[]),
-    "locations": array::unique(*[_type == "creator"].location)
+    "categories": array::unique(*[_type in ["exclusiveCreator", "creator"]].mainCategory) + array::unique(*[_type in ["exclusiveCreator", "creator"]].niche),
+    "platforms": array::unique(*[_type in ["exclusiveCreator", "creator"]].mainPlatform),
+    "niches": array::unique(*[_type in ["exclusiveCreator", "creator"]].niches[]),
+    "locations": array::unique(*[_type in ["exclusiveCreator", "creator"]].location)
   }`;
   
-  const fallback = {
-    categories: [
-      'Fashion & Style',
-      'Beauty & Makeup', 
-      'Fitness & Health',
-      'Food & Cooking',
-      'Travel & Adventure',
-      'Technology',
-      'Gaming',
-      'Lifestyle',
-      'Comedy & Entertainment',
-      'Art & Design',
-      'Music',
-      'Business & Finance'
-    ],
-    platforms: ['YouTube', 'Instagram', 'TikTok', 'Twitter'],
-    niches: ['documentary', 'streetwear', 'fashion', 'lifestyle', 'entertainment', 'paranormal', 'mystery'],
-    locations: ['United States', 'Canada', 'United Kingdom', 'Australia', 'Philippines']
+  // CMS only - return empty arrays if no data
+  const emptyFallback = {
+    categories: [],
+    platforms: [],
+    niches: [],
+    locations: []
   };
   
-  return fetchSanityData(query, {}, fallback);
+  return fetchSanityData(query, {}, emptyFallback);
 }
 
-// Creators with filters and pagination
+// Creators with filters and pagination - CMS only, no fallback
 export async function getCreatorsWithFilters({
   mainCategory,
   mainPlatform,
@@ -1450,8 +1488,9 @@ export async function getCreatorsWithFilters({
   offset?: number;
   limit?: number;
 } = {}) {
-  const query = `*[_type == "exclusiveCreator"
-    && (!defined($mainCategory) || niche == $mainCategory)
+  // Query both exclusiveCreator and creator types
+  const query = `*[_type in ["exclusiveCreator", "creator"]
+    && (!defined($mainCategory) || niche == $mainCategory || mainCategory == $mainCategory)
     && (!defined($mainPlatform) || mainPlatform == $mainPlatform)
     && (!defined($niche) || $niche in niches[] || niche == $niche)
   ]{
@@ -1459,11 +1498,11 @@ export async function getCreatorsWithFilters({
     name,
     slug,
     featured,
-    "mainCategory": niche,
+    "mainCategory": coalesce(niche, mainCategory),
     mainPlatform,
-    "image": coalesce(heroImage[0].image.asset->url, heroImage.image.asset->url),
-    "imageAlt": coalesce(heroImage[0].alt, heroImage.alt, name),
-    "followers": subscribers
+    "image": coalesce(heroImage[0].image.asset->url, heroImage.image.asset->url, image.asset->url),
+    "imageAlt": coalesce(heroImage[0].alt, heroImage.alt, image.alt, name),
+    "followers": coalesce(subscribers, followers, totalFollowers)
   } | order(featured desc, name asc) [$offset...$end]`;
   
   const params = {
@@ -1474,50 +1513,54 @@ export async function getCreatorsWithFilters({
     end: offset + limit - 1
   };
   
-  const fallback = [
-    {
-      _id: '1',
-      name: 'Kai Chen',
-      slug: { current: 'kai-chen' },
-      featured: true,
-      mainCategory: 'Lifestyle',
-      mainPlatform: 'YouTube',
-      image: '/assets/img/home-01/team/team-1-1.jpg',
-      imageAlt: 'Kai Chen',
-      followers: 120000
-    }
-  ];
-  
-  return fetchSanityData(query, params, fallback);
+  // CMS only - return empty array if no data
+  return fetchSanityData(query, params, []);
 }
 
-// Single creator detail
+// Single creator detail - query both exclusiveCreator and creator types
 export async function getCreatorBySlug(slug: string) {
-  const query = `*[_type == "exclusiveCreator" && slug.current == $slug][0]{
+  const query = `*[_type in ["exclusiveCreator", "creator"] && slug.current == $slug][0]{
     _id,
     _type,
     name,
     slug,
-    headline,
-    "mainCategory": niche,
-    "niches": coalesce(niches, [niche]),
-    // Pre-resolve image URLs like in the list view
-    "heroImage": heroImage[]{
-      "image": image.asset->url,
-      alt
-    },
+    // Normalize headline across both types
+    "headline": coalesce(headline, niche, mainCategory),
+    // Normalize category fields
+    "mainCategory": coalesce(niche, mainCategory),
+    "niches": coalesce(niches, [coalesce(niche, mainCategory)]),
+    // Pre-resolve image URLs - handle different schema patterns
+    "heroImage": coalesce(
+      heroImage[]{
+        "image": image.asset->url,
+        alt
+      },
+      select(
+        defined(heroImage.image.asset) => [{
+          "image": heroImage.image.asset->url,
+          "alt": heroImage.alt
+        }],
+        defined(image.asset) => [{
+          "image": image.asset->url,
+          "alt": image.alt
+        }]
+      )
+    ),
     "gallery": gallery[]{
       "image": image.asset->url,
       alt
     },
-    "heroImageAlt": heroImage[0].alt,
+    "heroImageAlt": coalesce(heroImage[0].alt, heroImage.alt, image.alt, name),
     bio,
-    mainPlatform,
+    // Normalize platform field
+    "mainPlatform": coalesce(mainPlatform, "youtube"),
     metrics,
-    // Handle different follower field names
-    "totalFollowers": coalesce(totalFollowers, subscribers),
+    // Handle different follower field names across types
+    "totalFollowers": coalesce(totalFollowers, followers, subscribers),
+    "followers": coalesce(subscribers, followers, totalFollowers),
     availability,
     languages,
+    location,
     selectedWork[]{
       title,
       link,
@@ -1537,9 +1580,11 @@ export async function getCreatorBySlug(slug: string) {
     ratingAverage,
     ratingCount,
     seo,
-    // Additional exclusiveCreator fields
+    // Additional exclusiveCreator fields (will be null for creator type)
     exclusiveContent,
     joinDate,
+    verified,
+    featured,
     // Portfolio/recent work
     portfolio[]{
       title,

@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import { useSearchParams } from "next/navigation";
 import Wrapper from "@/layouts/wrapper";
 import HeaderCreators from "@/layouts/headers/header-creators";
 import FooterOne from "@/layouts/footers/footer-one";
@@ -52,12 +53,19 @@ type CreatorsMainProps = {
   };
 };
 
-export default function CreatorsMain({ 
-  initialCreators = [], 
+export default function CreatorsMain({
+  initialCreators = [],
   filterOptions = { categories: [], locations: [], platforms: [] }
 }: CreatorsMainProps) {
+  const searchParams = useSearchParams();
   const [currentPage, setCurrentPage] = React.useState(1);
   const creatorsPerPage = 9;
+
+  // Debug: Log all creator names on mount
+  React.useEffect(() => {
+    console.log('Total creators loaded:', initialCreators.length);
+    console.log('Creator names:', initialCreators.map(c => c.name).sort());
+  }, [initialCreators]);
 
   const {
     filters,
@@ -72,27 +80,71 @@ export default function CreatorsMain({
     toggleFilterSidebar,
   } = useCreatorFilters(initialCreators);
 
+  // Handle URL search params
+  React.useEffect(() => {
+    const searchQuery = searchParams?.get('search');
+    if (searchQuery && searchQuery !== filters.searchQuery) {
+      updateFilter('searchQuery', searchQuery);
+    } else if (!searchQuery && filters.searchQuery) {
+      updateFilter('searchQuery', '');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams]);
+
   // Helper function to get follower count
   const getFollowerCount = React.useCallback((creator: Creator): number => {
     return getCreatorFollowerCount(creator);
   }, []);
 
-  // Client-side filtering logic
+  // Client-side filtering logic - strictly use CMS data only, no fallbacks
   const applyClientSideFiltering = React.useMemo(() => {
+    // Only use CMS creators - if filteredCreators is empty, use initialCreators from CMS
+    // Do not use any static fallback data
+    if (!initialCreators || initialCreators.length === 0) {
+      return [];
+    }
     let filtered = [...(filteredCreators.length > 0 ? filteredCreators : initialCreators)];
-    
+
     // Apply filters based on CMS data structure
-    
+
+    // Search query filtering - search by creator name
+    if (filters.searchQuery && filters.searchQuery.trim() !== '') {
+      const query = filters.searchQuery.toLowerCase().trim().normalize('NFKD');
+      console.log('Searching for:', query);
+      console.log('Before search filter:', filtered.length, 'creators');
+
+      filtered = filtered.filter(creator => {
+        const nameRaw = creator.name || '';
+        const name = String(nameRaw).toLowerCase().trim().normalize('NFKD');
+
+        const slugRaw = typeof creator.slug === 'string' ? creator.slug : (creator.slug && creator.slug.current) || '';
+        const slug = String(slugRaw).toLowerCase().trim().normalize('NFKD');
+
+        const headlineRaw = creator.headline || '';
+        const headline = String(headlineRaw).toLowerCase().trim().normalize('NFKD');
+
+        const matches = (
+          name.includes(query) ||
+          slug.includes(query) ||
+          headline.includes(query)
+        );
+
+        return matches;
+      });
+
+    }
+
     // Niche/Category filtering - match against mainCategory and niches array
     if (filters.niches.length > 0) {
       filtered = filtered.filter(creator => {
         const mainCat = creator.mainCategory || '';
-        const niches = creator.niches || [];
+        // Filter out null/undefined values from niches array
+        const niches = (creator.niches || []).filter((n: any) => n != null);
         
         return filters.niches.some(filterNiche => {
           // Convert filter niche to match data format
           const filterSlug = filterNiche.toLowerCase().replace(/\s+/g, '-').replace(/&/g, '&');
-          return mainCat.includes(filterSlug) || niches.some((n: string) => n.includes(filterSlug));
+          return mainCat.includes(filterSlug) || niches.some((n: string) => n && n.includes(filterSlug));
         });
       });
     }
@@ -239,6 +291,11 @@ export default function CreatorsMain({
                         <div className="tp-shop-top-result">
                           <p>
                             Showing {Math.min(startIndex + 1, finalCreators.length)}–{Math.min(endIndex, finalCreators.length)} of {finalCreators.length} content creators
+                            {filters.searchQuery && (
+                              <span style={{ display: 'block', marginTop: '5px', fontSize: '14px', color: '#666' }}>
+                                Search results for: &quot;{filters.searchQuery}&quot;
+                              </span>
+                            )}
                           </p>
                         </div>
                       </div>
@@ -311,10 +368,11 @@ export default function CreatorsMain({
                             </div>
                           </div>
                         ) : currentCreators.length > 0 ? (
-                          // Creators grid
+                          // Creators grid - strictly CMS data only
                           currentCreators.map((creator) => {
-                            if (!creator || !creator._id) {
-                              console.warn('Invalid creator data:', creator);
+                            // Validate this is a real CMS creator with required fields
+                            if (!creator || !creator._id || !creator.name) {
+                              console.warn('Invalid or non-CMS creator data skipped:', creator);
                               return null;
                             }
                             return (
