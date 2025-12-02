@@ -7,6 +7,7 @@ import {
 import localFont from "next/font/local";
 import Script from "next/script";
 import { ThemeProvider } from "next-themes";
+import { Analytics } from "@vercel/analytics/react";
 import { ErrorProvider } from "@/contexts/error-context";
 import { ErrorNotification } from "@/components/error/error-notification";
 import "./globals.scss";
@@ -145,6 +146,7 @@ export default function RootLayout({
             <ErrorNotification position="top-right" maxVisible={3} autoHideDuration={5000} />
           </ThemeProvider>
         </ErrorProvider>
+        <Analytics />
         <Script id="chatwoot-sdk" strategy="lazyOnload">
           {`(function(d,t){
             var BASE_URL="https://chatwoot-wse0g-u26413.vm.elestio.app";
