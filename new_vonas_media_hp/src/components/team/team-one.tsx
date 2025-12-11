@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, FreeMode } from "swiper/modules";
+import { Autoplay, FreeMode, Mousewheel } from "swiper/modules";
 import { SwiperOptions } from "swiper/types";
 import TeamItem from "./team-item";
 import TeamModal from "../modal/team-modal";
@@ -12,6 +12,25 @@ const slider_setting: SwiperOptions = {
   loop: true,
   autoplay: false,
   spaceBetween: 30,
+  freeMode: {
+    enabled: true,
+    momentum: true,
+    momentumRatio: 1.5,
+    momentumVelocityRatio: 1.5,
+  },
+  mousewheel: {
+    forceToAxis: true,
+    sensitivity: 2.5,
+    releaseOnEdges: false,
+    thresholdDelta: 10,
+    thresholdTime: 500,
+    eventsTarget: 'container',
+    invert: false,
+  },
+  grabCursor: true,
+  preventClicks: false,
+  preventClicksPropagation: false,
+  speed: 800,
   breakpoints: {
     "1400": {
       slidesPerView: 6,
@@ -42,7 +61,24 @@ type IProps = {
 const TeamOne = ({ spacing = "pt-20", creators }: IProps) => {
   const [showModal, setShowModal] = React.useState(false);
   const [teamItem, setTeamItem] = React.useState<any | null>(null);
-  
+  const swiperRef = React.useRef<HTMLDivElement>(null);
+
+  // Prevent page scroll when mouse is over the swiper
+  React.useEffect(() => {
+    const swiperElement = swiperRef.current;
+    if (!swiperElement) return;
+
+    const handleWheel = (e: WheelEvent) => {
+      e.stopPropagation();
+    };
+
+    swiperElement.addEventListener('wheel', handleWheel, { passive: false });
+
+    return () => {
+      swiperElement.removeEventListener('wheel', handleWheel);
+    };
+  }, []);
+
   // Strictly use CMS creators only - no fallback data
   // Return null if no creators from CMS
   if (!creators || creators.length === 0) {
@@ -96,10 +132,10 @@ const TeamOne = ({ spacing = "pt-20", creators }: IProps) => {
         <div className="container-fluid">
           <div className="row">
             <div className="col-xl-12">
-              <div className="tp-team-slider-wrapper">
+              <div className="tp-team-slider-wrapper" ref={swiperRef}>
                 <Swiper
                   {...slider_setting}
-                  modules={[Autoplay, FreeMode]}
+                  modules={[Autoplay, FreeMode, Mousewheel]}
                   className="swiper-container tp-team-slider-active"
                 >
                   {displayData.map((t) => (

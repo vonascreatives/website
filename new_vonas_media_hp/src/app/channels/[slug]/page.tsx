@@ -29,7 +29,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: ChannelDetailPageProps): Promise<Metadata> {
   const { slug } = await params;
   const channel = await getYouTubeChannelById(slug);
-  
+
   if (!channel) {
     return {
       title: "Channel Not Found - Vonas Media",
@@ -37,12 +37,13 @@ export async function generateMetadata({ params }: ChannelDetailPageProps): Prom
     };
   }
 
-  const description = channel.description || `Discover ${channel.title}, a YouTube channel featuring engaging content and creative videos. Subscribe for the latest updates and exclusive content.`;
+  const channelName = channel.channel_name || 'YouTube Channel';
+  const description = channel.description || channel.intro_description_text || `Discover ${channelName}, a YouTube channel featuring engaging content and creative videos. Subscribe for the latest updates and exclusive content.`;
   const channelImage = channel.thumbnails?.high?.url || channel.thumbnails?.default?.url || SEO_DEFAULTS.defaultImage;
   const channelUrl = `${SEO_DEFAULTS.siteUrl}/channels/${slug}`;
-  
+
   const keywords = [
-    channel.title,
+    channelName,
     'YouTube channel',
     'video content',
     'content creator',
@@ -50,13 +51,13 @@ export async function generateMetadata({ params }: ChannelDetailPageProps): Prom
   ];
 
   return generateSEOMetadata({
-    title: `${channel.title} - YouTube Channel`,
+    title: `${channelName} - YouTube Channel`,
     description,
     keywords,
     image: channelImage,
     url: channelUrl,
     type: 'website',
-    author: channel.title,
+    author: channelName,
   });
 }
 
@@ -76,8 +77,8 @@ const ChannelDetailPage = async ({ params }: ChannelDetailPageProps) => {
   const channelSchema = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
-    name: youtubeChannel.title,
-    description: youtubeChannel.description,
+    name: youtubeChannel.channel_name,
+    description: youtubeChannel.intro_description_text || youtubeChannel.description,
     url: `${SEO_DEFAULTS.siteUrl}/channels/${slug}`,
     logo: youtubeChannel.thumbnails?.high?.url || youtubeChannel.thumbnails?.default?.url,
     sameAs: [`https://www.youtube.com/channel/${slug}`],

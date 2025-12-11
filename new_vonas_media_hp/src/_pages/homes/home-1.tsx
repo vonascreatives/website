@@ -131,7 +131,7 @@ const HomeMain = ({ channels, creators, brands, homepageImages, awards, featured
 
             {/* use case area */}
             {/* {featuredUseCase ? (
-              <PortfolioDetailsShowcaseTwoAreaCms useCase={featuredUseCase} />
+              <PortfolioDetailsShowcaseTwoAreaCms useCase=g{featuredUseCase} />
             ) : (
               <PortfolioDetailsShowcaseTwoArea />
             )} */}
