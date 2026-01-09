@@ -34,7 +34,7 @@ const JobPostDetailsMain = ({ jobPost, operationsManager }: JobPostDetailsMainPr
             {/* job post details hero */}
 
             {/* job post details area */}
-            <JobPostDetailsArea operationsManager={operationsManager} />
+            <JobPostDetailsArea jobPost={jobPost} operationsManager={operationsManager} />
             {/* job post details area */}
           </main>
 

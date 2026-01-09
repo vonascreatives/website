@@ -8,9 +8,12 @@ export const metadata: Metadata = {
   description: "Read the latest news, insights, and stories from Vonas Media. Stay updated on content creation, creator economy, and digital media trends.",
 };
 
+// Enable ISR (Incremental Static Regeneration) with 10-second revalidation
+export const revalidate = 10;
+
 const BlogPage = async () => {
   const posts = await getNewsData();
-  
+
   return (
     <BlogMain posts={posts} />
   );

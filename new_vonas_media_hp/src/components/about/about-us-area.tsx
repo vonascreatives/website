@@ -26,32 +26,32 @@ export default function AboutUsArea({ aboutSectionImages }: AboutUsAreaProps) {
     if (aboutSectionImages && aboutSectionImages.length > 0) {
       // First try to find by display order
       let image = aboutSectionImages.find(img => img.displayOrder === order);
-      
+
       // If not found, try pattern matching
       if (!image) {
-        image = aboutSectionImages.find(img => 
+        image = aboutSectionImages.find(img =>
           img.placement?.toLowerCase().includes(pattern.toLowerCase()) ||
           img.title?.toLowerCase().includes(pattern.toLowerCase()) ||
           img.notes?.toLowerCase().includes(pattern.toLowerCase())
         );
       }
-      
+
       // If still not found, try by index
       if (!image && aboutSectionImages[order - 1]) {
         image = aboutSectionImages[order - 1];
       }
-      
+
       if (image) {
         return { src: image.url, alt: image.alt };
       }
     }
-    
+
     return { src: fallbackSrc, alt: fallbackAlt };
   };
-  
+
   // Get specific images with fallbacks (using display order)
   const shapeImage = getImageByOrder(1, 'shape', shape, 'About section decorative shape');
-  const mainImage = getImageByOrder(2, 'main', ab_1, 'About section main image'); 
+  const mainImage = getImageByOrder(2, 'main', ab_1, 'About section main image');
   const secondaryImage = getImageByOrder(3, 'secondary', ab_2, 'About section secondary image');
   const tertiaryImage = getImageByOrder(4, 'tertiary', ab_3, 'About section tertiary image');
   return (
@@ -64,7 +64,7 @@ export default function AboutUsArea({ aboutSectionImages }: AboutUsAreaProps) {
                 <Image
                   data-speed=".7"
                   src={mainImage.src}
-                  alt={mainImage.alt}
+                  alt={mainImage.alt || "About section main image"}
                   style={{ height: "auto" }}
                   width={600}
                   height={338}
@@ -77,7 +77,7 @@ export default function AboutUsArea({ aboutSectionImages }: AboutUsAreaProps) {
                   data-speed="1.1"
                   className="inner-img z-index-5"
                   src={secondaryImage.src}
-                  alt={secondaryImage.alt}
+                  alt={secondaryImage.alt || "About section secondary image"}
                   style={{ height: "auto" }}
                   width={300}
                   height={169}
@@ -85,7 +85,7 @@ export default function AboutUsArea({ aboutSectionImages }: AboutUsAreaProps) {
                 <Image
                   data-speed="0.9"
                   src={tertiaryImage.src}
-                  alt={tertiaryImage.alt}
+                  alt={tertiaryImage.alt || "About section tertiary image"}
                   style={{ height: "auto" }}
                   width={300}
                   height={169}
@@ -120,7 +120,7 @@ export default function AboutUsArea({ aboutSectionImages }: AboutUsAreaProps) {
                   <Image
                     className="ab-about-shape-1 d-none d-md-block"
                     src={shapeImage.src}
-                    alt={shapeImage.alt}
+                    alt={shapeImage.alt || "About section decorative shape"}
                     width={100}
                     height={100}
                   />

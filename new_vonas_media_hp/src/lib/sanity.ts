@@ -8,8 +8,8 @@ function createSanityClient() {
   const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
   // Try write token first, then read token as fallback
   const token = process.env.SANITY_WRITE_TOKEN || process.env.NEXT_PUBLIC_SANITY_READ_TOKEN;
-  
-  
+
+
   // Only create client if we have a valid project ID
   if (projectId && /^[a-z0-9-]+$/.test(projectId)) {
     const client = createClient({
@@ -21,7 +21,7 @@ function createSanityClient() {
     });
     return client;
   }
-  
+
   return null;
 }
 
@@ -40,19 +40,19 @@ export function urlFor(source: SanityImageSource) {
 }
 
 // Helper function to get image URL from Sanity image object
-export function getSanityImageUrl(image: any, width?: number, height?: number): string {
+export function getSanityImageUrl(image: any, width?: number, height?: number, bustCache: boolean = true): string {
   if (!image?.asset?._ref) {
     return '/assets/img/placeholder.jpg'; // Fallback image
   }
-  
+
   try {
     const urlBuilder = urlFor(image);
     if (!urlBuilder) {
       return '/assets/img/placeholder.jpg';
     }
-    
+
     let url = urlBuilder.auto('format').quality(90);
-    
+
     if (width && height) {
       url = url.width(width).height(height).fit('crop');
     } else if (width) {
@@ -60,8 +60,22 @@ export function getSanityImageUrl(image: any, width?: number, height?: number): 
     } else if (height) {
       url = url.height(height);
     }
-    
-    return url.url() || '/assets/img/placeholder.jpg';
+
+    const baseUrl = url.url();
+    if (!baseUrl) {
+      return '/assets/img/placeholder.jpg';
+    }
+
+    // Add cache-busting parameter to force browsers to fetch updated images
+    // This ensures that when images are replaced in Sanity, the new version is loaded
+    if (bustCache) {
+      const separator = baseUrl.includes('?') ? '&' : '?';
+      // Use a daily timestamp to balance cache freshness with CDN efficiency
+      const cacheBuster = Math.floor(Date.now() / (1000 * 60 * 60 * 24)); // Changes once per day
+      return `${baseUrl}${separator}v=${cacheBuster}`;
+    }
+
+    return baseUrl;
   } catch (error) {
     console.error('Error generating Sanity image URL:', error);
     return '/assets/img/placeholder.jpg';
@@ -70,11 +84,11 @@ export function getSanityImageUrl(image: any, width?: number, height?: number): 
 
 // Helper function to fetch data - CMS ONLY mode when fallback is empty array
 export async function fetchSanityData(query: string, params: any = {}, fallback: any = null) {
-  
+
   try {
     if (!sanityClient || !process.env.NEXT_PUBLIC_SANITY_PROJECT_ID) {
-        console.error('Sanity client or project ID is not available');
-      
+      console.error('Sanity client or project ID is not available');
+
       // In CMS-ONLY mode, return empty array instead of fallback
       if (Array.isArray(fallback) && fallback.length === 0) {
         console.debug('CMS-ONLY mode: returning empty array');
@@ -82,9 +96,9 @@ export async function fetchSanityData(query: string, params: any = {}, fallback:
       }
       return fallback;
     }
-    
+
     const data = await sanityClient.fetch(query, params);
-    
+
     const result = data || (Array.isArray(fallback) && fallback.length === 0 ? [] : fallback);
     return result;
   } catch (error) {
@@ -149,7 +163,7 @@ export async function getHomepageImages() {
       folder
     }
   }`;
-  
+
   const fallback = {
     heroImages: [],
     serviceIcons: [],
@@ -158,7 +172,7 @@ export async function getHomepageImages() {
     projectBackground: null,
     projectShape: null
   };
-  
+
   return fetchSanityData(query, {}, fallback);
 }
 
@@ -171,7 +185,7 @@ export async function getBrandCollaborationData() {
     "logoAlt": logo[0].alt,
     slug
   } | order(_createdAt desc)`;
-  
+
   const fallback = [
     {
       _id: 'brand-1',
@@ -180,7 +194,7 @@ export async function getBrandCollaborationData() {
       logoAlt: 'Sample Brand 1 Logo'
     }
   ];
-  
+
   return fetchSanityData(query, {}, fallback);
 }
 
@@ -392,7 +406,7 @@ export async function getChannelsData() {
     focus,
     cta_button_url
   }`;
-  
+
   const fallback = [
     {
       _id: '1',
@@ -411,14 +425,14 @@ export async function getChannelsData() {
       tags: ['documentary', 'lifestyle', 'philippines']
     },
     {
-      _id: '2', 
+      _id: '2',
       name: 'FRMWRKD',
       slug: { current: 'frmwrkd' },
       image: '/assets/img/home-01/project/project-1-2.jpg',
       imageAlt: 'FRMWRKD channel logo',
       about: 'Smart takes on sales, marketing, and operations.',
       category: 'business',
-      country: 'Philippines', 
+      country: 'Philippines',
       language: 'en',
       metrics: [
         { platform: 'youtube', followers: 85000, views: 1500000 },
@@ -443,7 +457,7 @@ export async function getChannelsData() {
       tags: ['interviews', 'creators', 'culture']
     }
   ];
-  
+
   return fetchSanityData(query, {}, fallback);
 }
 
@@ -499,14 +513,14 @@ export async function getCompanyStats() {
     "totalFollowers": 2500000,
     "totalViews": 50000000
   }`;
-  
+
   const fallback = {
     totalChannels: 15,
     totalCreators: 25,
     totalFollowers: 2500000,
     totalViews: 50000000
   };
-  
+
   return fetchSanityData(query, {}, fallback);
 }
 
@@ -585,7 +599,7 @@ export async function getYouTubeChannelById(slug: string) {
       `*[_type == "youtubeId" && slug.current == $slug][0]{${baseFields}}`,
       { slug }
     );
-    
+
     if (result) {
       return result;
     }
@@ -594,13 +608,13 @@ export async function getYouTubeChannelById(slug: string) {
     const allChannels = await sanityClient.fetch(
       `*[_type == "youtubeId"]{_id, channel_name, slug, ${baseFields}}`
     );
-    
+
     // Find channel by matching generated slug
     const matchedChannel = allChannels.find((channel: any) => {
       const generatedSlug = generateSlugFromName(channel.channel_name || '');
       return generatedSlug === slug;
     });
-    
+
     if (matchedChannel) {
       return matchedChannel;
     }
@@ -611,7 +625,7 @@ export async function getYouTubeChannelById(slug: string) {
       `*[_type == "youtubeId" && lower(channel_name) match lower($searchTerm)][0]{${baseFields}}`,
       { searchTerm: `*${searchTerm}*` }
     );
-    
+
     if (result) {
       return result;
     }
@@ -620,7 +634,7 @@ export async function getYouTubeChannelById(slug: string) {
     console.error('Error fetching channel:', error);
   }
 
-// Final fallback - return null to indicate no channel found
+  // Final fallback - return null to indicate no channel found
   return null;
 }
 
@@ -643,10 +657,10 @@ export async function getChannelNavigation(currentSlug: string) {
 
     // Find current channel index
     let currentIndex = -1;
-    
+
     // Try to find by exact slug first
     currentIndex = allChannels.findIndex((ch: any) => ch.slug?.current === currentSlug);
-    
+
     // If not found, try by generated slug
     if (currentIndex === -1) {
       currentIndex = allChannels.findIndex((ch: any) => {
@@ -782,7 +796,7 @@ export async function getTeamMembersData() {
       order: 3
     }
   ];
-  
+
   return fetchSanityData(query, {}, fallback);
 }
 
@@ -809,7 +823,7 @@ export async function getNewsData() {
     "readTime": length(body[_type == "block"].children[].text) / 200,
     seo
   }`;
-  
+
   const fallback = [
     {
       _id: '1',
@@ -860,7 +874,7 @@ export async function getNewsData() {
       readTime: 7
     }
   ];
-  
+
   return fetchSanityData(query, {}, fallback);
 }
 
@@ -889,7 +903,7 @@ export async function getNewsArticleBySlug(slug: string) {
     "readTime": length(body[_type == "block"].children[].text) / 200,
     seo
   }`;
-  
+
   const fallback = {
     _id: 'fallback-article',
     title: 'Sample News Article',
@@ -917,7 +931,7 @@ export async function getNewsArticleBySlug(slug: string) {
     readTime: 5,
     seo: null
   };
-  
+
   return fetchSanityData(query, { slug }, fallback);
 }
 
@@ -948,7 +962,7 @@ export async function getKnowledgeBaseData() {
     "readTime": 5,
     "author": "Vonas Team"
   }`;
-  
+
   const fallback = [
     {
       _id: '1',
@@ -1298,7 +1312,7 @@ export async function getKnowledgeBaseData() {
       author: 'Vonas Analytics Team'
     }
   ];
-  
+
   return fetchSanityData(query, {}, fallback);
 }
 
@@ -1334,13 +1348,13 @@ export async function getChannelsPageImages() {
       usage
     }
   }`;
-  
+
   const fallback = {
     heroImages: [],
     serviceIcons: [],
     testimonialImages: []
   };
-  
+
   return fetchSanityData(query, {}, fallback);
 }
 
@@ -1372,7 +1386,7 @@ export async function getAboutPageImages() {
       placement
     }
   }`;
-  
+
   const fallback = {
     heroImages: [
       {
@@ -1406,7 +1420,7 @@ export async function getAboutPageImages() {
       },
       {
         _id: 'fallback-about-2',
-        title: 'About Image 2', 
+        title: 'About Image 2',
         url: '/assets/img/inner-about/about/about-2.jpg',
         alt: 'About section secondary image',
         originalPath: 'assets/img/inner-about/about/about-2.jpg',
@@ -1434,22 +1448,22 @@ export async function getAboutPageImages() {
       }
     ]
   };
-  
+
   return fetchSanityData(query, {}, fallback);
 }
 
 // Knowledge Base categories for navigation
 export async function getKnowledgeBaseCategories() {
   const query = `array::unique(*[_type == "knowledgeBase"].topic)`;
-  
+
   const fallback = [
     'Strategy',
-    'Launch', 
+    'Launch',
     'Collaboration',
     'Production',
     'Analytics'
   ];
-  
+
   return fetchSanityData(query, {}, fallback);
 }
 
@@ -1462,7 +1476,7 @@ export async function getCreatorFilterData() {
     "niches": array::unique(*[_type in ["exclusiveCreator", "creator"]].niches[]),
     "locations": array::unique(*[_type in ["exclusiveCreator", "creator"]].location)
   }`;
-  
+
   // CMS only - return empty arrays if no data
   const emptyFallback = {
     categories: [],
@@ -1470,7 +1484,7 @@ export async function getCreatorFilterData() {
     niches: [],
     locations: []
   };
-  
+
   return fetchSanityData(query, {}, emptyFallback);
 }
 
@@ -1504,7 +1518,7 @@ export async function getCreatorsWithFilters({
     "imageAlt": coalesce(heroImage[0].alt, heroImage.alt, image.alt, name),
     "followers": coalesce(subscribers, followers, totalFollowers)
   } | order(featured desc, name asc) [$offset...$end]`;
-  
+
   const params = {
     mainCategory: mainCategory || undefined,
     mainPlatform: mainPlatform || undefined,
@@ -1512,7 +1526,7 @@ export async function getCreatorsWithFilters({
     offset,
     end: offset + limit - 1
   };
-  
+
   // CMS only - return empty array if no data
   return fetchSanityData(query, params, []);
 }
@@ -1593,7 +1607,7 @@ export async function getCreatorBySlug(slug: string) {
       alt
     }
   }`;
-  
+
   // CMS connection is now working properly - no fallback needed
   return fetchSanityData(query, { slug }, null);
 }
@@ -1615,7 +1629,7 @@ export async function getAwardsData() {
     featured,
     isActive
   }`;
-  
+
   // Fetch awards from Sanity CMS with no fallback
   return fetchSanityData(query, {}, []);
 }
@@ -1654,7 +1668,7 @@ export async function getUseCasesData() {
     featured,
     tags
   }`;
-  
+
   return fetchSanityData(query, {}, []);
 }
 
@@ -1692,9 +1706,9 @@ export async function getFeaturedUseCase() {
     featured,
     tags
   }`;
-  
+
   const result = await fetchSanityData(query, {}, null);
-  
+
   return result;
 }
 
@@ -1732,7 +1746,7 @@ export async function getUseCaseBySlug(slug: string) {
     featured,
     tags
   }`;
-  
+
   return fetchSanityData(query, { slug }, null);
 }
 
@@ -1750,7 +1764,7 @@ export async function getFunFactsData(pageLocation: string = 'about') {
     isActive,
     pageLocation
   }`;
-  
+
   const fallback = {
     title: 'Agency Snapshots',
     subtitle: 'Fun Facts',
@@ -1781,7 +1795,7 @@ export async function getFunFactsData(pageLocation: string = 'about') {
       }
     ]
   };
-  
+
   return fetchSanityData(query, { pageLocation }, fallback);
 }
 
@@ -1803,7 +1817,7 @@ export async function getStudioHeroData(pageLocation: string = 'studio-home') {
     isActive,
     pageLocation
   }`;
-  
+
   const fallback = {
     title: 'Content Channel Lab',
     heroImageLeft: '/assets/img/home-08/hero/img-1.jpg',
@@ -1835,7 +1849,7 @@ export async function getStudioHeroData(pageLocation: string = 'studio-home') {
       }
     ]
   };
-  
+
   return fetchSanityData(query, { pageLocation }, fallback);
 }
 
@@ -1858,7 +1872,7 @@ export async function getStudioTestimonialsData(pageLocation: string = 'studio-h
     isActive,
     pageLocation
   }`;
-  
+
   const fallback = {
     sectionTitle: 'What Our Clients Say',
     subtitle: 'Testimonials:',
@@ -1894,7 +1908,7 @@ export async function getStudioTestimonialsData(pageLocation: string = 'studio-h
       }
     ]
   };
-  
+
   return fetchSanityData(query, { pageLocation }, fallback);
 }
 
@@ -1912,7 +1926,7 @@ export async function getStudioCounterData(pageLocation: string = 'studio-home')
     isActive,
     pageLocation
   }`;
-  
+
   const fallback = {
     title: null,
     counters: [
@@ -1953,7 +1967,7 @@ export async function getStudioCounterData(pageLocation: string = 'studio-home')
       }
     ]
   };
-  
+
   return fetchSanityData(query, { pageLocation }, fallback);
 }
 
@@ -1973,8 +1987,8 @@ export async function getFaqData() {
       isActive
     }
   }`;
-  
-  
+
+
   const fallback = {
     _id: 'faq-default',
     sidebarTitle: 'Q&A',
@@ -2027,9 +2041,9 @@ export async function getFaqData() {
       }
     ]
   };
-  
+
   const result = await fetchSanityData(query, {}, fallback);
-  
+
   return result;
 }
 
@@ -2049,7 +2063,7 @@ export async function getAffiliateLinksData() {
     featured,
     isActive
   }`;
-  
+
   const fallback = [
     {
       _id: '1',
@@ -2094,6 +2108,6 @@ export async function getAffiliateLinksData() {
       isActive: true
     },
   ];
-  
+
   return fetchSanityData(query, {}, fallback);
 }
