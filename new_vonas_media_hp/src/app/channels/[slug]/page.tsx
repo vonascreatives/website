@@ -14,7 +14,7 @@ interface ChannelDetailPageProps {
 // Generate static params for all channels
 export async function generateStaticParams() {
   if (!sanityClient) return [];
-  
+
   try {
     const channels = await sanityClient.fetch(`*[_type == "youtubeChannel"].channelId`);
     return channels.map((slug: string) => ({
@@ -25,6 +25,9 @@ export async function generateStaticParams() {
     return [];
   }
 }
+
+// Enable ISR (Incremental Static Regeneration) with 10-second revalidation
+export const revalidate = 10;
 
 export async function generateMetadata({ params }: ChannelDetailPageProps): Promise<Metadata> {
   const { slug } = await params;
@@ -67,7 +70,7 @@ const ChannelDetailPage = async ({ params }: ChannelDetailPageProps) => {
     getYouTubeChannelById(slug),
     getChannelNavigation(slug)
   ]);
-  
+
   // If no channel found, show 404
   if (!youtubeChannel) {
     notFound();
@@ -87,12 +90,12 @@ const ChannelDetailPage = async ({ params }: ChannelDetailPageProps) => {
       name: 'Vonas Media'
     }
   };
-  
+
   return (
     <>
       <StructuredData data={channelSchema} />
-      <PortfolioDetailsCustomLightMain 
-        channel={youtubeChannel} 
+      <PortfolioDetailsCustomLightMain
+        channel={youtubeChannel}
         navigation={navigation}
       />
     </>

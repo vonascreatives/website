@@ -13,7 +13,7 @@ interface BlogDetailPageProps {
 // Generate static params for all blog posts
 export async function generateStaticParams() {
   if (!sanityClient) return [];
-  
+
   try {
     const posts = await getNewsData();
     return posts.map((post: any) => ({
@@ -25,10 +25,13 @@ export async function generateStaticParams() {
   }
 }
 
+// Enable ISR (Incremental Static Regeneration) with 10-second revalidation
+export const revalidate = 10;
+
 export async function generateMetadata({ params }: BlogDetailPageProps): Promise<Metadata> {
   const { slug } = await params;
   const post = await getNewsArticleBySlug(slug);
-  
+
   if (!post) {
     return {
       title: "Post Not Found - Vonas Media",
@@ -50,11 +53,11 @@ export async function generateMetadata({ params }: BlogDetailPageProps): Promise
 const BlogDetailPage = async ({ params }: BlogDetailPageProps) => {
   const { slug } = await params;
   const post = await getNewsArticleBySlug(slug);
-  
+
   if (!post) {
     notFound();
   }
-  
+
   return <BlogDetailMain post={post} />;
 };
 
