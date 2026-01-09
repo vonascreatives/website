@@ -1,9 +1,9 @@
 import React from "react";
 import { Metadata } from "next";
 import HomeMain from "@/_pages/homes/home-1";
-import { 
-  getChannelsData, 
-  getCreatorsData, 
+import {
+  getChannelsData,
+  getCreatorsData,
   getBrandCollaborationData,
   getYouTubeChannelsForHomepage,
   getHomepageImages,
@@ -15,20 +15,24 @@ export const metadata: Metadata = {
   title: "Vonas Media - Home",
 };
 
+// Enable ISR (Incremental Static Regeneration) with 10-second revalidation
+// This ensures fresh Sanity data is fetched periodically in production
+export const revalidate = 10;
+
 const Home = async () => {
   // Fetch all homepage data
   const [channels, creators, brands, youtubeChannels, homepageImages, awards, featuredUseCase] = await Promise.all([
     getChannelsData(),
     getCreatorsData(),
     getBrandCollaborationData(),
-    getYouTubeChannelsForHomepage(), 
+    getYouTubeChannelsForHomepage(),
     getHomepageImages(),
     getAwardsData(),
     getFeaturedUseCase()
   ]);
-  
+
   return (
-    <HomeMain 
+    <HomeMain
       channels={youtubeChannels} // Use YouTube channels for project section (max 10)
       creators={creators.slice(0, 20)} // Limit to 20 creators for gallery view 
       brands={brands}

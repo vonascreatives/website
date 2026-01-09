@@ -2,6 +2,8 @@
 import React from "react";
 import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
+import "@/styles/project-banner-fullwidth.css";
+
 
 import ProjectTextLine from "./project-text-line";
 
@@ -52,9 +54,9 @@ const ProjectOne = ({ channels, homepageImages }: ProjectOneProps) => {
   // Use CMS data if available, otherwise fallback to static data
   const normalizedChannels = Array.isArray(channels) ? channels.filter(Boolean) : [];
   const hasChannels = normalizedChannels.length > 0;
-  
+
   // Create display items - use CMS data or fallback
-  const displayItems = hasChannels 
+  const displayItems = hasChannels
     ? normalizedChannels.slice(0, 6) // Show max 6 channels
     : fallbackChannels;
 
@@ -71,7 +73,7 @@ const ProjectOne = ({ channels, homepageImages }: ProjectOneProps) => {
         </div>
       </div>
 
-      {/* Portfolio section - matches project-three */}
+      {/* Portfolio section - full width */}
       <div
         className="tp-project-4-area pb-120 project-panel-area"
         style={{ backgroundImage: "url(/assets/img/home-04/brand/overly.png)" }}
@@ -80,43 +82,40 @@ const ProjectOne = ({ channels, homepageImages }: ProjectOneProps) => {
           <div className="row g-0">
             <div className="col-xl-12">
               {displayItems.map((item, index) => {
-                const title = hasChannels 
+                const title = hasChannels
                   ? (item.channel_name || item.title || `Channel ${index + 1}`)
                   : item.title;
-                
-                const imageSrc = hasChannels 
+
+                const imageSrc = hasChannels
                   ? (item.heroImage?.url || item.image || fallbackChannels[index % fallbackChannels.length].img)
                   : item.img;
-                
+
                 const altText = hasChannels
                   ? (item.heroImage?.alt || item.imageAlt || title)
                   : title;
-                
+
                 const slug = hasChannels ? getChannelSlug(item) : null;
                 const href = slug ? `/channels/${slug}` : "/channels";
 
                 return (
                   <div key={item._id || item.id || index} className="tp-project-4-bg project-panel">
                     <Link href={href}>
-                      <div className="tp-project-4-thumb" style={{ 
-                        width: "100%", 
-                        maxWidth: "1000px",
+                      <div className="tp-project-4-thumb" style={{
+                        width: "100%",
                         aspectRatio: "16/9",
-                        overflow: "hidden", 
-                        position: "relative",
-                        margin: "0 auto"
+                        overflow: "hidden",
+                        position: "relative"
                       }}>
-                        <Image 
-                          src={imageSrc} 
+                        <Image
+                          src={imageSrc}
                           alt={altText}
-                          width={1920}
-                          height={1080}
-                          style={{ 
+                          width={2560}
+                          height={1440}
+                          style={{
                             width: "100%",
                             height: "100%",
-                            objectFit: "contain",
-                            objectPosition: "center",
-                            backgroundColor: "#000"
+                            objectFit: "cover",
+                            objectPosition: "center"
                           }}
                           priority={index < 2}
                         />

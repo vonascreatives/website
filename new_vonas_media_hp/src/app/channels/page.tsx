@@ -1,16 +1,19 @@
 import React from "react";
 import { Metadata } from "next";
 import HomeSevenMain from "@/_pages/homes/home-7";
-import { 
+import {
   getChannelsData,
-  getStudioHeroData, 
+  getStudioHeroData,
   getStudioTestimonialsData,
-  getStudioCounterData 
+  getStudioCounterData
 } from "@/lib/sanity";
 
 export const metadata: Metadata = {
   title: "Vonas Media - Our Channels",
 };
+
+// Enable ISR (Incremental Static Regeneration) with 10-second revalidation
+export const revalidate = 10;
 
 const ChannelsPage = async () => {
   try {
@@ -18,9 +21,9 @@ const ChannelsPage = async () => {
     const studioHeroData = await getStudioHeroData('studio-home');
     const testimonialData = await getStudioTestimonialsData('studio-home');
     const counterData = await getStudioCounterData('studio-home');
-    
+
     return (
-      <HomeSevenMain 
+      <HomeSevenMain
         channels={youtubeChannels}
         studioHeroData={studioHeroData}
         testimonialData={testimonialData}
@@ -29,7 +32,7 @@ const ChannelsPage = async () => {
     );
   } catch (error) {
     return (
-      <HomeSevenMain 
+      <HomeSevenMain
         channels={[]}
       />
     );

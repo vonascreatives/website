@@ -12,10 +12,13 @@ export const metadata: Metadata = generateSEOMetadata({
   type: 'website',
 });
 
+// Enable ISR (Incremental Static Regeneration) with 10-second revalidation
+export const revalidate = 10;
+
 const JobsPage = async () => {
   // Fetch job posts from Sanity CMS
   const jobPosts = await getJobPosts();
-  
+
   return (
     <JobPostsMainNew initialJobs={jobPosts} />
   );

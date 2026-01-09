@@ -55,27 +55,27 @@ interface StudioPanelThreeProps {
 
 export default function StudioPanelThree({ channels }: StudioPanelThreeProps) {
   // Use YouTube channels from CMS or fallback to static portfolio data
-  const displayData = channels && channels.length > 0 
+  const displayData = channels && channels.length > 0
     ? channels.map((ch, index) => {
-        // Generate slug: use real slug if exists, otherwise create from channel name
-        const generatedSlug = ch.slug?.current || 
-          ch.channel_name?.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 
-          `channel-${index + 1}`;
-        
-        return {
-          id: index + 1,
-          img: ch.image || ch.heroImage || portfolio_data[index]?.img,
-          title: ch.channel_name || ch.name || portfolio_data[index]?.title,
-          slug: generatedSlug, // This is now always a string
-          channel_number: ch.channel_number
-        };
-      })
+      // Generate slug: use real slug if exists, otherwise create from channel name
+      const generatedSlug = ch.slug?.current ||
+        ch.channel_name?.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') ||
+        `channel-${index + 1}`;
+
+      return {
+        id: index + 1,
+        img: ch.image || ch.heroImage || portfolio_data[index]?.img,
+        title: ch.channel_name || ch.name || portfolio_data[index]?.title,
+        slug: generatedSlug, // This is now always a string
+        channel_number: ch.channel_number
+      };
+    })
     : portfolio_data;
   return (
     <div className="panel-2 tp-studio-height">
       <div className="tp-studio-portfolio-area d-flex align-items-end tp-studio-height tp-studio-plr p-relative fix pt-100 pb-60">
         <div className="tp-studio-portfolio-shape d-none d-md-block">
-          <Image src={shape} alt="shape" style={{height:"auto"}} />
+          <Image src={shape} alt="shape" style={{ height: "auto" }} />
         </div>
         <div className="container container-1630">
           <div className="row align-items-end counter-row">
@@ -108,14 +108,6 @@ export default function StudioPanelThree({ channels }: StudioPanelThreeProps) {
                           <Link href={`/channels/${item.slug}`}>{item.title}</Link>
                           <span>{(item as any).channel_number || (item.id < 9 ? `0${item.id}` : item.id)}</span>
                         </h4>
-                      </div>
-                      <div className="tp-studio-portfolio-img">
-                        <Image
-                          src={item.img}
-                          alt={item.title || "channel image"}
-                          width={400}
-                          height={225}
-                        />
                       </div>
                     </div>
                   ))}

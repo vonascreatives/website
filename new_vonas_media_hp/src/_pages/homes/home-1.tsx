@@ -58,10 +58,10 @@ const HomeMain = ({ channels, creators, brands, homepageImages, awards, featured
   }, []);
 
   useEffect(() => {
-    if(typeof window !== 'undefined' && document.querySelector('.tp-magic-cursor')) {
+    if (typeof window !== 'undefined' && document.querySelector('.tp-magic-cursor')) {
       cursorAnimation();
     }
-  },[]);
+  }, []);
 
   useGSAP(() => {
     const timer = setTimeout(() => {
@@ -69,11 +69,11 @@ const HomeMain = ({ channels, creators, brands, homepageImages, awards, featured
       // portfolio image wrap
       gsap.timeline({
         scrollTrigger: {
-           trigger: ".tp-project-full-img-wrap",
-           start: "top 65",
-           end: "bottom 0%",
-           pin: ".tp-project-full-img",
-           pinSpacing: false,
+          trigger: ".tp-project-full-img-wrap",
+          start: "top 65",
+          end: "bottom 0%",
+          pin: ".tp-project-full-img",
+          pinSpacing: false,
         }
       });
       // team marquee
@@ -104,7 +104,7 @@ const HomeMain = ({ channels, creators, brands, homepageImages, awards, featured
       <div id="smooth-wrapper">
         <div id="smooth-content">
           <main>
-            
+
             {/* hero area start */}
             <HeroBannerOne />
             {/* hero area end */}

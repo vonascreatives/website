@@ -13,10 +13,13 @@ export async function generateStaticParams() {
   }));
 }
 
-export async function generateMetadata({params}:{params:Promise<{slug:string}>}): Promise<Metadata> {
+// Enable ISR (Incremental Static Regeneration) with 10-second revalidation
+export const revalidate = 10;
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const jobPost = await getJobPostBySlug(slug);
-  
+
   if (!jobPost) {
     return generateSEOMetadata({
       title: "Job Post Not Found - Vonas Media",
@@ -25,7 +28,7 @@ export async function generateMetadata({params}:{params:Promise<{slug:string}>})
     });
   }
 
-  const description = Array.isArray(jobPost.description) 
+  const description = Array.isArray(jobPost.description)
     ? 'Join our team at Vonas Media. Apply now for this exciting opportunity.'
     : jobPost.description || `Join our team as ${jobPost.title} at Vonas Media. Apply now for this exciting opportunity.`;
 
@@ -38,7 +41,7 @@ export async function generateMetadata({params}:{params:Promise<{slug:string}>})
   });
 }
 
-export default async function JobPostDetailsPage({params}:{params:Promise<{slug:string}>}) {
+export default async function JobPostDetailsPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const jobPost = await getJobPostBySlug(slug);
 

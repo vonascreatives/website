@@ -2,84 +2,60 @@ import React from "react";
 import { QuoteThree, Share, Tag } from "@/components/svg";
 import BlogDetailsAuthor from "@/components/blog/details/blog-details-author";
 import BlogDetailsNavigation from "@/components/blog/details/blog-details-navigation";
+import { JobPost } from "@/lib/sanity-queries";
+import { PortableText } from "@portabletext/react";
 
 interface JobPostDetailsAreaProps {
   operationsManager?: any;
+  jobPost?: JobPost;
 }
 
-export default function JobPostDetailsArea({ operationsManager }: JobPostDetailsAreaProps) {
+export default function JobPostDetailsArea({ operationsManager, jobPost }: JobPostDetailsAreaProps) {
   return (
     <section className="postbox__area tp-blog-sidebar-sticky-area pt-120 pb-120">
       <div className="container">
         <div className="row justify-content-center">
           <div className="col-12">
             <div className="postbox__wrapper">
-              <div className="row justify-content-center">
-                <div className="col-xl-8">
-                  <div className="blog-details-top-text tp_fade_bottom">
-                    <p>
-                      Join our dynamic team at Vonas Media and be part of creating
-                      innovative digital experiences. We&apos;re looking for passionate
-                      individuals who share our vision for excellence and creativity
-                      in the digital space.{" "}
-                    </p>
-                  </div>
-                  <div className="blog-details-left-content tp_fade_bottom">
-                    <h4 className="blog-details-left-title">
-                      What is this role about?
-                    </h4>
-                    <p className="mb-20">
-                      <span>This position</span> offers an exciting opportunity to
-                      work with cutting-edge technologies and collaborate with
-                      talented professionals. You&apos;ll be contributing to projects
-                      that make a real impact in the digital media landscape.
-                    </p>
-                    <p>
-                      We believe in fostering growth, creativity, and innovation
-                      while maintaining a healthy work-life balance.
-                    </p>
+              {/* Description Section */}
+              {jobPost?.description && Array.isArray(jobPost.description) && (
+                <div className="row justify-content-center">
+                  <div className="col-xl-8">
+                    <div className="blog-details-left-content tp_fade_bottom">
+                      <h4 className="blog-details-left-title">
+                        Description
+                      </h4>
+                      <div className="job-description-content">
+                        <PortableText value={jobPost.description} />
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
+
+              {/* Requirements Section */}
+              {jobPost?.requirements && Array.isArray(jobPost.requirements) && jobPost.requirements.length > 0 && (
+                <div className="row justify-content-center">
+                  <div className="col-xl-8">
+                    <div className="blog-details-left-content tp_fade_bottom">
+                      <h4 className="blog-details-left-title">
+                        Requirements
+                      </h4>
+                      <div className="job-requirements-content">
+                        <ul style={{ listStyleType: 'disc', paddingLeft: '20px' }}>
+                          {jobPost.requirements.map((requirement, index) => (
+                            <li key={index} className="mb-10">{requirement}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
 
               <div className="row justify-content-center">
                 <div className="col-xl-8">
-                  <div className="blog-details-left-content tp_fade_bottom">
-                    <h4 className="blog-details-left-title">
-                      Responsibilities & Growth
-                    </h4>
-                    <p>
-                      You&apos;ll be working on exciting projects that challenge your
-                      skills and help you grow professionally. Our collaborative
-                      environment encourages innovation and creative problem-solving.
-                      We provide mentorship, learning opportunities, and the tools
-                      you need to succeed in your career journey with us.
-                    </p>
-                  </div>
-                  <div className="blog-details-blockquote tp_fade_bottom">
-                    <blockquote>
-                      <span className="quote-icon">
-                        <QuoteThree />
-                      </span>
-                      <p>Don&apos;t watch the clock; do what it does. keep going.</p>
-                      <span className="blockquote-info">Sam Levenson</span>
-                    </blockquote>
-                  </div>
-                  <div className="blog-details-left-content tp_fade_bottom">
-                    <p>
-                      At Vonas Media, we believe that great work comes from great
-                      people. We&apos;re committed to creating an inclusive environment
-                      where everyone can thrive. Join us in building the future of
-                      digital media and make your mark in an industry that&apos;s
-                      constantly evolving.
-                    </p>
-                  </div>
-                </div>
-              </div>
 
-              <div className="row justify-content-center">
-                <div className="col-xl-8">
-                  
                   <div className="blog-details-share-wrap mb-40">
                     <div className="row">
                       <div className="col-xl-8">
@@ -116,5 +92,5 @@ export default function JobPostDetailsArea({ operationsManager }: JobPostDetails
         </div>
       </div>
     </section>
-   );
- }
+  );
+}
