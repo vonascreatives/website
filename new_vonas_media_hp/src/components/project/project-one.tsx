@@ -100,23 +100,12 @@ const ProjectOne = ({ channels, homepageImages }: ProjectOneProps) => {
                 return (
                   <div key={item._id || item.id || index} className="tp-project-4-bg project-panel">
                     <Link href={href}>
-                      <div className="tp-project-4-thumb" style={{
-                        width: "100%",
-                        aspectRatio: "16/9",
-                        overflow: "hidden",
-                        position: "relative"
-                      }}>
+                      <div className="tp-project-4-thumb">
                         <Image
                           src={imageSrc}
                           alt={altText}
                           width={2560}
                           height={1440}
-                          style={{
-                            width: "100%",
-                            height: "100%",
-                            objectFit: "cover",
-                            objectPosition: "center"
-                          }}
                           priority={index < 2}
                         />
                       </div>
