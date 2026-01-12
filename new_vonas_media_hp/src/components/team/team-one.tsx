@@ -12,6 +12,8 @@ const slider_setting: SwiperOptions = {
   loop: true,
   autoplay: false,
   spaceBetween: 30,
+  centeredSlides: true, // Center slides to allow scrolling both directions
+  rewind: true, // Allow rewinding to start
   freeMode: {
     enabled: true,
     momentum: true,
@@ -84,7 +86,7 @@ const TeamOne = ({ spacing = "pt-20", creators }: IProps) => {
   if (!creators || creators.length === 0) {
     return null;
   }
-  
+
   // Deduplicate team members by name to avoid showing duplicates
   const deduplicateTeamMembers = (members: any[]) => {
     const seen = new Set();
@@ -97,7 +99,7 @@ const TeamOne = ({ spacing = "pt-20", creators }: IProps) => {
       return true;
     });
   };
-  
+
   // Use only CMS creators data - deduplicate and sort
   let displayData = deduplicateTeamMembers(creators);
 
@@ -120,8 +122,43 @@ const TeamOne = ({ spacing = "pt-20", creators }: IProps) => {
     if (!aHasImage && bHasImage) return 1;
     return 0;
   });
-  
-  
+
+  // Dynamic slider settings based on number of creators
+  const creatorCount = displayData.length;
+
+  // Calculate slides per view to ensure there's always overflow for dragging
+  const getSlidesPerView = (maxSlides: number) => {
+    if (creatorCount <= 2) return 1.5; // Show 1.5 slides to hint at more content
+    if (creatorCount <= 4) return Math.min(2.5, creatorCount - 0.5); // Show partial slide
+    return Math.min(maxSlides, creatorCount - 1); // Always show one less than total
+  };
+
+  const dynamicSliderSettings: SwiperOptions = {
+    ...slider_setting,
+    loop: false, // Disable loop for better grab behavior
+    slidesPerView: getSlidesPerView(6),
+    breakpoints: {
+      "1400": {
+        slidesPerView: getSlidesPerView(6),
+      },
+      "1200": {
+        slidesPerView: getSlidesPerView(4),
+      },
+      "992": {
+        slidesPerView: getSlidesPerView(4),
+      },
+      "768": {
+        slidesPerView: getSlidesPerView(3),
+      },
+      "576": {
+        slidesPerView: getSlidesPerView(2),
+      },
+      "0": {
+        slidesPerView: 1.2,
+      },
+    },
+  };
+
   function handleTeamModal(team: any) {
     setShowModal(!showModal);
     setTeamItem(team);
@@ -134,7 +171,7 @@ const TeamOne = ({ spacing = "pt-20", creators }: IProps) => {
             <div className="col-xl-12">
               <div className="tp-team-slider-wrapper" ref={swiperRef}>
                 <Swiper
-                  {...slider_setting}
+                  {...dynamicSliderSettings}
                   modules={[Autoplay, FreeMode, Mousewheel]}
                   className="swiper-container tp-team-slider-active"
                 >
