@@ -12,13 +12,13 @@ const footer_links = [
   { link: "/news", title: "News" },
   { link: "/jobs", title: "Jobs" },
   { link: "/contact", title: "Contact" },
-  { link: "/knowledge", title: "Knowledge Base" },
+  { link: "/about", title: "Knowledge Base" },
 ];
 export default function FooterOne() {
   const [isActive, setIsActive] = React.useState(false);
   useEffect(() => {
     footerOneAnimation();
-  },[])
+  }, [])
   return (
     <footer>
       {/* footer area start */}
