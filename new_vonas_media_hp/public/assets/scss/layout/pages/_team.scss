@@ -83,7 +83,7 @@
 
     &-title-sm {
         font-weight: 400;
-        font-size: 50px;
+        font-size: 30px;
         line-height: 1;
         text-transform: uppercase;
         color: var(--tp-common-white);
@@ -95,16 +95,16 @@
         transition-delay: 0.2s;
 
         @media #{$xl} {
-            font-size: 40px;
+            font-size: 26px;
         }
 
         @media #{$lg,$md,$xs} {
-            font-size: 30px;
+            font-size: 22px;
         }
     }
 
     &-slider-active {
-        margin: 0px -260px;
+        margin: 0px -80px;
         @media #{$xl,$md,$xs} {
             margin: 0;
         }
@@ -114,7 +114,7 @@
 .tp-team-img-portrait {
     position: relative;
     width: 100%;
-    aspect-ratio: 10 / 16;
+    aspect-ratio: 4 / 5;
     overflow: hidden;
 
     & img {

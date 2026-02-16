@@ -31,7 +31,7 @@ export default function TeamItem({ item,handleTeamModal }:IProps) {
   };
   
   return (
-    <div className="tp-team-item tp-hover-btn-wrapper marque fix mb-30">
+    <div className="tp-team-item tp-hover-btn-wrapper marque fix mb-10">
       <div className="tp-hover-btn-item tp-team-img-portrait">
         <Image
           src={displayImage}

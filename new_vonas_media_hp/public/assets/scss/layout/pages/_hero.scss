@@ -23,15 +23,15 @@
 }
 .tp-hero{
     &-ptb{
-        padding-top: 200px;
+        padding-top: 140px;
         @media #{$lg}{
-            padding-top: 140px;
+            padding-top: 110px;
         }
         @media #{$md}{
-            padding-top: 130px;
+            padding-top: 100px;
         }
         @media #{$xs}{
-            padding-top: 120px;
+            padding-top: 90px;
         }
     }
     &-title-wrap{
@@ -140,9 +140,9 @@
     &-content{
         max-width: 570px;
         margin: 0 auto;
-        margin-bottom: 120px;
+        margin-bottom: 70px;
         @media #{$xs}{
-            margin-bottom: 60px;
+            margin-bottom: 40px;
         }
         & p{
             font-weight: 400;
@@ -167,14 +167,14 @@
             background-size: cover;
             object-fit: cover;
             width: 670px;
-            height: 890px;
+            height: 650px;
             margin: 0 auto;
             overflow: hidden;
             @media #{$xl}{
-                height: 700px;
+                height: 550px;
             }
             @media #{$xs}{
-                height: 500px;
+                height: 380px;
             }
             & video{
                 height: 100%;
