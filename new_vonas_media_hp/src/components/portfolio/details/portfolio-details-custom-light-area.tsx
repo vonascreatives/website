@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import {Swiper,SwiperSlide} from 'swiper/react';
@@ -6,7 +6,6 @@ import {Autoplay} from 'swiper/modules';
 import { SwiperOptions } from 'swiper/types';
 import Social from '@/components/social/social';
 import { Dots } from '@/components/svg';
-import { loadFonts, getSafeFontFamily, Font } from '@/utils/font-loader';
 
 // fallback images
 import full_img from '@/assets/img/inner-project/custom/custom-big-1.jpg';
@@ -58,8 +57,6 @@ interface PortfolioDetailsCustomLightAreaProps {
 export default function PortfolioDetailsCustomLightArea({ channel, navigation }: PortfolioDetailsCustomLightAreaProps) {
   console.log('Channel data received:', channel); // Debug log
   
-  // State for font loading
-  const [fontsLoaded, setFontsLoaded] = useState<boolean[]>([]);
   
   // Extract channel data with fallbacks
   const channelNumber = channel?.channel_number || '01';
@@ -94,19 +91,6 @@ export default function PortfolioDetailsCustomLightArea({ channel, navigation }:
     slider_images = fallback_slider_images;
   }
   
-  // Extract typography and colors from Sanity with proper field mapping
-  const typography = useMemo(() => 
-    channel?.typography?.map((font: any) => ({
-      name: font.font_name || font.name || 'Inter',
-      style: font.font_usage || font.style || 'Sans-serif'
-    })) || [{ name: 'Big Shoulders Display', style: 'Display Font' }, { name: 'Syne', style: 'Modern Sans-Serif' }],
-    [channel?.typography]
-  );
-  
-  const colors = channel?.colors?.map((color: any) => ({
-    name: color.color_name || color.name || 'Color',
-    hex: color.color_hex || color.hex || '#19191A'
-  })) || [{ name: 'Primary', hex: '#19191A' }, { name: 'Secondary', hex: '#505063' }, { name: 'Accent', hex: '#ECEECA' }];
   
   // Extract concept section data
   const conceptSubtitle = channel?.concept_subtitle || 'The Concept';
@@ -117,20 +101,6 @@ export default function PortfolioDetailsCustomLightArea({ channel, navigation }:
     (channel?.concept_text_block_2 && channel.concept_text_block_2[0]?.children?.[0]?.text) ||
     'We build and activate brands through cultural insight, strategic vision, and the power of emotion across every element of its expression.';
   
-  // Load fonts when component mounts or typography changes
-  useEffect(() => {
-    if (typography && typography.length > 0) {
-      const fonts: Font[] = typography.map((font: any) => ({
-        name: font.name || font,
-        weights: ['400', '700']
-      }));
-      
-      loadFonts(fonts).then(results => {
-        setFontsLoaded(results);
-        console.log(`Loaded ${results.filter(r => r).length}/${results.length} fonts for ${channelName}`);
-      });
-    }
-  }, [typography, channelName]);
   return (
     <>
       {/* portfolio details area */}
@@ -234,69 +204,6 @@ export default function PortfolioDetailsCustomLightArea({ channel, navigation }:
                   height={600}
                   style={{height: "auto"}}
                 />
-              </div>
-              <div className="pd-typography-wrap">
-                <div className="row">
-                    {/* First Typography Column */}
-                    <div className="col-xl-4 col-lg-4 col-md-6">
-                      <div className="pd-typography-left tp_fade_bottom">
-                          <span className="text-1">Typography</span>
-                          <span className="text-2" style={{ fontFamily: getSafeFontFamily(typography[0]?.name || 'Big Shoulders Display') }}>
-                            {typography[0]?.name || 'Big Shoulders Display'}
-                          </span>
-                          <span className="text-3" style={{ fontFamily: getSafeFontFamily(typography[0]?.name || 'Big Shoulders Display') }}>
-                            abcdefghijklmnopqrstuvwxyz
-                          </span>
-                          <span className="text-4" style={{ fontFamily: getSafeFontFamily(typography[0]?.name || 'Big Shoulders Display') }}>
-                            0123456789
-                          </span>
-                          <span className="text-5" style={{ fontFamily: getSafeFontFamily(typography[0]?.name || 'Big Shoulders Display') }}>
-                            Aa
-                          </span>
-                      </div>
-                    </div>
-                    
-                    {/* Second Typography Column */}
-                    <div className="col-xl-4 col-lg-4 col-md-6">
-                      <div className="pd-typography-middle tp_fade_bottom">
-                          <div className="pd-typography-left">
-                            <span className="text-2" style={{ fontFamily: getSafeFontFamily(typography[1]?.name || 'Syne') }}>
-                              {typography[1]?.name || 'Syne'}
-                            </span>
-                            <span className="text-3" style={{ fontFamily: getSafeFontFamily(typography[1]?.name || 'Syne') }}>
-                              abcdefghijklmnopqrstuvwxyz
-                            </span>
-                            <span className="text-4" style={{ fontFamily: getSafeFontFamily(typography[1]?.name || 'Syne') }}>
-                              0123456789
-                            </span>
-                            <span className="text-5" style={{ fontFamily: getSafeFontFamily(typography[1]?.name || 'Syne') }}>
-                              Aa
-                            </span>
-                          </div>
-                      </div>
-                    </div>
-                    
-                    {/* Colors Column */}
-                    <div className="col-xl-4 col-lg-4 col-md-6">
-                      <div className="pd-typography-color tp_fade_bottom"
-                           style={{
-                             '--color-1': colors[0]?.hex || '#19191A',
-                             '--color-2': colors[1]?.hex || '#505063',
-                             '--color-3': colors[2]?.hex || '#ECEECA'
-                           } as React.CSSProperties}>
-                          <h5 className="text-1">Colors</h5>
-                          <span className="color-1" style={{ backgroundColor: colors[0]?.hex || '#19191A' }}>
-                            {colors[0]?.hex || '#19191A'}
-                          </span>
-                          <span className="color-2" style={{ backgroundColor: colors[1]?.hex || '#505063' }}>
-                            {colors[1]?.hex || '#505063'}
-                          </span>
-                          <span className="color-3" style={{ backgroundColor: colors[2]?.hex || '#ECEECA' }}>
-                            {colors[2]?.hex || '#ECEECA'}
-                          </span>
-                      </div>
-                    </div>
-                </div>
               </div>
           </div>
         </div>
