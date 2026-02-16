@@ -108,6 +108,9 @@
         @media #{$xl,$md,$xs} {
             margin: 0;
         }
+        & .swiper-slide {
+            width: 200px;
+        }
     }
 }
 
