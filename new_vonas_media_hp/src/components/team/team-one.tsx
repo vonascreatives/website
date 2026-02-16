@@ -123,39 +123,13 @@ const TeamOne = ({ spacing = "pt-20", creators }: IProps) => {
     return 0;
   });
 
-  // Dynamic slider settings based on number of creators
-  const creatorCount = displayData.length;
-
-  // Calculate slides per view - always leave 0.5 slide overflow for scrolling
-  const getSlidesPerView = (maxSlides: number) => {
-    if (creatorCount <= 1) return 1;
-    return Math.min(maxSlides, creatorCount) - 0.5;
-  };
-
+  // Use auto slidesPerView so slides match the CSS width (200px)
+  // This keeps images small and close together with no gaps
   const dynamicSliderSettings: SwiperOptions = {
     ...slider_setting,
-    loop: false, // Disable loop for better grab behavior
-    slidesPerView: getSlidesPerView(10),
-    breakpoints: {
-      "1400": {
-        slidesPerView: getSlidesPerView(10),
-      },
-      "1200": {
-        slidesPerView: getSlidesPerView(8),
-      },
-      "992": {
-        slidesPerView: getSlidesPerView(6),
-      },
-      "768": {
-        slidesPerView: getSlidesPerView(5),
-      },
-      "576": {
-        slidesPerView: getSlidesPerView(3),
-      },
-      "0": {
-        slidesPerView: 2.5,
-      },
-    },
+    loop: false,
+    slidesPerView: 'auto',
+    breakpoints: {},
   };
 
   function handleTeamModal(team: any) {
