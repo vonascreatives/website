@@ -8,11 +8,11 @@ import TeamModal from "../modal/team-modal";
 import { getCreatorFollowerCount } from "@/utils/formatFollowers";
 
 const slider_setting: SwiperOptions = {
-  slidesPerView: 6,
+  slidesPerView: 10,
   loop: true,
   autoplay: false,
-  spaceBetween: 30,
-  centeredSlides: true, // Center slides to allow scrolling both directions
+  spaceBetween: 5,
+  centeredSlides: true,
   rewind: true, // Allow rewinding to start
   freeMode: {
     enabled: true,
@@ -126,35 +126,34 @@ const TeamOne = ({ spacing = "pt-20", creators }: IProps) => {
   // Dynamic slider settings based on number of creators
   const creatorCount = displayData.length;
 
-  // Calculate slides per view to ensure there's always overflow for dragging
+  // Calculate slides per view - always leave 0.5 slide overflow for scrolling
   const getSlidesPerView = (maxSlides: number) => {
-    if (creatorCount <= 2) return 1.5; // Show 1.5 slides to hint at more content
-    if (creatorCount <= 4) return Math.min(2.5, creatorCount - 0.5); // Show partial slide
-    return Math.min(maxSlides, creatorCount - 1); // Always show one less than total
+    if (creatorCount <= 1) return 1;
+    return Math.min(maxSlides, creatorCount) - 0.5;
   };
 
   const dynamicSliderSettings: SwiperOptions = {
     ...slider_setting,
     loop: false, // Disable loop for better grab behavior
-    slidesPerView: getSlidesPerView(6),
+    slidesPerView: getSlidesPerView(10),
     breakpoints: {
       "1400": {
-        slidesPerView: getSlidesPerView(6),
+        slidesPerView: getSlidesPerView(10),
       },
       "1200": {
-        slidesPerView: getSlidesPerView(4),
+        slidesPerView: getSlidesPerView(8),
       },
       "992": {
-        slidesPerView: getSlidesPerView(4),
+        slidesPerView: getSlidesPerView(6),
       },
       "768": {
-        slidesPerView: getSlidesPerView(3),
+        slidesPerView: getSlidesPerView(5),
       },
       "576": {
-        slidesPerView: getSlidesPerView(2),
+        slidesPerView: getSlidesPerView(3),
       },
       "0": {
-        slidesPerView: 1.2,
+        slidesPerView: 2.5,
       },
     },
   };
@@ -165,7 +164,7 @@ const TeamOne = ({ spacing = "pt-20", creators }: IProps) => {
   }
   return (
     <>
-      <div className={`tp-team-area ${spacing} pb-120 fix`}>
+      <div className={`tp-team-area ${spacing} pb-30 fix`}>
         <div className="container-fluid">
           <div className="row">
             <div className="col-xl-12">
