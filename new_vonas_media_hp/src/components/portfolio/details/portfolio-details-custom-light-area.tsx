@@ -9,7 +9,6 @@ import { Dots } from '@/components/svg';
 
 // fallback images
 import full_img from '@/assets/img/inner-project/custom/custom-big-1.jpg';
-import full_img_2 from '@/assets/img/inner-project/custom/custom-big-2.jpg';
 import port_1 from '@/assets/img/inner-project/custom/port-1.jpg';
 import port_2 from '@/assets/img/inner-project/custom/port-2.jpg';
 import port_3 from '@/assets/img/inner-project/custom/port-3.jpg';
@@ -75,7 +74,6 @@ export default function PortfolioDetailsCustomLightArea({ channel, navigation }:
   
   // Extract images from Sanity with fallbacks
   const heroImage = channel?.visual_identity_images?.[0]?.url || full_img;
-  const secondaryImage = channel?.visual_identity_images?.[1]?.url || full_img_2;
   const conceptImages = channel?.concept_images || [];
   
   // Create slider images array (use Sanity images if available, fallback to static)
@@ -195,16 +193,7 @@ export default function PortfolioDetailsCustomLightArea({ channel, navigation }:
                     </div>
                 </div>
               </div>
-              <div className="pd-custom-full-img-2 mb-120 mt-120">
-                <Image 
-                  data-speed=".8" 
-                  src={secondaryImage} 
-                  alt={channel?.visual_identity_images?.[1]?.alt || `${channelName} secondary image`}
-                  width={1200}
-                  height={600}
-                  style={{height: "auto"}}
-                />
-              </div>
+
           </div>
         </div>
       {/* details title area */}
