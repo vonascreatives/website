@@ -29,6 +29,9 @@ import award  from './award'
 import useCase from './usecase'
 import funFact from './funfact'
 
+// Folder type (migrated from sanity.folder)
+import vonasFolder from './vonasFolder'
+
 // Documentation types
 import docsSection from './docsSection'
 import docsPage from './docsPage'
@@ -87,6 +90,9 @@ export const schemaTypes = [
   useCase,
   funFact,
   
+  // Folder type (migrated from sanity.folder)
+  vonasFolder,
+
   // Documentation types
   docsSection,
   docsPage,
