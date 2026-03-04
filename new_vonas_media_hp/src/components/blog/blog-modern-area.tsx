@@ -1,51 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Image from "next/image";
-import { getNewsData } from "@/lib/sanity";
 import usePagination from "@/hooks/use-pagination";
 import Pagination from "../ui/pagination";
 import BlogItem from "./blog-item/blog-item";
 
-import { SanityBlogPost, TransformedBlogPost } from "@/types/sanity";
+import { SanityBlogPost } from "@/types/sanity";
 
-export default function BlogModern() {
-  const [blogPosts, setBlogPosts] = useState<SanityBlogPost[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+interface BlogModernProps {
+  posts?: SanityBlogPost[];
+}
 
-  useEffect(() => {
-    const fetchBlogPosts = async () => {
-      try {
-        const data = await getNewsData();
-        setBlogPosts(data);
-      } catch (error) {
-        console.error('Error fetching blog posts:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchBlogPosts();
-  }, []);
-
+export default function BlogModern({ posts = [] }: BlogModernProps) {
   // Always call hooks at the top level
-  const first_blog = blogPosts[0];
-  const other_blogs = blogPosts.slice(1);
+  const first_blog = posts[0];
+  const other_blogs = posts.slice(1);
   const { currentItems, handlePageClick, pageCount } = usePagination<SanityBlogPost>(other_blogs, 6);
 
-  if (isLoading) {
-    return (
-      <div className="tp-blog-standard-area pt-170">
-        <div className="container container-1500">
-          <div className="row">
-            <div className="col-xl-12">
-              <div className="text-center">
-                <p>Loading blog posts...</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
   return (
     <>
       <div className="tp-blog-standard-area pt-170">
@@ -54,9 +24,9 @@ export default function BlogModern() {
             <div className="col-xl-12">
               <div className="tp-blog-standard-thumb-box p-relative">
                 {first_blog?.heroImage && (
-                  <Image 
-                    data-speed=".8" 
-                    src={first_blog.heroImage} 
+                  <Image
+                    data-speed=".8"
+                    src={first_blog.heroImage}
                     alt={first_blog.heroImageAlt || first_blog.title}
                     width={800}
                     height={600}
@@ -87,8 +57,6 @@ export default function BlogModern() {
         <div className="container">
           <div className="row">
             {currentItems.map((item) => {
-              // Transform Sanity blog post to match BlogItem expected format
-              // heroImage is already a URL string from the GROQ query
               const transformedItem = {
                 id: item._id,
                 title: item.title,
@@ -103,7 +71,7 @@ export default function BlogModern() {
                 excerpt: item.excerpt || '',
                 slug: item.slug?.current
               };
-              
+
               return (
                 <div key={item._id} className="col-xl-4 col-lg-6 col-md-6 mb-50">
                   <BlogItem item={transformedItem} />

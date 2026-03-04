@@ -17,7 +17,11 @@ import { charAnimation } from "@/utils/title-animation";
 import BlogModern from "@/components/blog/blog-modern-area";
 import BigText from "@/components/big-text";
 
-const BlogModernMain = () => {
+interface BlogModernMainProps {
+  posts?: any[];
+}
+
+const BlogModernMain = ({ posts = [] }: BlogModernMainProps) => {
   useScrollSmooth();
 
   useGSAP(() => {
@@ -37,7 +41,7 @@ const BlogModernMain = () => {
         <div id="smooth-content">
           <main>
             {/* blog modern area start */}
-            <BlogModern />
+            <BlogModern posts={posts} />
             {/* blog modern area end */}
 
             {/* big text area */}
