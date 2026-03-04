@@ -1,8 +1,7 @@
 import React from "react";
 import Image from "next/image";
-import { formatFollowers, getCreatorFollowerCount } from "@/utils/formatFollowers";
 import { processBioContent } from "@/utils/processBio";
-import { getSanityImageUrl } from '@/lib/sanity'
+
 import "@/styles/creator-social.css";
 
 interface CreatorAboutProps {
@@ -22,9 +21,6 @@ export default function CreatorAbout({ creator }: CreatorAboutProps) {
     );
   }
 
-  const followerCount = getCreatorFollowerCount(creator);
-  const formattedFollowers = formatFollowers(followerCount);
-  
   // Get creator's main image for the About section
   const getCreatorImage = () => {
     if (!creator) return null;
@@ -70,7 +66,7 @@ export default function CreatorAbout({ creator }: CreatorAboutProps) {
             <div className="tp-shop-details-description-list">
               <h4>Creator Highlights</h4>
               <ul>
-                <li>✓ Professional content creator with {formattedFollowers} followers</li>
+                <li>✓ Professional content creator</li>
                 {creator.verified && <li>✓ Verified creator profile</li>}
                 {creator.category?.title && <li>✓ Specializes in {creator.category.title}</li>}
                 {creator.mainPlatform && <li>✓ Active on {creator.mainPlatform}</li>}
@@ -110,11 +106,6 @@ export default function CreatorAbout({ creator }: CreatorAboutProps) {
             
             <div className="tp-shop-details-info-list">
               <ul>
-                <li>
-                  <span>Followers:</span>
-                  <span>{formattedFollowers}</span>
-                </li>
-                
                 {creator.category?.title && (
                   <li>
                     <span>Category:</span>
@@ -228,29 +219,6 @@ export default function CreatorAbout({ creator }: CreatorAboutProps) {
                   </div>
                 )}
                 
-                {creator.metrics && creator.metrics.length > 0 && (
-                  <div className="tp-metrics-table mb-3">
-                    <h6>Platform Metrics:</h6>
-                    <table className="table table-sm">
-                      <thead>
-                        <tr>
-                          <th>Platform</th>
-                          <th>Handle</th>
-                          <th>Followers</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {creator.metrics.map((metric: any, index: number) => (
-                          <tr key={index}>
-                            <td>{metric.platform}</td>
-                            <td>{metric.handle || '-'}</td>
-                            <td>{formatFollowers(metric.followers || 0)}</td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                )}
                 
                 <div className="tp-shop-details-social-description">
                   <p>Ready to collaborate? Add to shortlist and contact us for custom rates and project details.</p>

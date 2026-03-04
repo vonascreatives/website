@@ -1,6 +1,5 @@
 import React from "react";
 import CreatorDetailsDescription from "./creator-details-description";
-import CreatorDetailsWork from "./creator-details-work";
 import CreatorDetailsReview from "./creator-details-review";
 
 interface CreatorDetailsBottomAreaProps {
@@ -56,19 +55,6 @@ export default function CreatorDetailsBottomArea({ creator }: CreatorDetailsBott
                     </button>
                     <button
                       className="nav-link"
-                      id="nav-addInfo-tab"
-                      data-bs-toggle="tab"
-                      data-bs-target="#nav-addInfo"
-                      type="button"
-                      role="tab"
-                      aria-controls="nav-addInfo"
-                      aria-selected="false"
-                      onClick={e => handleActive(e)}
-                    >
-                      Portfolio & Work
-                    </button>
-                    <button
-                      className="nav-link"
                       id="nav-review-tab"
                       data-bs-toggle="tab"
                       data-bs-target="#nav-review"
@@ -98,16 +84,6 @@ export default function CreatorDetailsBottomArea({ creator }: CreatorDetailsBott
                     {/* description */}
                     <CreatorDetailsDescription creator={creator} />
                     {/* description */}
-                  </div>
-                  <div
-                    className="tab-pane fade"
-                    id="nav-addInfo"
-                    role="tabpanel"
-                    aria-labelledby="nav-addInfo-tab"
-                  >
-                    {/* work/portfolio */}
-                    <CreatorDetailsWork creator={creator} />
-                    {/* work/portfolio */}
                   </div>
                   <div
                     className="tab-pane fade"

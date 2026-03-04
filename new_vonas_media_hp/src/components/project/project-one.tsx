@@ -106,6 +106,7 @@ const ProjectOne = ({ channels, homepageImages }: ProjectOneProps) => {
                           alt={altText}
                           width={2560}
                           height={1440}
+                          style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }}
                           priority={index < 2}
                         />
                       </div>

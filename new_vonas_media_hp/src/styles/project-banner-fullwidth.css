@@ -9,7 +9,6 @@
     padding-left: 0 !important;
     padding-right: 0 !important;
     margin-bottom: 120px !important;
-    /* Space before Awards section */
 }
 
 /* Remove container padding */
@@ -19,29 +18,25 @@
     max-width: none !important;
 }
 
-/* Force uniform banner heights - overrides SCSS theme */
+/* Force uniform banner heights */
 .tp-project-4-bg {
     height: clamp(300px, 50vw, 700px) !important;
     min-height: clamp(300px, 50vw, 700px) !important;
     max-height: clamp(300px, 50vw, 700px) !important;
 }
 
-.tp-project-4-thumb {
+/* Fix <a> tag breaking height chain */
+.tp-project-4-bg > a {
+    display: block !important;
     width: 100% !important;
     height: 100% !important;
-    overflow: hidden !important;
-    position: relative !important;
-    display: block !important;
 }
 
-/* Target Next.js Image wrapper spans */
-.tp-project-4-thumb>span,
-.tp-project-4-thumb span {
+.tp-project-4-thumb {
     width: 100% !important;
-    height: 100% !important;
-    position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
+    height: clamp(300px, 50vw, 700px) !important;
+    overflow: hidden !important;
+    display: block !important;
 }
 
 .tp-project-4-thumb img {
@@ -50,6 +45,8 @@
     object-fit: cover !important;
     object-position: center !important;
     display: block !important;
+    min-width: 100% !important;
+    min-height: 100% !important;
 }
 
 /* Hide horizontal overflow */

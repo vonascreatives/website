@@ -1,6 +1,5 @@
 import React from "react";
 import Image from "next/image";
-import { getCreatorFollowerCount, formatFollowers } from "@/utils/formatFollowers";
 import { processBioContent } from "@/utils/processBio";
 
 interface CreatorDetailsDescriptionProps {
@@ -8,8 +7,6 @@ interface CreatorDetailsDescriptionProps {
 }
 
 export default function CreatorDetailsDescription({ creator }: CreatorDetailsDescriptionProps) {
-  const followerCount = getCreatorFollowerCount(creator);
-  const formattedFollowers = formatFollowers(followerCount);
   
   // Get hero image for the About section
   const getHeroImage = () => {
@@ -36,13 +33,16 @@ export default function CreatorDetailsDescription({ creator }: CreatorDetailsDes
       <div className="tp-product-details-description-banner mb-40">
         <div className="row">
           <div className="col-xl-6">
-            <div className="tp-product-details-description-banner-thumb">
+            <div
+              className="tp-product-details-description-banner-thumb"
+              style={{ position: 'relative', width: '100%', aspectRatio: '4/5', borderRadius: '8px', overflow: 'hidden' }}
+            >
               <Image
                 src={heroImage}
                 alt={creator.name || 'Creator'}
-                width={500}
-                height={400}
-                style={{ objectFit: 'cover', borderRadius: '8px', width: '100%' }}
+                fill
+                sizes="(min-width: 1200px) 500px, 90vw"
+                style={{ objectFit: 'cover', objectPosition: 'top center' }}
               />
             </div>
           </div>
@@ -51,7 +51,6 @@ export default function CreatorDetailsDescription({ creator }: CreatorDetailsDes
               <h4 className="tp-product-details-description-banner-title">About {creator.name}</h4>
               <p>{bioContent}</p>
               <div className="mt-3">
-                <strong>Followers:</strong> {formattedFollowers}<br/>
                 <strong>Location:</strong> {creator.location || 'United States'}<br/>
                 <strong>Specialization:</strong> {creator.niche || creator.niches?.[0] || 'Content Creation'}
               </div>
