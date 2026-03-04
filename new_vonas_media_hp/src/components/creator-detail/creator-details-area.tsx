@@ -26,14 +26,12 @@ export default function CreatorDetailsArea({ creator }: CreatorDetailsAreaProps)
     );
   }
   
-  // Get only gallery images (excluding hero image)
+  // Get gallery images, falling back to heroImage if none exist
   const getGalleryImages = () => {
     const images: string[] = [];
-    
-    // Add only gallery images (not hero image)
+
     if (creator.gallery && Array.isArray(creator.gallery)) {
       creator.gallery.forEach((item: any) => {
-        // Handle both URL strings (fallback) and objects (CMS)
         if (typeof item === 'string') {
           images.push(item);
         } else if (item && item.image) {
@@ -41,12 +39,18 @@ export default function CreatorDetailsArea({ creator }: CreatorDetailsAreaProps)
         }
       });
     }
-    
-    // Use the main creator image as fallback if no gallery images available
+
+    // Fall back to heroImage (from Sanity query) if no gallery
+    if (images.length === 0) {
+      const heroImg = getHeroImage();
+      if (heroImg) images.push(heroImg);
+    }
+
+    // Last resort: direct image field
     if (images.length === 0 && creator.image) {
       images.push(creator.image);
     }
-    
+
     return images;
   };
 
